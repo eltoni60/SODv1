@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Staging Area Designer</title>
+		<style>
+			td {
+				border: 1px solid black;
+			}
+			.canvastable {
+				vertical-align:center;
+				text-align:center;
+				border: 0px solid black;
+				padding: 0 0 0 0;
+			}
+			canvas {
+				border: 1px solid black;
+			}
+			.elementtoolbox {
+				width: 150px;
+				height: 240px;
+				max-height: 240px;
+				overflow-y: scroll;
+			}
+			button {
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+		</style>
+		<script src="sod_classes.js"></script>
+		<script>
+			var drawContext;
+			var canvas;
+			var selectElement = 0;
+			var boundPage;
+		
+			function initCanvas() {
+				canvas = document.getElementById('editorcanvas');
+				drawContext = canvas.getContext('2d');
+			}
+			
+			function fillCanvas() {
+				drawContext.fillStyle = '#99ffcc';
+				drawContext.fillRect(0, 0, canvas.width, canvas.height);
+			}
+			
+			function setSelectedElement(val) {
+				selectElement = val;
+				console.log('selected ' + val);
+			}
+			
+			function onCanvasClick(event) {
+				var clientRect = canvas.getBoundingClientRect();
+				var mx = (event.clientX-clientRect.left)*(canvas.width/clientRect.width);
+				var my = (event.clientY-clientRect.top)*(canvas.height/clientRect.height);
+				var elemIndex = boundPage.hitElementIndex(mx, my);
+				if (elemIndex != -1) {
+					boundPage.insertElement(elemIndex, selectElement);
+					page.drawPage(drawContext);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<table width="800" height="480">
+			<tr>
+				<td rowspan="2" width="150">
+					Orders
+				</td>
+				<td class="canvastable" rowspan="2">
+					<canvas width="480" height="480" id="editorcanvas" onclick="onCanvasClick(event)"></canvas>
+				</td>
+				<td width="150" height="240">
+					<div class="elementtoolbox">
+						<button type="button" onclick="setSelectedElement(1)">Element 1</button>
+						<button type="button" onclick="setSelectedElement(2)">Element 2</button>
+						<button type="button" onclick="setSelectedElement(3)">Element 3</button>
+						<button type="button" onclick="setSelectedElement(4)">Element 4</button>
+						<button type="button" onclick="setSelectedElement(5)">Element 5</button>
+						<button type="button" onclick="setSelectedElement(6)">Element 6</button>
+						<button type="button" onclick="setSelectedElement(7)">Element 7</button>
+						<button type="button" onclick="setSelectedElement(8)">Element 8</button>
+						<button type="button" onclick="setSelectedElement(9)">Element 9</button>
+						<button type="button" onclick="setSelectedElement(10)">Element 10</button>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="150" height="240">
+					Properties
+				</td>
+			</tr>
+		<table>
+		<script>
+			initCanvas();
+			fillCanvas();
+			
+			var gridLayout = createGridLayout(3, 3, canvas.width, canvas.height, 10, 20);
+			let page = new Page('Page 1', gridLayout);
+			boundPage = page; // bind this as current page
+			
+			//now we can do more stuff with it
+			boundPage.drawPage(drawContext);
+		</script>
+	</body>
+</html>
