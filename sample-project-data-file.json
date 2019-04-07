@@ -1,0 +1,30 @@
+{
+	project-name: "Project Name",
+	pages: 
+	[
+		{
+			page-name: "Page 1",
+			layout: {
+				layout-name: "Grid Layout",
+				cells:
+				[
+					[ 0, 0, 100, 100 ],
+					[ 150, 0, 100, 100 ]
+				]
+			}
+			elements: [ 0, 4 ]
+		},
+		{
+			page-name: "Page 2",
+			layout: {
+				layout-name: "Grid Layout",
+				cells:
+				[
+					[ 0, 0, 100, 100 ],
+					[ 150, 0, 100, 100 ]
+				]
+			}
+			elements: [ 4, 7 ]
+		}
+	]
+}

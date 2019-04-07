@@ -1,0 +1,17 @@
+{
+	items:
+	[
+		{
+			item-name: "Item Name 1",
+			item-price: 1.25,
+			attribute-names: [ ],
+			attribute-values: [ ]
+		},
+		{
+			item-name: "Item Name 2",
+			item-price: 2.50,
+			attribute-names: [ "Attribute1" ],
+			attribute-values: [ 100 ]
+		}
+	]
+}
