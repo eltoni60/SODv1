@@ -68,11 +68,11 @@
 					Orders
 				</td>
 				<td class="canvastable" rowspan="2">
-					<canvas width="480" height="480" id="editorcanvas" onclick="onCanvasClick(event)"></canvas>
+					<canvas width="480" height="480" id="editorcanvas" ondrop="onCanvasClick(event)"></canvas>
 				</td>
 				<td width="150" height="240">
 					<div class="elementtoolbox">
-						<button type="button" onclick="setSelectedElement(1)">Element 1</button>
+						<button type="button" draggable="true" onclick="setSelectedElement(1)">Element 1</button>
 						<button type="button" onclick="setSelectedElement(2)">Element 2</button>
 						<button type="button" onclick="setSelectedElement(3)">Element 3</button>
 						<button type="button" onclick="setSelectedElement(4)">Element 4</button>
