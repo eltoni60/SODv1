@@ -1,3 +1,5 @@
 #These are folders specific to Webstorm IDE
 .idea
+
+#External libraries that are downloaded
 bootstrap-4.3.1-dist/

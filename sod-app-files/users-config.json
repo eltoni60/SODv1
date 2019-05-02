@@ -1,2 +1,12 @@
-/*
-This is where the usernames and hashed passwords will be stored as key value pairs.*/
+{
+  "loginCredentials": [
+    {
+      "username": "user1",
+      "password": "nmoovluf5"
+    },
+    {
+      "username": "user2",
+      "password": "olfbllf517"
+    }
+  ]
+}
