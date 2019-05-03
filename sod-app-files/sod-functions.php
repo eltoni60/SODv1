@@ -2,38 +2,7 @@
 	
 /* The #include for PHP */
 require('sod-classes.php');
-	
-	
-	
-/**
-	Creates a grid layout object for a page of the given page width,
-	with the number of rows and columns. The last two parameters
-	specify the spacing betweeen elements
-*/
-function create_grid_layout($rows, $columns, $page_width, $page_height, $hspace, $vspace) {
-	$grid_layout = new Layout("Grid Layout $rows x $columns");
-	
-	if ($hspace*($columns+1)>=$page_width or $vspace*($rows+1)>=$page_height) {
-		echo "Cannot create GridLayout, the spacing is too large!";
-		return nil;
-	}
-	else {
-		$cellWidth = ($page_width - ($columns+1)*$hspace)/$columns;
-		$cellHeight = ($page_height - ($rows+1)*$vspace)/$rows;		
-		for ($r = 0; $r < $rows; $r++) {
-			for ($c = 0; $c < $columns; $c++) {
-				$rect = new Rectangle(
-					$hspace + $c*($cellWidth+$hspace),
-					$vspace + $r*($cellHeight+$vspace),
-					$cellWidth,
-					$cellHeight
-				);
-				$grid_layout->push_cell($rect);
-			}
-		}
-		return $grid_layout;
-	}
-}
+
 	
 /**
 	Converts the program object representation of
@@ -95,5 +64,27 @@ function deserialize_item_library_str($json_str) {
 function deserialize_project_data_str($json_str) {
 	
 }
+
+
+/**
+	POS System Generation - See Section 5.1.9
 	
+	Generates the code for an element button. This 
+	depends on the generate_element function.
+*/	
+function generate_element($element_id, $item) {
+	
+}	
+
+/**
+	POS System Generation - See Section 5.1.9
+
+	Generates an HTML table from a Page object. This 
+	depends on the generate_element function.
+*/	
+function generate_page($page, $item_library) {
+	
+}
+	
+
 ?>
