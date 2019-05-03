@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>SOD</title>
+    <script src="./loging-signup/security-verifying.js"></script>
+
 </head>
 <body>
 
-<form class="login" method="post" action="verifyLogin()">
+<form name="loginInfo" method="post" onsubmit="return login()">
     <div>
         <label>Username: </label>
         <div class="col-sm-8">
@@ -28,10 +30,9 @@
     </div>
     <div>
         <div class="col-sm-offset-2 col-sm-8">
-            <button type="submit" value="verifyLogin()">Log In</button>
+            <button type="submit" name="submit" value="submit">Log In</button>
         </div>
     </div>
-
 </form>
 
 
