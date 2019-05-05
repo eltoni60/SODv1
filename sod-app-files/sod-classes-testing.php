@@ -135,5 +135,13 @@
 		$example_item_library->debug_info_dump();
 	 ?>
 	 
+	 <h4>Testing .sodp files</h4>
+	 
+	 <?php
+		
+		serialize_sodp_file($example_project_data, $example_item_library, "test.sodp");
+		
+		$everything_array = deserialize_sodp_file("test.sodp");
+	 ?>
 </body>
 </html>

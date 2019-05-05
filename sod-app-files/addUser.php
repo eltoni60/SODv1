@@ -3,8 +3,6 @@
     $usersFile = fopen("users-config.json", 'r');
     $addedUserStr = file_get_contents("php://input");
     $existingUsersStr = fread($usersFile, filesize("users-config.json"));
-    fclose($usersFile);
-
 
     $jsonAddedUser = json_decode($addedUserStr, true);
     /*print_r($jsonAddedUser);*/
@@ -24,6 +22,6 @@
     $filePaths = fopen($sod.'/POSSD-'.$jsonAddedUser["username"].'/'.$jsonAddedUser["username"].'-POSSD-filepaths.json', 'w');
     $startWrite = '{"projects": []}';
     fwrite($filePaths, $startWrite);
-    fclose($filPaths);
+    fclose($filePaths);
     echo 'Sign Up Complete. Please login.';
 ?>
