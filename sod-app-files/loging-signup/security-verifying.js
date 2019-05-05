@@ -106,14 +106,19 @@ function signUp() {
         username: enteredUsername,
         password: enteredPassword
     };
-    var logins = returnLoadedJSON('../sod-app-files/users-config.json').loginCredentials;
-    logins.push(credential);
-    /*TODO write the logins array back to the users-config.json using PHP*/
-
-
-
-
-
+    /*var logins = returnLoadedJSON('../sod-app-files/users-config.json');
+    logins.loginCredentials.push(credential);*/
+    var dataString = JSON.stringify(credential);
+    var http = new XMLHttpRequest();
+    var url = "./addUser.php";
+    http.open('POST', url, true);
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState === 4 && http.status === 200) {
+            alert(http.responseText);
+        }
+    };
+    http.send(dataString);
     window.location.replace('./index.html');
     return false;
 }
@@ -137,7 +142,7 @@ function login() {
          //Setting a session variable with the POSSD username, can be used in filepaths
          //Retrieve variable with sessionStorage.getItem("POSSD");
          sessionStorage.setItem("POSSD", enteredUsername);
-         window.location.replace('./project-selector.html');
+         window.location.href = './project-selector.html';
          return false;
      }
      else {
@@ -146,14 +151,65 @@ function login() {
      }
 }
 
+function checkProjectName() {
+    var name = document.getElementById('name');
+    if (isAlphaNum(name.value)) {
+        name.style.backgroundColor = '#53f442';
+        return false;
+    }
+    else {
+        name.style.backgroundColor = '#f77474';
+        return false;
+    }
+}
+
+//Redirects the user to the
+function redirectToItemLibrary(projectname) {
+    sessionStorage.setItem("PROJECT_NAME", projectname);
+    window.location.href ="./item-library.html";
+    return false;
+}
+
+function redirectToGPOS(projectname) {
+    var possd = sessionStorage.getItem("POSSD");
+    var tempPOSSD = "EXAMPLE";
+    window.location.href = "../generated-pos/" + possd + "-" + projectname
+        + "-gpos.html";
+    return false;
+}
+
+function logOut() {
+    sessionStorage.clear();
+    window.location.href = "./index.html";
+    return false;
+}
 
 
+var loadFile = function (event) {
+    validateFile();
+    var input = event.target.files;
+    var reader = new FileReader();
+    reader.onload = function () {
+        var dataText = reader.result;
+        var http = new XMLHttpRequest();
+        var url = "./processSODP.php";
+        http.open('POST', url, true);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.onreadystatechange = function() {//Call a function when the state changes.
+            if(http.readyState === 4 && http.status === 200) {
+                alert(http.responseText);
+            }
+        };
+        http.send(dataText);
+    };
+    reader.readAsText(input.files[0]);
 
+};
 
-
-
-
-
-
-
-
+var validateFile = function () {
+    var file = document.getElementById("myFile").files;
+    if (file.length === 0) {
+        alert("You must select a valid file with extension .sodp");
+        return false;
+    }
+}

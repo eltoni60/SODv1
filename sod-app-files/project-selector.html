@@ -1,10 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sod Project Selector</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./generated-pos-functions/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./sodCSS.css">
+    <script src="./generated-pos-functions/jquery-3.4.1.min.js"></script>
+    <script src="./generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="loging-signup/security-verifying.js"></script>
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 450px
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+
+            .row.content {
+                height: auto;
+            }
+        }
+    </style>
 </head>
 <body>
+
+<script>
+    //Doesn't allow access to the project-selector page unless the POSSD session
+    //attribute has been set.
+    if (sessionStorage.getItem("POSSD") == null)
+        window.location.replace("./index.html");
+</script>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            </button>
+            <a class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD"));</script></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="container-fluid text-center">
+    <div class="container">
+        <div class="row">
+            <!-- Trigger the modal with a button -->
+
+            <div class="col-lg-4">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                        data-target="#newName" style="margin: 1em 0 1em; padding: auto; height: 48.8px">Create New Project
+                </button>
+            </div>
+
+            <!-- Place the appropirate PHP function under action -->
+            <form name="fileSODP" method="post" action="" onsubmit=" return loadFile(event)">
+                <div class="col-lg-6 btn-group">
+
+                    <input class="btn btn-info btn-lg" type="file" id="myFile" name="files" style="margin: 1em 0 1em; padding: auto" />
+
+                    <input class="btn btn-info btn-lg" type="submit" value="submit" style="margin: 1em 0 1em; padding: auto; height: 48.8px" />
+                </div>
+                <div class="col-lg-1">
+
+                </div>
+
+            </form>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="newName" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Enter Project Name</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="getProjectName" action="" method="post"
+                              onsubmit="return redirectToItemLibrary(name.value)">
+                            <label id="projectname" name="projectname">Enter Project Name</label>
+                            <input type="text" id="name" name="name" onchange="checkProjectName()">
+                            <button type="submit" value="newName" class="btn btn-default">Next</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</header>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-6 sidenav" id="editProjects">
+
+            <script>
+                //TODO must replace the 'EXAMPLE' with the session variable that was set in the login page
+                var possd = sessionStorage.getItem("POSSD");
+                var savedProjects = returnLoadedJSON('../possd-' + possd + '/' + possd + '-POSSD-filepaths.json');
+                for (var i = 0; i < savedProjects.projects.length; i++) {
+                    var btn = document.createElement("BUTTON");
+                    btn.setAttribute("onclick", "return redirectToItemLibrary(" + savedProjects.projects[i] + ")");
+                    btn.id = savedProjects.projects[i];
+                    btn.value = savedProjects.projects[i];
+                    btn.className += 'btn btn-info btn-lg';
+                    btn.innerHTML = savedProjects.projects[i];
+                    btn.style.margin = "1em 2em 1em";
+                    btn.style.width = "50% ";
+                    document.getElementById('editProjects').appendChild(btn);
+                    document.getElementById('editProjects').appendChild(document.createElement("BR"));
+                }
+            </script>
+
+
+        </div>
+        <div class="col-sm-6 sidenav" id="generatedPOS">
+            <script>
+                //TODO must replace the 'EXAMPLE' with the session variable that was set in the login page
+                var possd = sessionStorage.getItem("POSSD");
+                var savedProjects = returnLoadedJSON('../possd-' + possd + '/' + possd + '-POSSD-filepaths.json');
+                for (var i = 0; i < savedProjects.projects.length; i++) {
+                    var btn = document.createElement("BUTTON");
+                    btn.setAttribute("onclick", "return redirectToGPOS(" + savedProjects.projects[i] + ")");
+                    btn.id = savedProjects.projects[i];
+                    btn.value = savedProjects.projects[i];
+                    btn.className += 'btn btn-info btn-lg';
+                    btn.innerHTML = "POS " + savedProjects.projects[i];
+                    btn.style.margin = "1em 2em 1em";
+                    btn.style.width = "50% ";
+                    document.getElementById('generatedPOS').appendChild(btn);
+                    document.getElementById('generatedPOS').appendChild(document.createElement("BR"));
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center">
+    <p>Footer Text</p>
+</footer>
 
 </body>
 </html>
