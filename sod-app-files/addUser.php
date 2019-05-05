@@ -16,6 +16,7 @@
     $prettyString = json_encode($jsonExistingUsers, JSON_PRETTY_PRINT);
     $usersFile = fopen("users-config.json", 'w');
     fwrite($usersFile, $prettyString);
+	fclose($usersFile);
 
     /*This code creates the folder structure for the POSSD as specified in the RAD*/
     $sod = dirname(__FILE__, 2);

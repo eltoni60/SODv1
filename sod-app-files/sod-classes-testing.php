@@ -119,6 +119,20 @@
 		$test_item_lib->add_item($item1);
 		$test_item_lib->add_item($item2);
 		$test_item_lib->debug_info_dump();
+		
+		//serialize_item_library($test_item_lib, "test_output_item_lib.json");
+	 ?>
+	 
+	 <h4>Testing deserialization on example project</h4>
+	 
+	 <p>Deserializing project data and item library and then showing it here</p>
+	 
+	 <?php
+	 
+		$example_project_data = deserialize_project_data("./../possd-EXAMPLE/project-1/1-project.json");
+		$example_item_library = deserialize_item_library("./../possd-EXAMPLE/project-1/1-item-library.json");
+		$example_project_data->debug_info_dump();
+		$example_item_library->debug_info_dump();
 	 ?>
 	 
 </body>

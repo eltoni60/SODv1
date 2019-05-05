@@ -41,7 +41,8 @@ class Layout {
 		//Insert any necessary cleanup here
 	}
 	
-	private function push_cell($rect) {
+	// to only be used for the initial construction of a layout object
+	public function push_cell($rect) {
 		array_push($this->rectangles, $rect);
 	}
 	
@@ -295,6 +296,8 @@ class Page {
 /*Program object for an item on the menu*/
 class Item {
 	
+	// TODO: automatic item ID incrementation
+	//  challenge, synchronization between program instances
 	private $item_id;
 	private $item_name;
 	private $item_price;
@@ -349,7 +352,7 @@ class Item {
 			echo "No attributes for this item<br />";
 		}
 		else {
-			$keys = list_attribute_names();
+			$keys = $this->list_attribute_names();
 			for ($i = 0; $i < count($keys); $i++) {
 				echo "Attribute $i: {$keys[$i]} = {$this->attributes[$keys[$i]]}<br />";
 			}
@@ -453,6 +456,14 @@ class SOD_Project {
 		return $used_elements;
 	}
 	
+	// for iterating over pages
+	public function list_page_names() {
+		$page_names = array();
+		for ($i = 0; $i < count($this->pages); $i++) {
+			array_push($page_names, $this->pages[$i]->get_page_name());
+		}
+		return $page_names;
+	}
 	
 	public function debug_info_dump() {
 		echo "Project Name: $this->project_name<br />";
@@ -513,6 +524,9 @@ class Item_Library {
 		}
 	}
 
+	// currently O(n), but if the list is sorted
+	// by IDs and the find function is implemented as binary search
+	// then it could get item lookup to O(log N)
 	public function get_item($item_id) {
 		for ($i = 0; $i < count($this->items); $i++) {
 			if ($this->items[$i]->get_item_id() == $item_id) {
@@ -529,6 +543,15 @@ class Item_Library {
 			}
 		}
 		return null;
+	}
+	
+	// for iterating over the item library
+	public function list_item_ids() {
+		$ids = array();
+		for ($i = 0; $i < count($this->items); $i++) {
+			array_push($ids, $this->items[$i]->get_item_id());
+		}
+		return $ids;
 	}
 	
 	public function debug_info_dump() {
