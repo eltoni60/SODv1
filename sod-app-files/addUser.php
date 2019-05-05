@@ -12,14 +12,14 @@
     array_push($jsonExistingUsers["loginCredentials"], $jsonAddedUser);
 
     $prettyString = json_encode($jsonExistingUsers, JSON_PRETTY_PRINT);
-    $usersFile = fopen("users-config.json", 'w');
+    $usersFile = fopen("users-config.json", "w");
     fwrite($usersFile, $prettyString);
 	fclose($usersFile);
 
     /*This code creates the folder structure for the POSSD as specified in the RAD*/
     $sod = dirname(__FILE__, 2);
     mkdir($sod.'/POSSD-'.$jsonAddedUser["username"]);
-    $filePaths = fopen($sod.'/POSSD-'.$jsonAddedUser["username"].'/'.$jsonAddedUser["username"].'-POSSD-filepaths.json', 'w');
+    $filePaths = fopen($sod.'/POSSD-'.$jsonAddedUser["username"].'/'.$jsonAddedUser["username"].'-POSSD-filepaths.json', "w");
     $startWrite = '{"projects": []}';
     fwrite($filePaths, $startWrite);
     fclose($filePaths);
