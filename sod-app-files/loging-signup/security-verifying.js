@@ -204,7 +204,6 @@ function logOut() {
     return false;
 }
 
-
 var loadFile = function (event) {
     validateFile();
     var input = event.target.files;
@@ -228,8 +227,11 @@ var loadFile = function (event) {
 
 var validateFile = function () {
     var file = document.getElementById("myFile").files;
-    if (file.length === 0) {
+    var extension = file[0].name.split('.').pop();
+    var bol = (extension !== 'sodp');
+    if (file.length === 0 || bol) {
         alert("You must select a valid file with extension .sodp");
         return false;
     }
-}
+    return true;
+};
