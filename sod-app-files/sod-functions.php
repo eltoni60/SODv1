@@ -372,7 +372,11 @@ function serialize_sodp_file($project_data, $item_library, $file_path) {
 */
 function deserialize_sodp_file($file_path) {
 	$file_content = file_get_contents($file_path);
-	$file_json_array = json_decode($file_content, true);
+	return deserialize_sodp_string($file_content);
+}
+
+function deserialize_sodp_string($json_str) {
+	$file_json_array = json_decode($json_str, true);
 	
 	$project_data_val = $file_json_array["project_data"];
 	$item_library_val = $file_json_array["item_library"];
