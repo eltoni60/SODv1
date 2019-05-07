@@ -131,7 +131,7 @@ function login() {
     var index = -1;
     for (var i = 0; i < credentials.length; i++) {
         if (enteredUsername === credentials[i].username) {
-            index = 0;
+            index = i;
         }
     }
      if (index < 0) {
