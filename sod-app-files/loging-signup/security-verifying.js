@@ -164,7 +164,27 @@ function checkProjectName() {
 }
 
 //Redirects the user to the
-function redirectToItemLibrary(projectname) {
+function redirectToItemLibrary(projectname, newProject = false) {
+    if(newProject) {
+        sessionStorage.setItem("PROJECT_NAME", projectname);
+        var possd = sessionStorage.getItem("POSSD");
+        var projectObj = {
+            POSSD: possd,
+            pName: projectname
+        };
+        var http = new XMLHttpRequest();
+        var url = "./addProject.php";
+        http.open('POST', url, true);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.onreadystatechange = function() {//Call a function when the state changes.
+            if(http.readyState === 4 && http.status === 200) {
+                alert(http.responseText);
+            }
+        };
+        http.send(JSON.stringify(projectObj));
+        window.location.href ="./item-library.html";
+        return false;
+    }
     sessionStorage.setItem("PROJECT_NAME", projectname);
     window.location.href ="./item-library.html";
     return false;

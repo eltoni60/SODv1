@@ -80,7 +80,6 @@
     <div class="container">
         <div class="row">
             <!-- Trigger the modal with a button -->
-
             <div class="col-lg-4">
                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
                         data-target="#newName" style="margin: 1em 0 1em; padding: auto; height: 48.8px">Create New Project
@@ -101,8 +100,6 @@
 
             </form>
         </div>
-
-
         <!-- Modal -->
         <div class="modal fade" id="newName" role="dialog">
             <div class="modal-dialog">
@@ -114,7 +111,7 @@
                     </div>
                     <div class="modal-body">
                         <form name="getProjectName" action="" method="post"
-                              onsubmit="return redirectToItemLibrary(name.value)">
+                              onsubmit="return redirectToItemLibrary(name.value, true)">
                             <label id="projectname" name="projectname">Enter Project Name</label>
                             <input type="text" id="name" name="name" onchange="checkProjectName()">
                             <button type="submit" value="newName" class="btn btn-default">Next</button>
@@ -131,13 +128,10 @@
     </div>
 
 </header>
-
 <div class="container-fluid text-center">
     <div class="row content">
         <div class="col-sm-6 sidenav" id="editProjects">
-
             <script>
-                //TODO must replace the 'EXAMPLE' with the session variable that was set in the login page
                 var possd = sessionStorage.getItem("POSSD");
                 var savedProjects = returnLoadedJSON('../possd-' + possd + '/' + possd + '-POSSD-filepaths.json');
                 for (var i = 0; i < savedProjects.projects.length; i++) {
@@ -153,12 +147,9 @@
                     document.getElementById('editProjects').appendChild(document.createElement("BR"));
                 }
             </script>
-
-
         </div>
         <div class="col-sm-6 sidenav" id="generatedPOS">
             <script>
-                //TODO must replace the 'EXAMPLE' with the session variable that was set in the login page
                 var possd = sessionStorage.getItem("POSSD");
                 var savedProjects = returnLoadedJSON('../possd-' + possd + '/' + possd + '-POSSD-filepaths.json');
                 for (var i = 0; i < savedProjects.projects.length; i++) {
@@ -177,10 +168,5 @@
         </div>
     </div>
 </div>
-
-<footer class="container-fluid text-center">
-    <p>Footer Text</p>
-</footer>
-
 </body>
 </html>
