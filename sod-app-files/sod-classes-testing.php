@@ -129,19 +129,19 @@
 	 
 	 <?php
 	 
-		$example_project_data = deserialize_project_data("./../possd-EXAMPLE/project-1/1-project.json");
-		$example_item_library = deserialize_item_library("./../possd-EXAMPLE/project-1/1-item-library.json");
-		$example_project_data->debug_info_dump();
-		$example_item_library->debug_info_dump();
+		//$example_project_data = deserialize_project_data("./../possd-EXAMPLE/project-1/1-project.json");
+		//$example_item_library = deserialize_item_library("./../possd-EXAMPLE/project-1/1-item-library.json");
+		//$example_project_data->debug_info_dump();
+		//$example_item_library->debug_info_dump();
 	 ?>
 	 
 	 <h4>Testing .sodp files</h4>
 	 
 	 <?php
 		
-		serialize_sodp_file($example_project_data, $example_item_library, "test.sodp");
+		serialize_sodp_file($test_project, $test_item_lib, "test.sodp");
 		
-		$everything_array = deserialize_sodp_file("test.sodp");
+		//$everything_array = deserialize_sodp_file("test.sodp");
 	 ?>
 </body>
 </html>

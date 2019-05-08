@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sod Staging Area Selector</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./generated-pos-functions/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./sodCSS.css">
+    <script src="./generated-pos-functions/jquery-3.4.1.min.js"></script>
+    <script src="./generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="loging-signup/security-verifying.js"></script>
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 450px
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+
+            .row.content {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    //Doesn't allow access to the project-selector page unless the POSSD session
+    //attribute has been set.
+    if (sessionStorage.getItem("POSSD") == null)
+        window.location.replace("./index.html");
+</script>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            </button>
+            <a class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD") + ' - ' + sessionStorage.getItem("PROJECT_NAME"));</script></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="container-fluid text-center">
+    <div class="container">
+		<div class="row">			
+			<!-- Add page button will be on the modal -->
+			<!-- Pretty much just copied the code from the project-selector page -->
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+				data-target="#newPageName" style="margin: 1em 0 1em; padding: auto; height: 48.8px">
+				Add Page
+			</button>
+			
+			<form class="removePageForm" method="post" action="" onsubmit="removePage.php"
+				style="display:inline";>
+				<input class="btn btn-info btn-lg" 
+					type="submit" value="Remove Page" 
+					style="margin: 1em 0 1em; padding: auto; height: 48.8px" 
+					onclick="submitForm('removePage.php')" />
+			</form>
+			<form class="deployPageForm" method="post" action="" onsubmit="deployPOSSystem.php"
+				style="display:inline";>
+				<input class="btn btn-info btn-lg" 
+					type="submit" value="Deploy" 
+					style="margin: 1em 0 1em; padding: auto; height: 48.8px"
+					onclick="submitForm('deploySystem.php')" />
+			</form>
+			
+			
+			
+			
+			<!-- Modal -->
+        <div class="modal fade" id="newPageName" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Enter Page Name</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="getPageName" action="addPage.php" method="post"
+                              onsubmit="">
+                            <label id="pagename" name="pagename">Enter Page Name</label>
+                            <input type="text" id="name" name="name" onchange="checkPageName()">
+                            <button type="submit" value="addPageName" class="btn btn-default">Add</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</header>
+
+<div class="container-fluid text-center">
+    <div class="container">
+        <div class="row content">
+			<!--We are going to make some stackable cards for the pages-->
+			<script>
+                var possd = sessionStorage.getItem("POSSD");
+                var project = sessionStorage.getItem("PROJECT_NAME");
+				
+            </script>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

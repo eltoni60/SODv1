@@ -163,6 +163,19 @@ function checkProjectName() {
     }
 }
 
+// same function as checkProjectName but under a different alias
+function checkPageName() {
+    var name = document.getElementById('name');
+    if (isAlphaNum(name.value)) {
+        name.style.backgroundColor = '#53f442';
+        return false;
+    }
+    else {
+        name.style.backgroundColor = '#f77474';
+        return false;
+    }
+}
+
 //Redirects the user to the
 function redirectToItemLibrary(projectname, newProject = false) {
     if(newProject) {
@@ -219,7 +232,14 @@ var loadFile = function (event) {
                 alert(http.responseText);
             }
         };
-        http.send(dataText);
+		//we need to carry the POSSD to the processSODP.php
+		//file, so we are going to create a wrapper json object
+        var wrapper = "{";
+		wrapper += "\"possd\":\"" + sessionStorage.getItem("POSSD") + "\",";
+		wrapper += "\"sodp\":"
+		wrapper += dataText;
+		wrapper += "}";
+		http.send(wrapper);
     };
     reader.readAsText(input.files[0]);
 

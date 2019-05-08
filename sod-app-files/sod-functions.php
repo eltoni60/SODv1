@@ -390,6 +390,36 @@ function deserialize_sodp_string($json_str) {
 	);
 }
 
+/**
+	Moved project directory creation into its own
+	function for code reuse purposes (at least two PHP files use this)
+*/
+function create_sod_project_files($sod_dir, $possd, $project_name) {
+	$projDir = $sod."/possd-".$possd."/project-".$project_name."/";
+	$dirSuccess = mkdir($projDir);
+
+	$filesToCreate = array($project_name."-element-page-tracker.txt",
+		$project_name."-item-library.json", $project_name."-project.json");
+
+	fclose(fopen($projDir.$filesToCreate[0], "w"));
+	fclose(fopen($projDir.$filesToCreate[1], "w"));
+	fclose(fopen($projDir.$filesToCreate[2], "w"));
+
+	$filePathP = $sod."/possd-".$possd."/".$possd."-POSSD-filepaths.json";+
+	$filePaths = fopen($filePathP, "r");
+	$pathsRead = fread($filePaths, filesize($filePathP));
+	fclose($filePaths);
+
+	$jsonPaths = json_decode($pathsRead, true);
+
+	array_push($jsonPaths["projects"], $project_name);
+
+	$filePaths = fopen($filePathP, "w");
+	fwrite($filePaths, json_encode($jsonPaths, JSON_PRETTY_PRINT));
+	fclose($filePaths);
+	
+}
+
 
 /**
 	POS System Generation - See Section 5.1.9

@@ -1,32 +1,39 @@
 <?php
-/*If this is being called then we are assuming that there isn't a project
-    of the name already*/
-$addedProj = json_decode(file_get_contents("php://input"), true);
-$POSSD = $addedProj["POSSD"];
-$pName = $addedProj["pName"];
+	/*If this is being called then we are assuming that there isn't a project
+		of the name already*/
 
-$sod = dirname(__DIR__);
-$projDir = $sod."/possd-".$POSSD."/project-".$pName."/";
-$dirSuccess = mkdir($projDir);
+	require('sod-functions.php');
 
-$filesToCreate = array($pName."-element-page-tracker.txt",
-    $pName."-item-library.json", $pName."-project.json");
+	$addedProj = json_decode(file_get_contents("php://input"), true);
+	$POSSD = $addedProj["POSSD"];
+	$pName = $addedProj["pName"];
 
-fclose(fopen($projDir.$filesToCreate[0], "w"));
-fclose(fopen($projDir.$filesToCreate[1], "w"));
-fclose(fopen($projDir.$filesToCreate[2], "w"));
+	$sod = dirname(__DIR__);
+	//see sod-functions.php, I moved this to its own
+	//function for code reuse purposes
+	create_sod_project_files($sod, $POSSD, $pName);
+	/*
+	$projDir = $sod."/possd-".$POSSD."/project-".$pName."/";
+	$dirSuccess = mkdir($projDir);
 
-$filePathP = $sod."/possd-".$POSSD."/".$POSSD."-POSSD-filepaths.json";+
-$filePaths = fopen($filePathP, "r");
-$pathsRead = fread($filePaths, filesize($filePathP));
-fclose($filePaths);
+	$filesToCreate = array($pName."-element-page-tracker.txt",
+		$pName."-item-library.json", $pName."-project.json");
 
-$jsonPaths = json_decode($pathsRead, true);
+	fclose(fopen($projDir.$filesToCreate[0], "w"));
+	fclose(fopen($projDir.$filesToCreate[1], "w"));
+	fclose(fopen($projDir.$filesToCreate[2], "w"));
 
-array_push($jsonPaths["projects"], $pName);
+	$filePathP = $sod."/possd-".$POSSD."/".$POSSD."-POSSD-filepaths.json";+
+	$filePaths = fopen($filePathP, "r");
+	$pathsRead = fread($filePaths, filesize($filePathP));
+	fclose($filePaths);
 
-$filePaths = fopen($filePathP, "w");
-fwrite($filePaths, json_encode($jsonPaths, JSON_PRETTY_PRINT));
-fclose($filePaths);
+	$jsonPaths = json_decode($pathsRead, true);
 
+	array_push($jsonPaths["projects"], $pName);
+
+	$filePaths = fopen($filePathP, "w");
+	fwrite($filePaths, json_encode($jsonPaths, JSON_PRETTY_PRINT));
+	fclose($filePaths);
+	*/
 ?>
