@@ -235,19 +235,7 @@ class Item {
         this.price = price;
     }
 }
-
 var numOfItems;
-
-function itemLibraryFields() {
-
-    console.log(itemLibrary);
-    var elements = document.forms["itemLibrary"].elements;
-
-    for (var i = 0; i < elements.length; i++) {
-        console.log(elements[i].value);
-    }
-
-}
 
 //This just loads the existing library files when the page is loaded
 function loadLibraryFields() {
@@ -299,6 +287,8 @@ function saveLibraryFields() {
 function addMoreLibraryFields(event) {
     event.preventDefault();
     var itemFields = document.getElementById("itemFields");
+    if(numOfItems === null)
+        numOfItems = 0;
 
 
     var elmDiv = document.createElement("div");
