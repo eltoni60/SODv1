@@ -33,14 +33,7 @@ function hashString(password) {
 //checks if the string is alpha numeric
 function isAlphaNum(name) {
     var letterNumber = /^[0-9a-zA-Z]+$/;
-    if(name.match(letterNumber)) {
-        //console.log("It is alpha numeric only")
-        return true;
-    }
-    else {
-        //console.log("It is not alpha numeric only");
-        return false;
-    }
+    return !!name.match(letterNumber);
 }
 
 function checkUsername() {
@@ -235,3 +228,149 @@ var validateFile = function () {
     }
     return true;
 };
+
+class Item {
+    constructor(name, price) {
+        this.name = name;
+        this.price = price;
+    }
+}
+
+var numOfItems;
+
+function itemLibraryFields() {
+
+    console.log(itemLibrary);
+    var elements = document.forms["itemLibrary"].elements;
+
+    for (var i = 0; i < elements.length; i++) {
+        console.log(elements[i].value);
+    }
+
+}
+
+//This just loads the existing library files when the page is loaded
+function loadLibraryFields() {
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
+
+    for(var i = 0; i < itemLibrary.items.length; i++) {
+        var elmDiv = document.createElement("div");
+        elmDiv.id = i;
+        elmDiv.style.display = "inline-block";
+
+        var elmItem = document.createElement("label");
+        elmItem.appendChild(document.createTextNode("Item Name: "));
+        elmDiv.appendChild(elmItem);
+
+        var elmItmInput = document.createElement("input");
+        elmItmInput.type = "text";
+        elmItmInput.value = itemLibrary.items[i].item_name;
+        elmDiv.appendChild(elmItmInput);
+
+        var elmPrice = document.createElement("label");
+        elmPrice.appendChild(document.createTextNode("Price: "));
+        elmDiv.appendChild(elmPrice);
+
+        var elmPriceInput = document.createElement("input");
+        elmPriceInput.type = "text";
+        elmPriceInput.value = itemLibrary.items[i].item_price;
+        elmDiv.appendChild(elmPriceInput);
+
+        var btn = document.createElement("button");
+        btn.setAttribute("onClick",  "deleteLibraryFields(event," + i + ")");
+        btn.innerHTML = "Delete";
+        elmDiv.appendChild(btn);
+        document.getElementById("itemFields").appendChild(elmDiv);
+        document.getElementById("itemFields").appendChild(document.createElement("br"));
+    }
+    numOfItems = i;
+}
+
+function saveLibraryFields() {
+
+
+
+}
+
+
+
+function addMoreLibraryFields(event) {
+    event.preventDefault();
+    var itemFields = document.getElementById("itemFields");
+
+
+    var elmDiv = document.createElement("div");
+    elmDiv.id = numOfItems;
+    elmDiv.style.display = "inline-block";
+
+    var elmItem = document.createElement("label");
+    elmItem.appendChild(document.createTextNode("Item Name: "));
+    elmDiv.appendChild(elmItem);
+
+    var elmItmInput = document.createElement("input");
+    elmItmInput.type = "text";
+    elmDiv.appendChild(elmItmInput);
+
+    var elmPrice = document.createElement("label");
+    elmPrice.appendChild(document.createTextNode("Price: "));
+    elmDiv.appendChild(elmPrice);
+
+    var elmPriceInput = document.createElement("input");
+    elmPriceInput.type = "text";
+    elmDiv.appendChild(elmPriceInput);
+
+    var btn = document.createElement("button");
+    btn.setAttribute("onClick",  "deleteLibraryFields(event," + numOfItems + ")");
+    btn.innerHTML = "Delete";
+    elmDiv.appendChild(btn);
+    itemFields.appendChild(elmDiv);
+    itemFields.appendChild(document.createElement("br"));
+    numOfItems++;
+
+}
+
+function deleteLibraryFields(evt,  id) {
+    evt.preventDefault();
+    var itemFields = document.getElementById(id);
+    var brField = itemFields.nextElementSibling;
+    itemFields.parentNode.removeChild(itemFields);
+    brField.parentNode.removeChild(brField);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

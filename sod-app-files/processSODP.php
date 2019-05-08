@@ -10,8 +10,6 @@ TODO use fopen(), fwrite(), fclose(), mkdir
 
 */
 
-$path = realpath("");
-echo $path;
 
 
  ?>

@@ -2,9 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sod - Item Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="./generated-pos-functions/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./sodCSS.css">
+    <script src="./generated-pos-functions/jquery-3.4.1.min.js"></script>
+    <script src="./generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="loging-signup/security-verifying.js"></script>
+
 </head>
-<body>
-<p>your at the item library</p>
+<body onload="loadLibraryFields()">
+
+<form name="itemLibrary" action="" onsubmit="itemLibraryFields()" >
+    <div id="itemFields"></div>
+    <div id="addField">
+        <button class="btn-block" style="width: 527.65px"
+                onclick="addMoreLibraryFields(event)">+</button>
+
+    </div>
+
+    <input type="submit">
+
+
+
+
+
+</form>
+
+
+
+
+
+
 </body>
 </html>
