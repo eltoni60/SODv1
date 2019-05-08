@@ -148,11 +148,11 @@ function checkProjectName() {
     var name = document.getElementById('name');
     if (isAlphaNum(name.value)) {
         name.style.backgroundColor = '#53f442';
-        return false;
+        name.disabled = false;
     }
     else {
         name.style.backgroundColor = '#f77474';
-        return false;
+        name.disabled = true;
     }
 }
 
@@ -229,7 +229,7 @@ var loadFile = function (event) {
 		//file, so we are going to create a wrapper json object
         var wrapper = "{";
 		wrapper += "\"possd\":\"" + sessionStorage.getItem("POSSD") + "\",";
-		wrapper += "\"sodp\":"
+		wrapper += "\"sodp\":";
 		wrapper += dataText;
 		wrapper += "}";
 		http.send(wrapper);
@@ -249,14 +249,8 @@ var validateFile = function () {
     return true;
 };
 
-class Item {
-    constructor(name, price) {
-        this.name = name;
-        this.price = price;
-    }
-}
-var numOfItems;
 
+var numOfItems;
 //This just loads the existing library files when the page is loaded
 function loadLibraryFields() {
     var possd = sessionStorage.getItem("POSSD");
@@ -296,20 +290,67 @@ function loadLibraryFields() {
     numOfItems = i;
 }
 
-function saveLibraryFields() {
-
-
-
+class Item {
+    constructor(id, name, price) {
+        this.item_id = id;
+        this.item_name = name;
+        this.item_price = price;
+        this.attribute_names = [];
+        this.attribute_values = [];
+    }
 }
 
+function saveLibraryFields() {
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
 
+    //Gets the div element with all of the fields
+    var dataFields = document.getElementById("itemFields");
+    //Gets the list of childs in the div element
+    var childFields = dataFields.childNodes;
+    //The itemLibrary object
+    var jsonItemObj = {
+        //sends the POSSD and the project name in the string
+        POSSD: possd,
+        projectName: pName,
+        //This makes it so that we dont have to edit the string to conform to our library format
+        library:
+        {
+            items: []
+        }
+    };
+
+   for(var i = 0; i < childFields.length; i+=2) {
+       var inputLabels = childFields[i].childNodes;
+
+       var name = inputLabels[1].value;
+       var price = inputLabels[3].value;
+       jsonItemObj.library.items.push(new Item(i/2, name, parseFloat(price)));
+    }
+    var stringy = JSON.stringify(jsonItemObj);
+   /*console.log(jsonItemObj);
+   console.log(stringy);*/
+
+    var http = new XMLHttpRequest();
+    var url = "./processItemLibrary.php";
+    http.open('POST', url, true);
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState === 4 && http.status === 200) {
+            alert(http.responseText);
+        }
+    };
+    http.send(stringy);
+
+    window.location.href = "./staging-area-selector.html";
+    return false;
+}
 
 function addMoreLibraryFields(event) {
     event.preventDefault();
     var itemFields = document.getElementById("itemFields");
-    if(numOfItems === null)
+    if(numOfItems == null)
         numOfItems = 0;
-
 
     var elmDiv = document.createElement("div");
     elmDiv.id = numOfItems;
