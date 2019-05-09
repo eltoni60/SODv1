@@ -1,11 +1,11 @@
 {
 "project_data":
 {
-	"project_name":"Test Project",
+	"project_name":"TestProject",
 	"pages":
 	[
 		{
-			"page_name":"My Test Page",
+			"page_name":"MyTestPage",
 			"layout":
 			{
 				"layout_name":"Grid Layout 2 x 2",

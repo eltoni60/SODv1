@@ -106,7 +106,7 @@ function signUp() {
     var dataString = JSON.stringify(credential);
     var http = new XMLHttpRequest();
 	// added cache busting to this to see if it helps
-    var url = "./addUser.php" + "?nocache=" + new Date().getTime();
+    var url = "./addUser.php";
     http.open('POST', url, true);
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     http.onreadystatechange = function() {//Call a function when the state changes.
@@ -184,7 +184,7 @@ function redirectToItemLibrary(projectname, newProject = false) {
         };
         var http = new XMLHttpRequest();
 		// added cache busting technique to see if it would help
-        var url = "./addProject.php" + "?nocache=" + new Date().getTime() ;
+        var url = "./addProject.php";
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
@@ -223,7 +223,7 @@ var loadFile = function (event) {
         var dataText = reader.result;
         var http = new XMLHttpRequest();
 		// added random parameter to end to try and get the browser to not cache this
-        var url = "./processSODP.php" + "?nocache=" + new Date().getTime();
+        var url = "./processSODP.php";
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
@@ -262,7 +262,7 @@ function loadLibraryFields() {
     var possd = sessionStorage.getItem("POSSD");
     var pName = sessionStorage.getItem("PROJECT_NAME");
 	// added random parameter to the end to prevent caching
-    var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json" + "?nocache=" + new Date().getTime());
+    var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
 
     for(var i = 0; i < itemLibrary.items.length; i++) {
         var elmDiv = document.createElement("div");
