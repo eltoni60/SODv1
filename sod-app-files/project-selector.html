@@ -90,7 +90,7 @@
             </div>
 
             <!-- Place the appropirate PHP function under action -->
-            <form name="fileSODP" method="post" action="" onsubmit=" return loadFile(event)">
+            <form name="fileSODP" method="post" action="./processSODP.php" onsubmit=" return loadFile(event)">
                 <div class="col-lg-6 btn-group">
 
                     <input class="btn btn-info btn-lg" type="file" id="myFile" name="files" style="margin: 1em 0 1em; padding: auto" />
@@ -117,7 +117,7 @@
                               onsubmit="return redirectToItemLibrary(name.value, true)">
                             <label id="projectname" name="projectname">Enter Project Name</label>
                             <input type="text" id="name" name="name" onchange="checkProjectName()">
-                            <button type="submit" value="newName" class="btn btn-default">Next</button>
+                            <button type="submit" value="newName" class="btn btn-default" disabled>Next</button>
                         </form>
                     </div>
                     <div class="modal-footer">

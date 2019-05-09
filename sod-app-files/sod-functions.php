@@ -395,7 +395,7 @@ function deserialize_sodp_string($json_str) {
 	function for code reuse purposes (at least two PHP files use this)
 */
 function create_sod_project_files($sod_dir, $possd, $project_name) {
-	$projDir = $sod."/possd-".$possd."/project-".$project_name."/";
+	$projDir = $sod_dir."/possd-".$possd."/project-".$project_name."/";
 	$dirSuccess = mkdir($projDir);
 
 	$filesToCreate = array($project_name."-element-page-tracker.txt",
@@ -405,7 +405,7 @@ function create_sod_project_files($sod_dir, $possd, $project_name) {
 	fclose(fopen($projDir.$filesToCreate[1], "w"));
 	fclose(fopen($projDir.$filesToCreate[2], "w"));
 
-	$filePathP = $sod."/possd-".$possd."/".$possd."-POSSD-filepaths.json";+
+	$filePathP = $sod_dir."/possd-".$possd."/".$possd."-POSSD-filepaths.json";+
 	$filePaths = fopen($filePathP, "r");
 	$pathsRead = fread($filePaths, filesize($filePathP));
 	fclose($filePaths);
