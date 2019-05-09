@@ -13,7 +13,7 @@
 
 	$sodpObject = $sodpArray["sodp"];
 	
-	var_dump($sodpArray);
+	var_dump($httpPostBody);
 	
 	$project_data_object = construct_project_data_object_from_json($sodpObject["project_data"]);
 	$item_library_object = construct_item_library_object_from_json($sodpObject["item_libray"]);
