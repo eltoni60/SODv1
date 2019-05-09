@@ -38,7 +38,8 @@ function isAlphaNum(name) {
 
 function checkUsername() {
     var m_username = document.forms["signUpInfo"]['m_userName'];
-    var usernames = returnLoadedJSON('../sod-app-files/users-config.json').loginCredentials;
+	//added date to the end to try to prevent browser caching
+    var usernames = returnLoadedJSON('../sod-app-files/users-config.json' + '?nocache=' + new Date().getTime()).loginCredentials;
     for (var i = 0; i < usernames.length; i++) {
         if (usernames[i].username === m_username.value) {
             m_username.style.backgroundColor = '#f77474';
@@ -67,8 +68,9 @@ function checkPassword() {
 function loadJSON(callback, pathName) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', pathName, false); // Replace 'my_data' with the path to your file
-    xobj.onreadystatechange = function () {
+	//adding a dummy parameter to the resource for cache busting purposes
+    xobj.open('GET', pathName + "?nocache=" + new Date().getTime(), false); // Replace 'my_data' with the path to your file
+	xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             callback(xobj.responseText);
@@ -103,7 +105,8 @@ function signUp() {
     logins.loginCredentials.push(credential);*/
     var dataString = JSON.stringify(credential);
     var http = new XMLHttpRequest();
-    var url = "./addUser.php";
+	// added cache busting to this to see if it helps
+    var url = "./addUser.php" + "?nocache=" + new Date().getTime();
     http.open('POST', url, true);
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     http.onreadystatechange = function() {//Call a function when the state changes.
@@ -120,7 +123,8 @@ function signUp() {
 function login() {
     var enteredUsername = document.forms["loginInfo"]["username"].value;
     var enteredPassword = document.forms["loginInfo"]["password"].value;
-    var credentials = returnLoadedJSON('../sod-app-files/users-config.json').loginCredentials;
+	// addded cache busting to see if it helps
+    var credentials = returnLoadedJSON('../sod-app-files/users-config.json' + '?nocache' + new Date().getTime()).loginCredentials;
     var index = -1;
     for (var i = 0; i < credentials.length; i++) {
         if (enteredUsername === credentials[i].username) {
@@ -179,7 +183,8 @@ function redirectToItemLibrary(projectname, newProject = false) {
             pName: projectname
         };
         var http = new XMLHttpRequest();
-        var url = "./addProject.php";
+		// added cache busting technique to see if it would help
+        var url = "./addProject.php" + "?nocache=" + new Date().getTime() ;
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
@@ -217,7 +222,8 @@ var loadFile = function (event) {
     reader.onload = function () {
         var dataText = reader.result;
         var http = new XMLHttpRequest();
-        var url = "./processSODP.php";
+		// added random parameter to end to try and get the browser to not cache this
+        var url = "./processSODP.php" + "?nocache=" + new Date().getTime();
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
@@ -261,7 +267,8 @@ var numOfItems;
 function loadLibraryFields() {
     var possd = sessionStorage.getItem("POSSD");
     var pName = sessionStorage.getItem("PROJECT_NAME");
-    var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
+	// added random parameter to the end to prevent caching
+    var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json" + "?nocache=" + new Date().getTime());
 
     for(var i = 0; i < itemLibrary.items.length; i++) {
         var elmDiv = document.createElement("div");
