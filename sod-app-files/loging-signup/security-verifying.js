@@ -124,7 +124,7 @@ function login() {
     var enteredUsername = document.forms["loginInfo"]["username"].value;
     var enteredPassword = document.forms["loginInfo"]["password"].value;
 	// addded cache busting to see if it helps
-    var credentials = returnLoadedJSON('../sod-app-files/users-config.json' + '?nocache' + new Date().getTime()).loginCredentials;
+    var credentials = returnLoadedJSON('../sod-app-files/users-config.json' + '?nocache=' + new Date().getTime()).loginCredentials;
     var index = -1;
     for (var i = 0; i < credentials.length; i++) {
         if (enteredUsername === credentials[i].username) {
@@ -150,13 +150,14 @@ function login() {
 
 function checkProjectName() {
     var name = document.getElementById('name');
+    var btn = document.getElementById("nextBtn");
     if (isAlphaNum(name.value)) {
         name.style.backgroundColor = '#53f442';
-        name.disabled = false;
+        btn.disabled = false;
     }
     else {
         name.style.backgroundColor = '#f77474';
-        name.disabled = true;
+        btn.disabled = true;
     }
 }
 
@@ -221,10 +222,11 @@ var loadFile = function (event) {
     var reader = new FileReader();
     reader.onload = function () {
         var dataText = reader.result;
+        testString = dataText;
         var http = new XMLHttpRequest();
 		// added random parameter to end to try and get the browser to not cache this
         var url = "./processSODP.php";
-        http.open('POST', url, true);
+        http.open('POST', url, false);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
             if(http.readyState === 4 && http.status === 200) {

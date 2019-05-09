@@ -9,6 +9,19 @@
     <script src="../sod-app-files/generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
     <script src="../sod-app-files/loging-signup/security-verifying.js"></script>
     <script src="../sod-app-files/generated-pos-functions/generatedPOSFunctions.js"></script>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            padding: 10px;
+        }
+        .grid-item {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            font-size: 30px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
@@ -32,15 +45,24 @@
 <div id="POSsystem">
 <div class="col-lg-8" id="menuButtons">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-        <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+        <!--TODO:#1 script that cycles through and creates the tabs for each page  -->
+        <li class="active"><a data-toggle="tab" href="#breakfast">Breakfast</a></li>
+        <li><a data-toggle="tab" href="#menu1">Lunch</a></li>
+        <li><a data-toggle="tab" href="#menu2">Dinner</a></li>
     </ul>
 
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-            <h3>HOME</h3>
-            <p>Some content.</p>
+        <!--TODO:#1 need to create the content divs for each page as well -->
+        <div id="breakfast" class="tab-pane fade in active">
+            <h3>Breakfast</h3>
+            <div class="grid-container">
+                <!--TODO:#2 script that cycles through and creates the buttons for the page -->
+                <div class="grid-item"><button id="item0" name="Bacon and Eggs" value="5.99">Bacon and Eggs</button></div>
+                <div class="grid-item"><button id="item1" name="Bacon and Eggs" value="5.99">Oatmeal</button></div>
+                <div class="grid-item"><button id="item2" name="Bacon and Eggs" value="5.99">Coffee</button></div>
+                <div class="grid-item"><button id="item3" name="Bacon and Eggs" value="5.99">Egg-White Omlette</button></div>
+            </div>
+
         </div>
         <div id="menu1" class="tab-pane fade">
             <h3>Menu 1</h3>
@@ -61,61 +83,62 @@
                 <th>Price</th>
                 <th></th>
             </tr>
-            <tr>
+            <tr id="0">
                 <td><button>Delete</button></td>
                 <td>burger</td>
-                <td align="right">5.99</td>
-
+                <td style="text-align: right">5.99</td>
             </tr>
-            <tr>
+            <tr id="1">
                 <td><button>Delete</button></td>
                 <td colspan="2">This is a meal message</td>
             </tr>
-            <tr>
+            <tr id="2">
                 <td><button>Delete</button></td>
                 <td>burger</td>
-                <td align="right">5.99</td>
+                <td style="text-align: right"">5.99</td>
             </tr>
-            <tr>
+            <tr id="3">
                 <td><button>Delete</button></td>
                 <td>burger</td>
-                <td align="right">5.99</td>
+                <td style="text-align: right"">5.99</td>
             </tr>
-            <tr>
+            <tr id="4">
                 <td><button>Delete</button></td>
                 <td>burger</td>
-                <td align="right">5.99</td>
+                <td style="text-align: right">5.99</td>
             </tr>
-            <tr>
+            <tr id="5">
                 <td><button>Delete</button></td>
                 <td>burger</td>
-                <td align="right">5.99</td>
+                <td style="text-align: right">5.99</td>
             </tr>
-            <tr>
+            <tr id="6">
                 <td><button>Delete</button></td>
                 <td>burger</td>
-                <td align="right">5.99</td>
+                <td style="text-align: right">5.99</td>
             </tr>
-            <tr>
+            <tr id="7">
                 <td><button>Delete</button></td>
                 <td>burger</td>
-                <td align="right">5.99</td>
+                <td style="text-align: right">5.99</td>
             </tr>
-           
+
 
         </table>
     </div>
     <div id="itemTotals">
         <table class="table responsive" style="position: sticky">
+            <!--TODO:#3 When an item is added to the order or deleted, this is update -->
             <tr>
                 <td colspan="2"><i>Subtotal: </i></td>
-                <td align="right">29.99</td>
+                <td style="text-align: right">29.99</td>
             </tr>
             <tr>
                 <td colspan="2"><b>Total: </b></td>
-                <td align="right">35.49</td>
+                <td style="text-align: right">35.49</td>
             </tr>
             <tr>
+                <!--TODO:#4 Functions to clear the order, and print the order -->
                 <td><button>Clear Order</button></td>
                 <td><button>Print</button></td>
             </tr>
