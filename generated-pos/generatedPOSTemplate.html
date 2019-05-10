@@ -3,30 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>GPoS Template</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../sod-app-files/generated-pos-functions/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../sod-app-files/generated-pos-functions/bootstrap-3.4.1-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="../sod-app-files/generated-pos-functions/jquery-3.4.1.min.js"></script>
     <script src="../sod-app-files/generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
     <script src="../sod-app-files/loging-signup/security-verifying.js"></script>
     <script src="../sod-app-files/generated-pos-functions/generatedPOSFunctions.js"></script>
-    <style>
-        .grid-container {
-            display: grid;
-            grid-template-columns: auto auto auto;
-            padding: 10px;
-        }
-        .grid-item {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            font-size: 30px;
-            text-align: center;
-        }
-    </style>
+    <link href="../sod-app-files/generated-pos-functions/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="gPOS.css" rel="stylesheet">
+    <script src="../sod-app-files/generated-pos-functions/print.min.js"></script>
+
 </head>
 <body>
 
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="margin-bottom: 0">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Sod</a>
@@ -35,123 +26,90 @@
             <li class="active"><a href="../sod-app-files/project-selector.html">Project Selector</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-        <li>
-            <button onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
-        </li>
+            <li>
+                <button onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
+            </li>
         </ul>
     </div>
 </nav>
 
-<div id="POSsystem">
-<div class="col-lg-8" id="menuButtons">
-    <ul class="nav nav-tabs">
-        <!--TODO:#1 script that cycles through and creates the tabs for each page  -->
-        <li class="active"><a data-toggle="tab" href="#breakfast">Breakfast</a></li>
-        <li><a data-toggle="tab" href="#menu1">Lunch</a></li>
-        <li><a data-toggle="tab" href="#menu2">Dinner</a></li>
-    </ul>
+<div class="" id="POSsystem">
+    <div class="col-lg-8" id="menuButtons">
+        <ul class="nav nav-tabs">
+            <!--TODO:#1 script that cycles through and creates the tabs for each page  -->
+            <li class="active"><a data-toggle="tab" href="#breakfast">Breakfast</a></li>
+            <li><a data-toggle="tab" href="#menu1">Lunch</a></li>
+            <li><a data-toggle="tab" href="#menu2">Dinner</a></li>
+        </ul>
 
-    <div class="tab-content">
-        <!--TODO:#1 need to create the content divs for each page as well -->
-        <div id="breakfast" class="tab-pane fade in active">
-            <h3>Breakfast</h3>
-            <div class="grid-container">
+        <div class="tab-content" >
+            <!--TODO:#1 need to create the content divs for each page as well -->
+            <div class="tab-pane fade in active" id="breakfast">
                 <!--TODO:#2 script that cycles through and creates the buttons for the page -->
-                <div class="grid-item"><button id="item0" name="Bacon and Eggs" value="5.99">Bacon and Eggs</button></div>
-                <div class="grid-item"><button id="item1" name="Bacon and Eggs" value="5.99">Oatmeal</button></div>
-                <div class="grid-item"><button id="item2" name="Bacon and Eggs" value="5.99">Coffee</button></div>
-                <div class="grid-item"><button id="item3" name="Bacon and Eggs" value="5.99">Egg-White Omlette</button></div>
+                <div class="orderButtons">
+                    <button class="btn btn-info btn-lg" id="item0" name="Bacon and Eggs" onclick="addOrderedItem(this)" value="5.99">Bacon and Eggs</button>
+                </div>
+                <div class="orderButtons">
+                    <button class="btn btn-info btn-lg" id="item1" name="Oatmeal" onclick="addOrderedItem(this)" value="5.99">Oatmeal</button>
+                </div>
+                <div class="orderButtons">
+                    <button class="btn btn-info btn-lg" id="item2" name="Coffee" onclick="addOrderedItem(this)" value="5.99">Coffee</button>
+                </div>
+                <div class="orderButtons">
+                    <button class="btn btn-info btn-lg" id="item3" name="Egg-White Omlette" onclick="addOrderedItem(this)" value="5.99">Egg-White Omlette</button>
+                </div>
             </div>
+            <div class="tab-pane fade " id="menu1">
 
+            </div>
+            <div class="tab-pane fade " id="menu2">
+
+            </div>
         </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Some content in menu 1.</p>
+    </div>
+
+    <div class="col-lg-4" id="orderList">
+        <div id="itemList">
+            <table class="">
+                <tr>
+                    <td colspan="3" style="text-align: center">Shoney's</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th id="entree" style="text-align: justify">Entree</th>
+                    <th id="price" style="text-align: right">Price</th>
+                </tr>
+            </table>
         </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Some content in menu 2.</p>
+        <div id="orderItems">
+            <table class="" id="order">
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="col-lg-4" id="itemTotals">
+            <table class="">
+                <!--TODO:#3 When an item is added to the order or deleted, this is update -->
+                <tr>
+                    <td colspan="2"><i>Subtotal: </i></td>
+                    <td id="subTotal" style="text-align: right"><i class="fa fa-usd" aria-hidden="true">0.00</i></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Total: </b></td>
+                    <td id="totalPrice" style="text-align: right"><i class="fa fa-usd" aria-hidden="true">0.00</i></td>
+                </tr>
+                <tr>
+                    <!--TODO:#4 Functions to clear the order, and print the order -->
+                    <td>
+                        <button id="default" class="btn btn-info btn-sm" onclick="deleteOrder()">Clear Order</button>
+                    </td>
+                    <td>
+                        <button id="default" class="btn btn-info"><i class="fa fa-print" onclick="printOrder()" aria-hidden="true"></i></button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
-
-<div class="col-lg-4" id="orderList">
-    <div id="itemList">
-        <table class="table responsive">
-            <tr>
-                <th >Name</th>
-                <th>Price</th>
-                <th></th>
-            </tr>
-            <tr id="0">
-                <td><button>Delete</button></td>
-                <td>burger</td>
-                <td style="text-align: right">5.99</td>
-            </tr>
-            <tr id="1">
-                <td><button>Delete</button></td>
-                <td colspan="2">This is a meal message</td>
-            </tr>
-            <tr id="2">
-                <td><button>Delete</button></td>
-                <td>burger</td>
-                <td style="text-align: right"">5.99</td>
-            </tr>
-            <tr id="3">
-                <td><button>Delete</button></td>
-                <td>burger</td>
-                <td style="text-align: right"">5.99</td>
-            </tr>
-            <tr id="4">
-                <td><button>Delete</button></td>
-                <td>burger</td>
-                <td style="text-align: right">5.99</td>
-            </tr>
-            <tr id="5">
-                <td><button>Delete</button></td>
-                <td>burger</td>
-                <td style="text-align: right">5.99</td>
-            </tr>
-            <tr id="6">
-                <td><button>Delete</button></td>
-                <td>burger</td>
-                <td style="text-align: right">5.99</td>
-            </tr>
-            <tr id="7">
-                <td><button>Delete</button></td>
-                <td>burger</td>
-                <td style="text-align: right">5.99</td>
-            </tr>
-
-
-        </table>
-    </div>
-    <div id="itemTotals">
-        <table class="table responsive" style="position: sticky">
-            <!--TODO:#3 When an item is added to the order or deleted, this is update -->
-            <tr>
-                <td colspan="2"><i>Subtotal: </i></td>
-                <td style="text-align: right">29.99</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>Total: </b></td>
-                <td style="text-align: right">35.49</td>
-            </tr>
-            <tr>
-                <!--TODO:#4 Functions to clear the order, and print the order -->
-                <td><button>Clear Order</button></td>
-                <td><button>Print</button></td>
-            </tr>
-        </table>
-    </div>
-
-
-
-</div>
-
-</div>
-
-
-
 </body>
 </html>

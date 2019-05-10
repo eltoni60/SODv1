@@ -9,7 +9,7 @@
 	*/
 
 	$httpPostBody = file_get_contents("php://input");
-	$sodpArray = json_decode($httpPostBody, true);	
+	$sodpArray = json_decode($httpPostBody, true);
 
 	$sodpObject = $sodpArray["sodp"];
 	

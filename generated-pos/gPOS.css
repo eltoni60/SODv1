@@ -1,0 +1,73 @@
+body {
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    margin-right: 1em;
+    overflow: hidden;
+
+}
+
+#POSsystem {
+    grid-template-columns: 60% 30%;
+    height: 90%;
+    display: inline;
+
+}
+
+#menuButtons {
+    font-size: 4rem;
+
+}
+
+.btn-lg {
+    font-size: 2.5rem;
+    margin: 1rem;
+    width: 100%;
+    overflow: visible;
+
+}
+
+.orderButtons {
+    display: inline-block;
+    width: 32.5%;
+
+}
+
+#itemList {
+    font-size: 3rem;
+    position: relative;
+    padding-right: 2%;
+}
+
+.deleteBtn {
+    margin: .5rem;
+    padding: .4rem .6rem .4rem;
+}
+
+#orderItems {
+    overflow-y: auto;
+    height: calc(100vh * .68);
+    padding-right: 2%;
+}
+
+#order {
+    font-size: 1.5rem;
+}
+
+#order tr:nth-child(even) {
+    background-color: #d0edf6;
+}
+
+
+#itemTotals {
+    position: relative;
+    width:100%;
+    height: calc(100vh * .10);
+    bottom: 0;
+    right: 0;
+    font-size: 1.75rem;
+    padding-right: 2%;
+
+}

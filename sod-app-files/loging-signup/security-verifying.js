@@ -383,7 +383,7 @@ function addMoreLibraryFields(event) {
 
     var btn = document.createElement("button");
     btn.setAttribute("onClick",  "deleteLibraryFields(event," + numOfItems + ")");
-    btn.innerHTML = "Delete";
+    btn.innerHTML = "<i class='fa fa-trash'></i>";
     elmDiv.appendChild(btn);
     itemFields.appendChild(elmDiv);
     itemFields.appendChild(document.createElement("br"));
