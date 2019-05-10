@@ -2,21 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SOD</title>
+    <title>SOD - Sign Up</title>
     <script src="./loging-signup/security-verifying.js"></script>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="./generated-pos-functions/bootstrap-3.4.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="./loging-signup/security-verifying.js"></script>
+    <script src="./generated-pos-functions/jquery-3.4.1.min.js"></script>
+    <script src="./generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="loging-signup/security-verifying.js"></script>
+    <style>
+        #container {
+            margin: 5rem 30rem 5rem;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container-fluid">
-    <div class="page-header">
-        <h1 class="glow">
-            Sign Up Here!<br>
-            <br>
-        </h1>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-3"></div>
+<!--
+       <div class="col-sm-3"></div>
 
 
 
@@ -59,6 +62,43 @@
         <div class="col-sm-3"></div>
     </div>
 </div>
+-->
+
+
+
+
+
+<div id="container">
+    <div class="modal-header">
+        <h4 style="color:red;"><span class="glyphicon glyphicon-lock"></span>Sign Up</h4>
+    </div>
+    <div class="modal-body">
+        <form name="signUpInfo" method="post" action="./addUser.php" onsubmit="return signUp()">
+            <div class="form-group">
+                <label for="m_username"><span class="glyphicon glyphicon-user"></span> Username</label>
+                <input class="form-control" id="m_username" name="m_username" onchange="checkUsername()" placeholder="Enter Username" maxlength="30" type="text">
+            </div>
+            <div class="form-group">
+                <label for="m_password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                <input class="form-control" id="m_password" name="m_password" placeholder="Enter password" minlength="6" type="password">
+            </div>
+            <div class="form-group">
+                <label for="m_password1"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                <input class="form-control" id="m_password1" name="m_password1" onchange="checkPassword()" placeholder="Retype password" minlength="6" type="password">
+            </div>
+            <button class="btn btn-default btn-info btn-block" type="submit"><span
+                    class="glyphicon glyphicon-off"></span> Sign Up
+            </button>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <p>Return to <a href="login.html">Login</a></p>
+    </div>
+</div>
+
+
+
+
 
 </body>
 </html>

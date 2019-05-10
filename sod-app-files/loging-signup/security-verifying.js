@@ -37,7 +37,7 @@ function isAlphaNum(name) {
 }
 
 function checkUsername() {
-    var m_username = document.forms["signUpInfo"]['m_userName'];
+    var m_username = document.forms["signUpInfo"][0];
 	//added date to the end to try to prevent browser caching
     var usernames = returnLoadedJSON('../sod-app-files/users-config.json' + '?nocache=' + new Date().getTime()).loginCredentials;
     for (var i = 0; i < usernames.length; i++) {
