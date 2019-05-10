@@ -3,6 +3,14 @@
 /* The #include for PHP */
 require('sod-classes.php');
 
+
+/**
+	Program constants
+*/
+
+$GLOBALS["GEN_POS_WIDTH"] = 800;
+$GLOBALS["GEN_POS_HEIGHT"] = 600;
+
 	
 /**
 	Converts the program object representation of
@@ -12,6 +20,10 @@ require('sod-classes.php');
 function serialize_item_library($item_lib, $file_path) {
 	// writing custom JSON to have control over the process
 	$fp = fopen($file_path, 'w');
+	if ($fp == FALSE) {
+		echo 'Unable to get file pointer to write item library file<br />';
+		return;
+	}
 	fwrite($fp, "{\n");
 	fwrite($fp, "\t\"items\":\n");
 	fwrite($fp, "\t[\n");
@@ -131,6 +143,10 @@ function item_library_to_string($item_lib) {
 function serialize_project_data($project_data, $file_path) {
 	// writing custom JSON to have control over the process
 	$fp = fopen($file_path, 'w');
+	if ($fp == FALSE) {
+		echo 'Unable to get file pointer to write project data file<br />';
+		return;
+	}
 	fwrite($fp, "{\n");
 	fwrite($fp, "\t\"project_name\":\"{$project_data->get_project_name()}\",\n");
 	fwrite($fp, "\t\"pages\":\n");
@@ -396,23 +412,27 @@ function deserialize_sodp_string($json_str) {
 	function for code reuse purposes (at least two PHP files use this)
 */
 function create_sod_project_files($sod_dir, $possd, $project_name) {
-	$projDir = $sod_dir."/possd-".$possd."/project-".$project_name."";
+	$projDir = $sod_dir."/possd-".$possd."/project-".$project_name."/";
 	
-	$dirSuccess = TRUE;
-	if (is_dir($projDir)) {
-		$dirSuccess = TRUE;
-	}
-	else {
-		$dirSuccess = mkdir($projDir);
-	}
+	
+	$dirSuccess = mkdir($projDir);
+	
 	
 	if ($dirSuccess) {
 		$filesToCreate = array($project_name."-element-page-tracker.txt",
 			$project_name."-item-library.json", $project_name."-project.json");
 
 		fclose(fopen($projDir.$filesToCreate[0], "w"));
-		fclose(fopen($projDir.$filesToCreate[1], "w"));
-		fclose(fopen($projDir.$filesToCreate[2], "w"));
+		
+		// we are going to write empty objects to represent 
+		// an empty project
+		
+		// Item Library part
+		$empty_item_library = new Item_Library();
+		serialize_item_library($empty_item_library, $projDir.$filesToCreate[1]);
+		
+		$empty_project_data = new SOD_Project($project_name);
+		serialize_project_data($empty_project_data, $projDir.$filesToCreate[2]);
 
 		$filePathP = $sod_dir."/possd-".$possd."/".$possd."-POSSD-filepaths.json";+
 		$filePaths = fopen($filePathP, "r");
@@ -428,7 +448,7 @@ function create_sod_project_files($sod_dir, $possd, $project_name) {
 		fclose($filePaths);
 	}
 	else {
-		//mkdir() returned error
+		//mkdir() returned 
 	}
 }
 

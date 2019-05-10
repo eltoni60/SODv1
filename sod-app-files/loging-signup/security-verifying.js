@@ -210,6 +210,132 @@ function redirectToGPOS(projectname) {
     return false;
 }
 
+function createNewPage(newPageName) {
+	var projectName = sessionStorage.getItem("PROJECT_NAME");
+	var possd = sessionStorage.getItem("POSSD");
+	
+	var projectObj = {
+            POSSD: possd,
+            projectName: projectName,
+			pageName: newPageName
+        };
+		
+	var http = new XMLHttpRequest();
+	// added cache busting technique to see if it would help
+	var url = "./addPage.php" + "?nocache=" + new Date().getTime();
+	http.open('POST', url, true);
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	http.onreadystatechange = function() {//Call a function when the state changes.
+		if(http.readyState === 4 && http.status === 200) {
+			alert(http.responseText);
+		}
+	};
+	var httpBody = JSON.stringify(projectObj);
+	http.send(httpBody);
+	// we want to manually create a new page button here
+	createNewPageButton('editPages', newPageName);
+	
+	// hiding the modal that is still visible with jQuery here
+	$('#newPageName').modal('hide')
+	
+	return false;
+}
+
+function removePage(pageNameToRemove, pageContainerId) {
+	var projectName = sessionStorage.getItem("PROJECT_NAME");
+	var possd = sessionStorage.getItem("POSSD");
+	
+	var projectObj = {
+            POSSD: possd,
+            projectName: projectName,
+			pageName: pageNameToRemove
+        };
+		
+	var http = new XMLHttpRequest();
+	// added cache busting technique to see if it would help
+	var url = "./removePage.php" + "?nocache=" + new Date().getTime();
+	http.open('POST', url, true);
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	http.onreadystatechange = function() {//Call a function when the state changes.
+		if(http.readyState === 4 && http.status === 200) {
+			alert(http.responseText);
+		}
+	};
+	var httpBody = JSON.stringify(projectObj);
+	http.send(httpBody);
+	
+	// also detach the button element with this ID
+	var btn = document.getElementById(pageNameToRemove);
+	btn.parentNode.removeChild(btn);
+	
+	exitPageRemoveMode(pageContainerId);
+	return false;
+}
+
+function createNewPageButton(pageContainerId, newPageName) {
+	var btn = document.createElement("BUTTON");
+	
+	/** TODO: make onclick go to the staging area designer **/
+	
+	btn.id = newPageName;
+	btn.value = newPageName;
+	btn.className += 'btn btn-info btn-lg';
+	btn.innerHTML = newPageName;
+	btn.style.margin = "1em 2em 1em";
+	btn.style.width = "50% ";
+	document.getElementById(pageContainerId).appendChild(btn);
+	document.getElementById(pageContainerId).appendChild(document.createElement("BR"));
+}
+
+/** This puts the page into "remove move" **/
+function enterPageRemoveMode(pageContainerId) {
+	var pageButtonContainer = document.getElementById(pageContainerId);
+	// for each child element,
+	// if it is a button element,
+	// then change the onclick attribute to the 
+	// appropriate removePage() function call
+	//  and add "Remove " to the front of its display text
+	var pageChildren = pageButtonContainer.children;
+		
+	for (var i = 0; i < pageChildren.length; i++) {
+		var child = pageChildren[i];
+		if (child.tagName.toUpperCase() == "BUTTON") {
+			//we can safely modify this now
+			child.innerHTML = "Remove " + child.id;
+			child.setAttribute("onclick", "return removePage('" + child.id + "', '" + pageContainerId + "')"); 
+		}
+	}
+	return false;
+}
+
+/** 
+	This puts the page back into "normal mode" by restoring
+    button actions to what they originally were and changin 
+    the button text to what they were before
+**/
+function exitPageRemoveMode(pageContainerId) {
+	var pageButtonContainer = document.getElementById(pageContainerId);
+	// for each child element,
+	// if it is a button element,
+	// then change the onclick attribute to  
+	// what it is supposed to be and remove the
+	// "Remove " from the front of its display text
+	var pageChildren = pageButtonContainer.children;
+	
+	console.log("Entering remove page mode");
+	
+	for (var i = 0; i < pageChildren.length; i++) {
+		var child = pageChildren[i];
+		if (child.tagName.toUpperCase() == "BUTTON") {
+			//we can safely modify this now
+			child.innerHTML = child.id;
+			
+			//TODO: add required code
+			child.setAttribute("onclick", ""); 
+		}
+	}
+}
+
 function logOut() {
     sessionStorage.clear();
     window.location.href = "./index.html";

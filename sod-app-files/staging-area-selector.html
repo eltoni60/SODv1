@@ -84,13 +84,11 @@
 				data-target="#newPageName" style="margin: 1em 0 1em; padding: auto; height: 48.8px">
 				Add Page
 			</button>
-			<form class="removePageForm" method="post" action="" onsubmit="removePage.php"
-				style="display:inline";>
-				<input class="btn btn-info btn-lg" 
-					type="submit" value="Remove Page" 
-					style="margin: 1em 0 1em; padding: auto; height: 48.8px" 
-					onclick="submitForm('removePage.php')" />
-			</form>
+			<button type="button" class="btn btn-info btn-lg" 
+			style="margin: 1em 0 1em; padding: auto; height: 48.8px" 
+			onclick="return enterPageRemoveMode('editPages')">
+				Remove Page
+			</button>
 			<form class="deployPageForm" method="post" action="" onsubmit="deployPOSSystem.php"
 				style="display:inline";>
 				<input class="btn btn-info btn-lg" 
@@ -101,10 +99,8 @@
         </div>
     </div>
 			
-			
-			
-			
-			<!-- Modal -->
+				
+		<!-- Modal -->
         <div class="modal fade" id="newPageName" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -114,8 +110,8 @@
                         <h4 class="modal-title">Enter Page Name</h4>
                     </div>
                     <div class="modal-body">
-                        <form name="getPageName" action="addPage.php" method="post"
-                              onsubmit="">
+                        <form name="getPageName" action="" method="post"
+                              onsubmit="return createNewPage(name.value)">
                             <label id="pagename" name="pagename">Enter Page Name</label>
                             <input type="text" id="name" name="name" onchange="checkPageName()">
                             <button type="submit" value="addPageName" class="btn btn-default">Add</button>
@@ -133,13 +129,22 @@
 <div class="container-fluid text-center">
     <div class="container">
         <div class="row content">
+			<div class="col-sm-12 sidenav" id="editPages">
 			<!--We are going to make some stackable cards for the pages-->
-			<script>
-                var possd = sessionStorage.getItem("POSSD");
-                var project = sessionStorage.getItem("PROJECT_NAME");
-				
-				
-            </script>
+				<script>
+					var possd = sessionStorage.getItem("POSSD");
+					var projectName = sessionStorage.getItem("PROJECT_NAME");
+					// load the most recent version of the project data as a JSON object
+					var projectObjectJSON = returnLoadedJSON('../possd-' + possd + '/' + 
+						'project-' + projectName + '/' + projectName + 
+						'-project.json'); // cache busting taken care of by returnLoadedJSON
+					// make a button for each page that would
+					// redirect to the staging area designer
+					for (var i = 0; i < projectObjectJSON.pages.length; i++) {
+						createNewPageButton('editPages', projectObjectJSON.pages[i].page_name);
+					}
+				</script>
+			</div>
         </div>
     </div>
 </div>

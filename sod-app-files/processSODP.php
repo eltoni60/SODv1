@@ -8,11 +8,12 @@
 	TODO use fopen(), fwrite(), fclose(), mkdir
 	*/
 
-	$httpPostBody = file_get_contents("php://input");
-	$sodpArray = json_decode($httpPostBody, true);
+	$sodpArray = json_decode(file_get_contents("php://input"), true);
 	$sodpObject = $sodpArray["sodp"];
 	$project_data_object = construct_project_data_object_from_json($sodpObject["project_data"]);
 	$item_library_object = construct_item_library_object_from_json($sodpObject["item_library"]);
+
+	echo $sodpArray;
 
 	// needed to modify loadFile to pass the POSSD to this PHP file
 	$POSSD = (string)$sodpArray["possd"]; // see loadFile()
