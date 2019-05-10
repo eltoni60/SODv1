@@ -9,19 +9,59 @@
     <script src="./generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
     <script src="loging-signup/security-verifying.js"></script>
     <link href="../sod-app-files/generated-pos-functions/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        #itemFields {
+            overflow-y: auto;
+            height: calc(100vh * .6);
+        }
+        html body {
+            background-color: #eee;
+        }
+        .deleteBtn {
+            margin: .5rem;
+            padding: .4rem .6rem .4rem;
+        }
+
+    </style>
 
 </head>
 <body onload="loadLibraryFields()">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            </button>
+            <a class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD"));</script></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
+<h2>Item Library</h2>
+<h4>Enter all of your menu items names and prices. Once complete select next to continue. Do not worry if you forget items, you can always come back here to add more.</h4>
+<div class="container">
 <form name="itemLibrary" action="" onsubmit="return saveLibraryFields()" >
     <div id="itemFields"></div>
     <div id="addField">
-        <button class="btn-block" style="width: 527.65px"
+        <button class="btn btn-info btn-md"
                 onclick="addMoreLibraryFields(event)"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+        <input type="submit" class="btn btn-info btn-md">
 
     </div>
 
-    <input type="submit">
+
 
 
 
@@ -30,7 +70,7 @@
 </form>
 
 
-
+</div>
 
 
 
