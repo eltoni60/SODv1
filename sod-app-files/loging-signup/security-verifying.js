@@ -177,11 +177,11 @@ function checkPageName() {
 //Redirects the user to the
 function redirectToItemLibrary(projectname, newProject = false) {
     if(newProject) {
-        sessionStorage.setItem("PROJECT_NAME", projectname);
+        sessionStorage.setItem("PROJECT_NAME", projectname[0].id);
         var possd = sessionStorage.getItem("POSSD");
         var projectObj = {
             POSSD: possd,
-            pName: projectname
+            pName: projectname[0].id
         };
         var http = new XMLHttpRequest();
 		// added cache busting technique to see if it would help
@@ -197,7 +197,7 @@ function redirectToItemLibrary(projectname, newProject = false) {
         window.location.href ="./item-library.html";
         return false;
     }
-    sessionStorage.setItem("PROJECT_NAME", projectname);
+    sessionStorage.setItem("PROJECT_NAME", projectname[0].id);
     window.location.href ="./item-library.html";
     return false;
 }
@@ -392,6 +392,10 @@ function loadLibraryFields() {
     var pName = sessionStorage.getItem("PROJECT_NAME");
 	// added random parameter to the end to prevent caching
     var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
+    if(itemLibrary == null) {
+        addMoreLibraryFields();
+        return;
+    }
 
     for(var i = 0; i < itemLibrary.items.length; i++) {
         var elmDiv = document.createElement("div");
@@ -477,13 +481,16 @@ function saveLibraryFields() {
         }
     };
     http.send(stringy);
+    if(childFields.length < 1)
+        addMoreLibraryFields(null);
 
     window.location.href = "./staging-area-selector.html";
     return false;
 }
 
 function addMoreLibraryFields(event) {
-    event.preventDefault();
+    if(!(event == null))
+        event.preventDefault();
     var itemFields = document.getElementById("itemFields");
     if(numOfItems == null)
         numOfItems = 0;
@@ -511,6 +518,7 @@ function addMoreLibraryFields(event) {
     var btn = document.createElement("button");
     btn.setAttribute("onClick",  "deleteLibraryFields(event," + numOfItems + ")");
     btn.innerHTML = "<i class='fa fa-trash'></i>";
+    btn.setAttribute('class','btn btn-info deleteBtn')
     elmDiv.appendChild(btn);
     itemFields.appendChild(elmDiv);
     itemFields.appendChild(document.createElement("br"));
