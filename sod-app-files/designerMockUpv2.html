@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Designer v2.0</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../sod-app-files/generated-pos-functions/bootstrap-3.4.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../sod-app-files/generated-pos-functions/jquery-3.4.1.min.js"></script>
+    <script src="../sod-app-files/generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="../sod-app-files/loging-signup/security-verifying.js"></script>
+    <script src="../sod-app-files/generated-pos-functions/generatedPOSFunctions.js"></script>
+    <link href="../sod-app-files/generated-pos-functions/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="../sod-app-files/generated-pos-functions/print.min.js"></script>
+    <link href="designerv2.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            </button>
+            <a class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD"));</script></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <form class="deployPageForm" method="post" action="" onsubmit="deployPOSSystem.php">
+            <input class="btn btn-info btn-lg"
+                   type="submit" id="Deploy"
+                   style="margin: 1em 0 1em; padding: auto; height: 48.8px"
+                   onclick="submitForm('deploySystem.php')" />
+        </form>
+    </div>
+</div>
+
+
+<div class="grid-container whole">
+<div class="staginArea grid-container">
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+    <div class="grid-item" ondrop="dragDrop(event)" ondragover="dragOver(event)"></div>
+</div>
+
+<div class="elementtoolbox grid-container">
+    <div class="grid-item"><button id="0" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 1</button></div>
+    <div class="grid-item"><button id="1" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 2</button></div>
+    <div class="grid-item"><button id="2" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 3</button></div>
+    <div class="grid-item"><button id="3" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 4</button></div>
+    <div class="grid-item"><button id="4" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 5</button></div>
+    <div class="grid-item"><button id="5" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 6</button></div>
+    <div class="grid-item"><button id="6" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 7</button></div>
+    <div class="grid-item"><button id="7" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 8</button></div>
+    <div class="grid-item"><button id="8" draggable="true" ondragstart="dragStart(event)" class="btn btn-info btn-md ">Element 9</button></div>
+
+</div>
+
+<div class="properties grid-container">
+    <h3 style="text-align: center; grid-column: 1 / span 3">Properties</h3>
+    <label>
+        <input type="text" class="grid-item">
+    </label>
+    <label>
+        <input type="text" class="grid-item">
+    </label>
+    <label>
+        <input type="text" class="grid-item">
+    </label>
+</div>
+
+
+</div>
+
+</body>
+<script>
+
+    function dragStart(e) {
+        e.dataTransfer.setData("text", e.target.id);
+    }
+
+    function dragOver(e) {
+        e.preventDefault();
+    }
+
+    function dragDrop(e) {
+        e.preventDefault();
+        var data = e.dataTransfer.getData("text");
+        var element = document.getElementById(data);
+        e.target.appendChild(element.cloneNode(true));
+    }
+
+
+
+
+</script>
+</html>

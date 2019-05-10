@@ -1,0 +1,71 @@
+
+
+
+
+.staginArea {
+    grid-row: 1 / 5;
+    grid-row-gap: 2rem;
+    grid-column-gap: 2rem;
+    margin: 1rem;
+    margin-right: 2rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.staginArea > .grid-item {
+    margin: 3rem 0 0 0;
+    background-color: black;
+}
+
+.btn-lg {
+
+
+}
+
+
+
+.setItem {
+    width: 100%;
+    height: 80%;
+
+}
+
+.whole {
+    display: inline-grid;
+    width: 100%;
+    grid-template-columns: 60% auto;
+    grid-template-rows: auto auto auto auto;
+    height: calc(100vh * .7);
+
+}
+
+.elementtoolbox {
+    grid-template-columns: auto auto auto;
+    grid-template-rows: unset;
+    overflow-y: scroll;
+    grid-row: 1 / 3;
+    grid-row-gap: 2rem;
+    grid-column-gap: 2rem;
+    margin: 3rem;
+    margin-right: 2rem;
+    margin-left: 5rem;
+
+}
+
+.btn-md {
+    width: 100%;
+    height: 60%;
+
+}
+
+.properties {
+    grid-column-start: 2;
+    grid-row: 3 / 5;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: unset;
+
+
+}

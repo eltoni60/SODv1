@@ -37,7 +37,7 @@ function isAlphaNum(name) {
 }
 
 function checkUsername() {
-    var m_username = document.forms["signUpInfo"]['m_userName'];
+    var m_username = document.forms["signUpInfo"][0];
 	//added date to the end to try to prevent browser caching
     var usernames = returnLoadedJSON('../sod-app-files/users-config.json' + '?nocache=' + new Date().getTime()).loginCredentials;
     for (var i = 0; i < usernames.length; i++) {
@@ -384,7 +384,7 @@ function addMoreLibraryFields(event) {
 
     var btn = document.createElement("button");
     btn.setAttribute("onClick",  "deleteLibraryFields(event," + numOfItems + ")");
-    btn.innerHTML = "Delete";
+    btn.innerHTML = "<i class='fa fa-trash'></i>";
     elmDiv.appendChild(btn);
     itemFields.appendChild(elmDiv);
     itemFields.appendChild(document.createElement("br"));

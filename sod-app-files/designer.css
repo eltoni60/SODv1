@@ -1,0 +1,58 @@
+td {
+
+}
+.canvastable {
+    vertical-align:center;
+    text-align: left;
+    padding: 0 0 0 3.5rem;
+}
+canvas {
+    border: solid black;
+}
+.elementtoolbox {
+    width: calc(100vw * .20);
+    height: calc(100vh * .53);
+    vertical-align: top;
+
+}
+button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.designerSection {
+
+}
+
+.designerTable {
+    width: 100%;
+}
+
+.row {
+    text-align: center;
+}
+
+.btn-lg {
+    width: 50%;
+}
+
+canvas {
+    width: calc(100vw * .6);
+    height: calc(100vh * .7);
+}
+
+.btn-md {
+    width:60%
+}
+.entreeButn {
+    overflow-y: scroll;
+    height: inherit;
+    text-align: center;
+}
+
+.properties {
+    width: calc(100vw * .20);
+    height: calc(100vh * .15);
+    vertical-align: top;
+    text-align: center;
+}

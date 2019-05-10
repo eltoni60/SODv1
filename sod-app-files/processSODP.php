@@ -9,9 +9,7 @@
 	*/
 
 	$httpPostBody = file_get_contents("php://input");
-	echo ($httpPostBody)."<br />";
 	$sodpArray = json_decode($httpPostBody, true);
-	echo ($sodpArray)."<br />";
 	$sodpObject = $sodpArray["sodp"];
 	$project_data_object = construct_project_data_object_from_json($sodpObject["project_data"]);
 	$item_library_object = construct_item_library_object_from_json($sodpObject["item_library"]);
