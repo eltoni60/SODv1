@@ -240,7 +240,7 @@ var loadFile = function (event) {
 		wrapper += "\"sodp\":";
 		wrapper += dataText;
 		wrapper += "}";
-		console.log("I am sending " + wrapper );
+		//console.log("I am sending " + wrapper );
 		http.send(wrapper);
     };
     reader.readAsText(input.files[0]);

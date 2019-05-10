@@ -267,16 +267,16 @@ function deserialize_item_library($file_path) {
 
 function construct_item_library_object_from_json($json_object) {
 	$item_lib_object = new Item_Library;
-	$items_array = $json_object["items"];
-	for ($item_index = 0; $item_index < count($items_array); $item_index++) {
+	$items_array = (array)$json_object["items"];
+	for ($item_index = 0; $item_index < sizeof($items_array); $item_index++) {
 		$item_array = $items_array[$item_index];
 		$id = $item_array["item_id"];
 		$name = $item_array["item_name"];
 		$price = $item_array["item_price"];
-		$attribute_name_array = $item_array["attribute_names"];
-		$attribute_value_array = $item_array["attribute_values"];
+		$attribute_name_array = (array)$item_array["attribute_names"];
+		$attribute_value_array = (array)$item_array["attribute_values"];
 		$item_object = new Item($id, $name, $price);
-		for ($a = 0; $a < count($attribute_name_array); $a++) {
+		for ($a = 0; $a < sizeof($attribute_name_array); $a++) {
 			$item_object->set_attribute($attribute_name_array[$a], $attribute_value_array[$a]);
 		}
 		$item_lib_object->add_item($item_object);
@@ -300,24 +300,25 @@ function deserialize_project_data($file_path) {
 }
 
 function construct_project_data_object_from_json($json_object) {
-	$project_name_val = $json_object["project_name"];
+	$project_name_val = (string)$json_object["project_name"];
+		
 	$project_object = new SOD_Project($project_name_val);
-	
-	$page_list_array = $json_object["pages"];
-	for ($page_index = 0; $page_index < count($page_list_array); $page_index++) {
+
+	$page_list_array = (array)$json_object["pages"];		
+	for ($page_index = 0; $page_index < sizeof($page_list_array); $page_index++) {
 		$page_val = $page_list_array[$page_index];
-		$page_name_val = $page_val["page_name"];
+		$page_name_val = (string)$page_val["page_name"];
 		$page_layout_val = $page_val["layout"];
-		$page_layout_name_val = $page_layout_val["layout_name"];
-		$page_layout_cell_array = $page_layout_val["cells"];
+		$page_layout_name_val = (string)$page_layout_val["layout_name"];
+		$page_layout_cell_array = (array)$page_layout_val["cells"];
 		// page layout object and add the layout cells to it
 		$page_layout_object = new Layout($page_layout_name_val);
-		for ($cell = 0; $cell < count($page_layout_cell_array); $cell++) {
+		for ($cell = 0; $cell < sizeof($page_layout_cell_array); $cell++) {
 			$rect = new Rectangle(
-				$page_layout_cell_array[$cell][0], //x
-				$page_layout_cell_array[$cell][1], //y
-				$page_layout_cell_array[$cell][2], //width
-				$page_layout_cell_array[$cell][3]  //height
+				(int)$page_layout_cell_array[$cell][0], //x
+				(int)$page_layout_cell_array[$cell][1], //y
+				(int)$page_layout_cell_array[$cell][2], //width
+				(int)$page_layout_cell_array[$cell][3]  //height
 			);
 			$page_layout_object->push_cell($rect);
 		}
@@ -326,7 +327,7 @@ function construct_project_data_object_from_json($json_object) {
 		
 		// now we want to set the element data
 		$elements_array = $page_val["elements"];
-		for ($elem = 0; $elem < count($elements_array); $elem++) {
+		for ($elem = 0; $elem < sizeof($elements_array); $elem++) {
 			if ($elements_array[$elem] != 0) {
 				$page_object->insert_element($elem, $elements_array[$elem]);
 			}
@@ -395,29 +396,40 @@ function deserialize_sodp_string($json_str) {
 	function for code reuse purposes (at least two PHP files use this)
 */
 function create_sod_project_files($sod_dir, $possd, $project_name) {
-	$projDir = $sod_dir."/possd-".$possd."/project-".$project_name."/";
-	$dirSuccess = mkdir($projDir);
-
-	$filesToCreate = array($project_name."-element-page-tracker.txt",
-		$project_name."-item-library.json", $project_name."-project.json");
-
-	fclose(fopen($projDir.$filesToCreate[0], "w"));
-	fclose(fopen($projDir.$filesToCreate[1], "w"));
-	fclose(fopen($projDir.$filesToCreate[2], "w"));
-
-	$filePathP = $sod_dir."/possd-".$possd."/".$possd."-POSSD-filepaths.json";+
-	$filePaths = fopen($filePathP, "r");
-	$pathsRead = fread($filePaths, filesize($filePathP));
-	fclose($filePaths);
-
-	$jsonPaths = json_decode($pathsRead, true);
-
-	array_push($jsonPaths["projects"], $project_name);
-
-	$filePaths = fopen($filePathP, "w");
-	fwrite($filePaths, json_encode($jsonPaths, JSON_PRETTY_PRINT));
-	fclose($filePaths);
+	$projDir = $sod_dir."/possd-".$possd."/project-".$project_name."";
 	
+	$dirSuccess = TRUE;
+	if (is_dir($projDir)) {
+		$dirSuccess = TRUE;
+	}
+	else {
+		$dirSuccess = mkdir($projDir);
+	}
+	
+	if ($dirSuccess) {
+		$filesToCreate = array($project_name."-element-page-tracker.txt",
+			$project_name."-item-library.json", $project_name."-project.json");
+
+		fclose(fopen($projDir.$filesToCreate[0], "w"));
+		fclose(fopen($projDir.$filesToCreate[1], "w"));
+		fclose(fopen($projDir.$filesToCreate[2], "w"));
+
+		$filePathP = $sod_dir."/possd-".$possd."/".$possd."-POSSD-filepaths.json";+
+		$filePaths = fopen($filePathP, "r");
+		$pathsRead = fread($filePaths, filesize($filePathP));
+		fclose($filePaths);
+
+		$jsonPaths = json_decode($pathsRead, true);
+
+		array_push($jsonPaths["projects"], $project_name);
+
+		$filePaths = fopen($filePathP, "w");
+		fwrite($filePaths, json_encode($jsonPaths, JSON_PRETTY_PRINT));
+		fclose($filePaths);
+	}
+	else {
+		//mkdir() returned error
+	}
 }
 
 
