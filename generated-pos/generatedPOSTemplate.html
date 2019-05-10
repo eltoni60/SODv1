@@ -105,9 +105,30 @@
                     </td>
                     <td>
                         <button id="default" class="btn btn-info"><i class="fa fa-print" onclick="printOrder()" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mealMessage" id="mmModal"><i class="fa fa-comments" aria-hidden="true"></i></button>
                     </td>
                 </tr>
             </table>
+            <div class="modal fade" id="mealMessage" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Enter your Meal Message</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form name="getProjectName">
+                                <label>
+                                    <textarea name="mm" rows="1" cols="40"></textarea>
+                                </label>
+                                <button id="nextBtn" value="newName" class="btn btn-default" onclick="mealMessage(this)" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

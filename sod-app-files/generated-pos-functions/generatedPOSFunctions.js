@@ -37,7 +37,8 @@ function addOrderedItem(item) {
 function deleteEntreeItem(elm){
     var elmToDelete = (elm.parentElement).parentElement;
     var price =  elmToDelete.childNodes;
-    calculateTotals(price[2].outerText, true);
+    if(price.length > 2)
+        calculateTotals(price[2].outerText, true);
     elmToDelete.parentElement.removeChild(elmToDelete);
 
 }
@@ -85,3 +86,46 @@ function calculateTotals(price, deleteEntree = false) {
     document.getElementById('subTotal').firstChild.innerHTML = subTotalField.toFixed(2);
     document.getElementById('totalPrice').firstChild.innerHTML = totalField.toFixed(2);
 }
+
+function mealMessage(elm) {
+    var table = document.getElementById("order");
+    var mealMessage = elm.previousElementSibling.childNodes[1].value;
+    elm.previousElementSibling.childNodes[1].value = "";
+    var child = table.firstChild;
+    child = child.nextSibling;
+
+
+    var tr = document.createElement("tr");
+    tr.setAttribute("id", table.rows.length);
+
+    var tdBtn = document.createElement("td");
+    var btn = document.createElement("button");
+    btn.setAttribute("class", "btn btn-info deleteBtn");
+    btn.setAttribute("onclick", "deleteEntreeItem(this)");
+    btn.innerHTML = "<i class='fa fa-trash'></i>";
+    btn.setAttribute("id", "default");
+    tdBtn.appendChild(btn);
+    tr.appendChild(tdBtn);
+
+    var tdName = document.createElement("td");
+    tdName.innerHTML = mealMessage;
+    tdName.setAttribute("colspan","2");
+    tr.appendChild(tdName);
+    child.appendChild(tr);
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
