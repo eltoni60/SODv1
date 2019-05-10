@@ -1,2 +1,6 @@
 #These are folders specific to Webstorm IDE
 .idea
+
+
+POSSD*/
+users-config.json
