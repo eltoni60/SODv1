@@ -140,7 +140,7 @@
                 var savedProjects = returnLoadedJSON('../possd-' + possd + '/' + possd + '-POSSD-filepaths.json');
                 for (var i = 0; i < savedProjects.projects.length; i++) {
                     var btn = document.createElement("BUTTON");
-                    btn.setAttribute("onclick", "return redirectToItemLibrary(" + savedProjects.projects[i].toString() + ")");
+                    btn.setAttribute("onclick", "return redirectToItemLibrary( '" + savedProjects.projects[i].toString() + "' )");
                     btn.id = savedProjects.projects[i];
                     btn.value = savedProjects.projects[i];
                     btn.className += 'btn btn-info btn-lg';

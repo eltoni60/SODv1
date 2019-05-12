@@ -186,11 +186,11 @@ function checkPageName() {
 //Redirects the user to the
 function redirectToItemLibrary(projectname, newProject = false) {
     if(newProject) {
-        sessionStorage.setItem("PROJECT_NAME", projectname[0].id);
+        sessionStorage.setItem("PROJECT_NAME", projectname);
         var possd = sessionStorage.getItem("POSSD");
         var projectObj = {
             POSSD: possd,
-            pName: projectname[0].id
+            pName: projectname
         };
         var http = new XMLHttpRequest();
 		// added cache busting technique to see if it would help
@@ -206,7 +206,7 @@ function redirectToItemLibrary(projectname, newProject = false) {
         window.location.href ="./item-library.html";
         return false;
     }
-    sessionStorage.setItem("PROJECT_NAME", projectname[0].id);
+    sessionStorage.setItem("PROJECT_NAME", projectname);
     window.location.href ="./item-library.html";
     return false;
 }
@@ -503,7 +503,8 @@ function addMoreLibraryFields(event) {
     if(!(event == null))
         event.preventDefault();
     var itemFields = document.getElementById("itemFields");
-    if(itemFields == null)
+    // assuming this is checking if there are any children
+	if(itemFields.lastChild == null)
         numOfItems = 1;
     else{
         var last = itemFields.lastChild;
