@@ -68,7 +68,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <button onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
+                    <button class="btn btn-warning btn-lg" onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
                 </li>
             </ul>
         </div>
@@ -84,17 +84,14 @@
 				data-target="#newPageName" style="margin: 1em 0 1em; padding: auto; height: 48.8px">
 				Add Page
 			</button>
-			<button type="button" class="btn btn-info btn-lg" 
+			<button type="button" class="btn btn-danger btn-lg"
 			style="margin: 1em 0 1em; padding: auto; height: 48.8px" 
 			onclick="return enterPageRemoveMode('editPages')">
 				Remove Page
 			</button>
 			<form class="deployPageForm" method="post" action="" onsubmit="deployPOSSystem.php"
 				style="display:inline";>
-				<input class="btn btn-info btn-lg" 
-					type="submit" value="Deploy" 
-					style="margin: 1em 0 1em; padding: auto; height: 48.8px"
-					onclick="submitForm('deploySystem.php')" />
+				<input class="btn btn-success btn-lg" type="submit" value="Deploy" onclick="submitForm('deploySystem.php')" />
 			</form>
         </div>
     </div>

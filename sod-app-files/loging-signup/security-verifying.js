@@ -204,7 +204,7 @@ function redirectToItemLibrary(projectname, newProject = false) {
 
 function redirectToGPOS(projectname) {
     var possd = sessionStorage.getItem("POSSD");
-    var tempPOSSD = "EXAMPLE";
+    sessionStorage.setItem("pName", projectname);
     window.location.href = "../generated-pos/" + possd + "-" + projectname
         + "-gpos.html";
     return false;
@@ -302,7 +302,7 @@ function enterPageRemoveMode(pageContainerId) {
 		if (child.tagName.toUpperCase() == "BUTTON") {
 			//we can safely modify this now
 			child.innerHTML = "Remove " + child.id;
-			child.setAttribute("onclick", "return removePage('" + child.id + "', '" + pageContainerId + "')"); 
+			child.setAttribute("onclick", "return removePage('" + child.id + "', '" + pageContainerId + "')");
 		}
 	}
 	return false;
@@ -385,7 +385,7 @@ var validateFile = function () {
 };
 
 
-var numOfItems;
+
 //This just loads the existing library files when the page is loaded
 function loadLibraryFields() {
     var possd = sessionStorage.getItem("POSSD");
@@ -397,9 +397,10 @@ function loadLibraryFields() {
         return;
     }
 
-    for(var i = 0; i < itemLibrary.items.length; i++) {
+    for(var i = 0 ; i < itemLibrary.items.length; i++) {
+        var itemID = itemLibrary.items[i].item_id;
         var elmDiv = document.createElement("div");
-        elmDiv.id = i;
+        elmDiv.id = itemID;
         elmDiv.style.display = "inline-block";
 
         var elmItem = document.createElement("label");
@@ -417,17 +418,17 @@ function loadLibraryFields() {
 
         var elmPriceInput = document.createElement("input");
         elmPriceInput.type = "text";
-        elmPriceInput.value = itemLibrary.items[i].item_price;
+        elmPriceInput.value = (itemLibrary.items[i].item_price).toFixed(2);
         elmDiv.appendChild(elmPriceInput);
 
         var btn = document.createElement("button");
-        btn.setAttribute("onClick",  "deleteLibraryFields(event," + i + ")");
-        btn.innerHTML = "Delete";
+        btn.setAttribute("onClick",  "deleteLibraryFields(event," + itemID + ")");
+        btn.setAttribute('class','btn btn-info deleteBtn')
+        btn.innerHTML = "<i class='fa fa-trash'></i>";
         elmDiv.appendChild(btn);
         document.getElementById("itemFields").appendChild(elmDiv);
         document.getElementById("itemFields").appendChild(document.createElement("br"));
     }
-    numOfItems = i;
 }
 
 class Item {
@@ -440,7 +441,7 @@ class Item {
     }
 }
 
-function saveLibraryFields() {
+function saveLibraryFields(path) {
     var possd = sessionStorage.getItem("POSSD");
     var pName = sessionStorage.getItem("PROJECT_NAME");
 
@@ -465,7 +466,7 @@ function saveLibraryFields() {
 
        var name = inputLabels[1].value;
        var price = inputLabels[3].value;
-       jsonItemObj.library.items.push(new Item(i/2, name, parseFloat(price)));
+       jsonItemObj.library.items.push(new Item(childFields[i].id, name, parseFloat(price)));
     }
     var stringy = JSON.stringify(jsonItemObj);
    /*console.log(jsonItemObj);
@@ -484,16 +485,23 @@ function saveLibraryFields() {
     if(childFields.length < 1)
         addMoreLibraryFields(null);
 
-    window.location.href = "./staging-area-selector.html";
+    window.location.href = path;
     return false;
 }
 
 function addMoreLibraryFields(event) {
+    var numOfItems;
     if(!(event == null))
         event.preventDefault();
     var itemFields = document.getElementById("itemFields");
-    if(numOfItems == null)
-        numOfItems = 0;
+    if(itemFields == null)
+        numOfItems = 1;
+    else{
+        var last = itemFields.lastChild;
+        last = last.previousSibling;
+        numOfItems = last.id;
+        numOfItems++;
+    }
 
     var elmDiv = document.createElement("div");
     elmDiv.id = numOfItems;
@@ -522,7 +530,7 @@ function addMoreLibraryFields(event) {
     elmDiv.appendChild(btn);
     itemFields.appendChild(elmDiv);
     itemFields.appendChild(document.createElement("br"));
-    numOfItems++;
+
 
 }
 
@@ -536,11 +544,88 @@ function deleteLibraryFields(evt,  id) {
 
 }
 
+function toggleHide(e) {
+    var element = e.currentTarget;
+    element = element.parentElement;
+    for (var i = 0; i < 3; i++) {
+        element = element.nextElementSibling;
+        if(element.style.visibility === "hidden")
+            element.style.visibility = "visible";
+        else
+            element.style.visibility = "hidden";
+
+    }
+}
+
+function loadDesigner() {
+    loadElementToolBox();
+    loadTab();
+
+
+}
+
+function loadTab() {
+    var page = getUrlVars()["modifyingPage"];
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    // added random parameter to the end to prevent caching
+    var projectData = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json")["pages"];
+    var elementArray;
+    for (var i = 0; i < projectData.length; i++) {
+        if(projectData[i]["page_name"] === page) {
+             elementArray = projectData[i]["elements"];
+             break;
+        }
+    }
+
+    var stagingArea = document.getElementById("stagingArea");
+    var divItem = stagingArea.firstElementChild;
+
+    for(var j = 0; j < stagingArea.childElementCount; j++) {
+        if(elementArray[j] === 0)
+            continue;
+        var element = document.getElementById(elementArray[j]);
+        var clonedElement = element.cloneNode(true);
+        clonedElement.setAttribute("ondragstart", "deleteDrag(event)");
+        divItem.appendChild(clonedElement);
+        divItem = divItem.nextElementSibling;
+    }
+
+    return false;
 
 
 
+}
 
+function loadElementToolBox() {
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    // added random parameter to the end to prevent caching
+    var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json").items;
+    var toolbox = document.getElementById("elementToolBox");
 
+    for (var i = 0; i < itemLibrary.length; i++) {
+        var divItem = document.createElement("div");
+        divItem.setAttribute("class", "grid-item");
+        var btnItem = document.createElement("button");
+        btnItem.setAttribute("draggable", true);
+        btnItem.setAttribute("class", "btn btn-info btn-md ");
+        btnItem.setAttribute("ondragstart", "dragStart(event)");
+        btnItem.setAttribute("id", itemLibrary[i].item_id);
+        btnItem.innerHTML = itemLibrary[i].item_name;
+        divItem.appendChild(btnItem);
+        toolbox.appendChild(divItem);
+    }
+
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
 
 
 
