@@ -39,7 +39,7 @@ function isAlphaNum(name) {
 function checkUsername() {
     var m_username = document.forms["signUpInfo"][0];
 	//added date to the end to try to prevent browser caching
-    var usernames = returnLoadedJSON('../sod-app-files/users-config.json' + '?nocache=' + new Date().getTime()).loginCredentials;
+    var usernames = returnLoadedJSON('../sod-app-files/users-config.json').loginCredentials;
     for (var i = 0; i < usernames.length; i++) {
         if (usernames[i].username === m_username.value) {
             m_username.style.backgroundColor = '#f77474';
@@ -90,23 +90,30 @@ function returnLoadedJSON(pathName) {
     return file;
 }
 
+/** Converted this to an AJAX call in signup.html **/
+/** This seemed to work better overall **/
+/*
 function signUp() {
     if (!(checkUsername() && checkPassword())) {
         //alert('Please fix the marked fields.');
         return false;
     }
+	console.log("I am signing up");
+	
     var enteredUsername = document.forms["signUpInfo"]["m_userName"].value;
     var enteredPassword = hashString(document.forms["signUpInfo"]["m_password"].value);
     var credential = {
         username: enteredUsername,
         password: enteredPassword
     };
-    /*var logins = returnLoadedJSON('../sod-app-files/users-config.json');
-    logins.loginCredentials.push(credential);*/
+    var logins = returnLoadedJSON('../sod-app-files/users-config.json');
+    logins.loginCredentials.push(credential);
     var dataString = JSON.stringify(credential);
     var http = new XMLHttpRequest();
+	
 	// added cache busting to this to see if it helps
-    var url = "./addUser.php"+ "?nocache=" + new Date().getTime();
+    
+	var url = "./addUser.php" ;
     http.open('POST', url, true);
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     http.onreadystatechange = function() {//Call a function when the state changes.
@@ -115,9 +122,11 @@ function signUp() {
         }
     };
     http.send(dataString);
+	console.log("I am being sent: '" + dataString + "'");
     window.location.replace('./index.html');
     return false;
 }
+*/
 
 //Used when for logging in.
 function login() {

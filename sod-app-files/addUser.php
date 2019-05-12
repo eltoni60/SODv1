@@ -1,16 +1,24 @@
 <?php
     /*This code only saves the new user that was just signed up successfully*/
     $usersFile = fopen("users-config.json", 'r');
-    $addedUserStr = file_get_contents("php://input");
     $existingUsersStr = fread($usersFile, filesize("users-config.json"));
+    $addedUserStr = file_get_contents("php://input");
 
 	// the format I am getting for the body of the request is:
 	// m_username=user&m_password=password&m_password1=password
 	// is this the same thing you are getting?
+	// UPDATE: the password is not the hashed version.
+	//  	   This broke the addUser function
+	//		   Need to figure out why the php://input is not working
 	$jsonAddedUser = array(
-		"username" => $_POST["m_username"],
-		"password" => $_POST["m_password"]
+		"username" => $_POST["username"],
+		"password" => $_POST["password"]
 	);
+	
+	var_dump($addedUserStr);
+	$debugFile = fopen('debug.txt', 'w');
+	fwrite($debugFile, $addedUserStr);
+	fclose($debugFile);
 	
 	// commenting this out for now because I am getting a different format
     //$jsonAddedUser = json_decode($addedUserStr, true);
@@ -37,7 +45,4 @@
     fwrite($filePaths, $startWrite);
     fclose($filePaths);
     echo 'Sign Up Complete. Please login.';
-	
-	header("Location: ./index.html", true, 301);
-exit();
 ?>

@@ -19,6 +19,28 @@
             background-color: #eee;
         }
     </style>
+	<script>
+		//try jquery and ajax to POST to addUser
+		$(function() {
+			$('#signUpInfo').submit(function() {
+				if (!(checkUsername() && checkPassword())) {
+					//alert('Please fix the marked fields.');
+					return false;
+				}
+				else {
+					$.ajax({
+						type: 'POST',
+						url: 'addUser.php',
+						data: { username: $('#m_username').val(), 
+								password: hashString($('#m_password').val()) }
+					});
+					console.log("I sent something");
+					window.location.replace('./index.html');
+					return false;
+				}
+			}); 
+		});
+	</script>
 </head>
 <body>
 
@@ -68,16 +90,15 @@
 </div>
 -->
 
-
-
-
-
 <div id="container">
     <div class="modal-header">
         <h4 style="color:red;"><span class="glyphicon glyphicon-lock"></span>Sign Up</h4>
     </div>
     <div class="modal-body">
-        <form name="signUpInfo" method="post" action="./addUser.php" onsubmit="return signUp()">
+        <!--<form name="signUpInfo" method="post" action="./addUser.php" onsubmit="return signUp()">-->
+        <!--  Removing the addUser PHP action because that was sending data incorrectly -->
+		<!--<form name="signUpInfo" onsubmit="return signUp();">-->
+		<form name="signUpInfo" id="signUpInfo" method="post">
             <div class="form-group">
                 <label for="m_username"><span class="glyphicon glyphicon-user"></span> Username</label>
                 <input class="form-control" id="m_username" name="m_username" onchange="checkUsername()" placeholder="Enter Username" maxlength="30" type="text">
