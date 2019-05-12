@@ -106,7 +106,7 @@ function signUp() {
     var dataString = JSON.stringify(credential);
     var http = new XMLHttpRequest();
 	// added cache busting to this to see if it helps
-    var url = "./addUser.php";
+    var url = "./addUser.php"+ "?nocache=" + new Date().getTime();
     http.open('POST', url, true);
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     http.onreadystatechange = function() {//Call a function when the state changes.
@@ -185,7 +185,7 @@ function redirectToItemLibrary(projectname, newProject = false) {
         };
         var http = new XMLHttpRequest();
 		// added cache busting technique to see if it would help
-        var url = "./addProject.php";
+        var url = "./addProject.php"+ "?nocache=" + new Date().getTime();
         http.open('POST', url, true);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
@@ -351,7 +351,7 @@ var loadFile = function (event) {
         testString = dataText;
         var http = new XMLHttpRequest();
 		// added random parameter to end to try and get the browser to not cache this
-        var url = "./processSODP.php";
+        var url = "./processSODP.php" + "?nocache=" + new Date().getTime();
         http.open('POST', url, false);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
@@ -472,7 +472,7 @@ function saveLibraryFields() {
    console.log(stringy);*/
 
     var http = new XMLHttpRequest();
-    var url = "./processItemLibrary.php";
+    var url = "./processItemLibrary.php" + "?nocache=" + new Date().getTime();
     http.open('POST', url, true);
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     http.onreadystatechange = function() {//Call a function when the state changes.
