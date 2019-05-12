@@ -38,14 +38,17 @@
             <a class="navbar-brand" href="./project-selector.html"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD") + " - " + sessionStorage.getItem("PROJECT_NAME"));</script></a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="../sod-app-files/project-selector.html">Project Selector</a></li>
+            <li><a onclick="saveLibraryFields('./project-selector.html')">Project Selector</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a onclick="saveLibraryFields('./staging-area-selector.html')">Staging Area Selector</a></li>
         </ul>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <button onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
+                    <button class="btn btn-warning btn-lg" onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
                 </li>
             </ul>
         </div>
@@ -55,7 +58,7 @@
 <h2>Item Library</h2>
 <h4>Enter all of your menu items names and prices. Once complete select next to continue. Do not worry if you forget items, you can always come back here to add more.</h4>
 <div class="container">
-<form name="itemLibrary" action="" onsubmit="return saveLibraryFields()" >
+<form name="itemLibrary" action="" onsubmit="return saveLibraryFields('./staging-area-selector.html')" >
     <div id="itemFields"></div>
     <div id="addField">
         <button class="btn btn-info btn-md"

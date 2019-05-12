@@ -164,6 +164,10 @@ function tableContents(projectObj, itemLibraryData) {
 
         for (var i = 0; i < elements.length; i++) { //loops through the elements to add them
             var btnDiv = document.createElement("div");
+            if (itemLibraryData[elements[i]].item_id === 0) {
+                tabDiv.appendChild(btnDiv);
+                continue;
+            }
             btnDiv.setAttribute("class", "orderButtons");
             var btn = document.createElement("button");
             btn.setAttribute("class", "btn btn-info btn-lg");
@@ -181,20 +185,20 @@ function tableContents(projectObj, itemLibraryData) {
 }
 
 function getProjectJSON() {
-    //var possd = sessionStorage.getItem("POSSD");
-    //var pName = sessionStorage.getItem("pName");
-    var possd = "Shoneys";
-    var pName = "test2";
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("pName");
+    //var possd = "Shoneys";
+    //var pName = "test2";
     var projectObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json");
     projectObj = projectObj["pages"];
     return projectObj;
 }
 
 function getItemLibraryJSON() {
-    //var possd = sessionStorage.getItem("POSSD");
-    //var pName = sessionStorage.getItem("pName");
-    var possd = "Shoneys";
-    var pName = "test2";
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("pName");
+    //var possd = "Shoneys";
+    //var pName = "test2";
     var libraryObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
     libraryObj = libraryObj["items"];
     return libraryObj;

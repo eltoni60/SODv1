@@ -3,17 +3,18 @@
 	"pages":
 	[
 		{
-			"page_name":"Breakfast",
-			"layout":
-			{
-				"layout_name":"Grid Layout",
+			"page_name": "Breakfast",
+			"layout": {
+				"layout_name": "Grid Layout",
 				"cells":
 				[
-					[ 0,0,100,100 ],
-					[ 150,0,100,100 ]
+					[ 0, 0, 100, 100 ],
+					[ 150, 0, 100, 100 ]
 				]
 			},
-			"elements": [ 7, 5 ]
+			"elements": [ 	7, 5, 4,
+							0, 0, 0,
+							0, 0, 0 ]
 		},
 		{
 			"page_name":"Lunch",
@@ -26,7 +27,9 @@
 					[ 150,0,100,100 ]
 				]
 			},
-			"elements": [ 0, 1 ]
+			"elements": [ 	0, 1, 0,
+							0, 0, 0,
+							0, 0, 0 ]
 		},
 		{
 			"page_name":"Dinner",
@@ -39,7 +42,9 @@
 					[ 150,0,100,100 ]
 				]
 			},
-			"elements": [ 7, 2 ]
+			"elements": [ 	7, 2, 0,
+							0, 0, 0,
+							0, 0, 0 ]
 		}
 	]
 }

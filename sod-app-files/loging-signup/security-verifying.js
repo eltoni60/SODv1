@@ -302,7 +302,7 @@ function enterPageRemoveMode(pageContainerId) {
 		if (child.tagName.toUpperCase() == "BUTTON") {
 			//we can safely modify this now
 			child.innerHTML = "Remove " + child.id;
-			child.setAttribute("onclick", "return removePage('" + child.id + "', '" + pageContainerId + "')"); 
+			child.setAttribute("onclick", "return removePage('" + child.id + "', '" + pageContainerId + "')");
 		}
 	}
 	return false;
@@ -441,7 +441,7 @@ class Item {
     }
 }
 
-function saveLibraryFields() {
+function saveLibraryFields(path) {
     var possd = sessionStorage.getItem("POSSD");
     var pName = sessionStorage.getItem("PROJECT_NAME");
 
@@ -485,7 +485,7 @@ function saveLibraryFields() {
     if(childFields.length < 1)
         addMoreLibraryFields(null);
 
-    window.location.href = "./staging-area-selector.html";
+    window.location.href = path;
     return false;
 }
 
@@ -495,7 +495,7 @@ function addMoreLibraryFields(event) {
         event.preventDefault();
     var itemFields = document.getElementById("itemFields");
     if(itemFields == null)
-        numOfItems = 0;
+        numOfItems = 1;
     else{
         var last = itemFields.lastChild;
         last = last.previousSibling;
@@ -544,11 +544,88 @@ function deleteLibraryFields(evt,  id) {
 
 }
 
+function toggleHide(e) {
+    var element = e.currentTarget;
+    element = element.parentElement;
+    for (var i = 0; i < 3; i++) {
+        element = element.nextElementSibling;
+        if(element.style.visibility === "hidden")
+            element.style.visibility = "visible";
+        else
+            element.style.visibility = "hidden";
+
+    }
+}
+
+function loadDesigner() {
+    loadElementToolBox();
+    loadTab();
+
+
+}
+
+function loadTab() {
+    var page = getUrlVars()["modifyingPage"];
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    // added random parameter to the end to prevent caching
+    var projectData = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json")["pages"];
+    var elementArray;
+    for (var i = 0; i < projectData.length; i++) {
+        if(projectData[i]["page_name"] === page) {
+             elementArray = projectData[i]["elements"];
+             break;
+        }
+    }
+
+    var stagingArea = document.getElementById("stagingArea");
+    var divItem = stagingArea.firstElementChild;
+
+    for(var j = 0; j < stagingArea.childElementCount; j++) {
+        if(elementArray[j] === 0)
+            continue;
+        var element = document.getElementById(elementArray[j]);
+        var clonedElement = element.cloneNode(true);
+        clonedElement.setAttribute("ondragstart", "deleteDrag(event)");
+        divItem.appendChild(clonedElement);
+        divItem = divItem.nextElementSibling;
+    }
+
+    return false;
 
 
 
+}
 
+function loadElementToolBox() {
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    // added random parameter to the end to prevent caching
+    var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json").items;
+    var toolbox = document.getElementById("elementToolBox");
 
+    for (var i = 0; i < itemLibrary.length; i++) {
+        var divItem = document.createElement("div");
+        divItem.setAttribute("class", "grid-item");
+        var btnItem = document.createElement("button");
+        btnItem.setAttribute("draggable", true);
+        btnItem.setAttribute("class", "btn btn-info btn-md ");
+        btnItem.setAttribute("ondragstart", "dragStart(event)");
+        btnItem.setAttribute("id", itemLibrary[i].item_id);
+        btnItem.innerHTML = itemLibrary[i].item_name;
+        divItem.appendChild(btnItem);
+        toolbox.appendChild(divItem);
+    }
+
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
 
 
 
