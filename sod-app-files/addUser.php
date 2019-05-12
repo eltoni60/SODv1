@@ -15,11 +15,6 @@
 		"password" => $_POST["password"]
 	);
 	
-	var_dump($addedUserStr);
-	$debugFile = fopen('debug.txt', 'w');
-	fwrite($debugFile, $addedUserStr);
-	fclose($debugFile);
-	
 	// commenting this out for now because I am getting a different format
     //$jsonAddedUser = json_decode($addedUserStr, true);
     

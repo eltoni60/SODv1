@@ -360,7 +360,7 @@ var loadFile = function (event) {
         testString = dataText;
         var http = new XMLHttpRequest();
 		// added random parameter to end to try and get the browser to not cache this
-        var url = "./processSODP.php" + "?nocache=" + new Date().getTime();
+        var url = "./processSODP.php";
         http.open('POST', url, false);
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
@@ -370,7 +370,7 @@ var loadFile = function (event) {
         };
 		//we need to carry the POSSD to the processSODP.php
 		//file, so we are going to create a wrapper json object
-        var wrapper = "{";
+        var wrapper = '{';
 		wrapper += "\"possd\":\"" + sessionStorage.getItem("POSSD") + "\",";
 		wrapper += "\"sodp\":";
 		wrapper += dataText;

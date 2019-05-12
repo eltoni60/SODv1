@@ -412,15 +412,13 @@ function deserialize_sodp_string($json_str) {
 	function for code reuse purposes (at least two PHP files use this)
 */
 function create_sod_project_files($sod_dir, $possd, $project_name) {
-	$projDir = $sod_dir."/possd-".$possd."/project-".$project_name."/";
-	
+	$projDir = $sod_dir.'/possd-'.$possd.'/project-'.$project_name.'/';
 	
 	$dirSuccess = mkdir($projDir);
 	
-	
 	if ($dirSuccess) {
-		$filesToCreate = array($project_name."-element-page-tracker.txt",
-			$project_name."-item-library.json", $project_name."-project.json");
+		$filesToCreate = array($project_name.'-element-page-tracker.txt',
+			$project_name.'-item-library.json', $project_name.'-project.json');
 
 		fclose(fopen($projDir.$filesToCreate[0], "w"));
 		
@@ -434,7 +432,7 @@ function create_sod_project_files($sod_dir, $possd, $project_name) {
 		$empty_project_data = new SOD_Project($project_name);
 		serialize_project_data($empty_project_data, $projDir.$filesToCreate[2]);
 
-		$filePathP = $sod_dir."/possd-".$possd."/".$possd."-POSSD-filepaths.json";+
+		$filePathP = $sod_dir.'/possd-'.$possd.'/'.$possd.'-POSSD-filepaths.json';+
 		$filePaths = fopen($filePathP, "r");
 		$pathsRead = fread($filePaths, filesize($filePathP));
 		fclose($filePaths);

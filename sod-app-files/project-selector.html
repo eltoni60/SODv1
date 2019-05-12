@@ -91,17 +91,16 @@
             </div>
 
             <!-- Place the appropirate PHP function under action -->
-            <form name="fileSODP" method="post" action="./processSODP.php" onsubmit=" return loadFile(event)">
+            <!--<form name="fileSODP" method="post" action="./processSODP.php" onsubmit=" return loadFile(event)">-->
+            <form name="fileSODP" id="fileSODP" onsubmit="return loadFile(event)">
                 <div class="col-lg-6 btn-group">
-
                     <input class="btn btn-info btn-lg" type="file" id="myFile" name="files" style="margin: 1em 0 1em; padding: auto" />
-
                     <input class="btn btn-info btn-lg" type="submit" value="submit" style="margin: 1em 0 1em; padding: auto; height: 48.8px" />
                 </div>
                 <div class="col-lg-1">
-
+					
                 </div>
-
+					
             </form>
         </div>
         <!-- Modal -->
