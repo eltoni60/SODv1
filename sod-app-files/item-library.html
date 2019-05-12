@@ -35,8 +35,11 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
             </button>
-            <a class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD"));</script></a>
+            <a class="navbar-brand" href="./project-selector.html"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD") + " - " + sessionStorage.getItem("PROJECT_NAME"));</script></a>
         </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="../sod-app-files/project-selector.html">Project Selector</a></li>
+        </ul>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
             </ul>
@@ -57,7 +60,7 @@
     <div id="addField">
         <button class="btn btn-info btn-md"
                 onclick="addMoreLibraryFields(event)"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
-        <input type="submit" class="btn btn-info btn-md">
+        <input type="submit" value="Next" class="btn btn-info btn-md">
 
     </div>
 

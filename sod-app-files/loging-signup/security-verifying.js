@@ -204,7 +204,7 @@ function redirectToItemLibrary(projectname, newProject = false) {
 
 function redirectToGPOS(projectname) {
     var possd = sessionStorage.getItem("POSSD");
-    var tempPOSSD = "EXAMPLE";
+    sessionStorage.setItem("pName", projectname);
     window.location.href = "../generated-pos/" + possd + "-" + projectname
         + "-gpos.html";
     return false;
@@ -385,7 +385,7 @@ var validateFile = function () {
 };
 
 
-var numOfItems;
+
 //This just loads the existing library files when the page is loaded
 function loadLibraryFields() {
     var possd = sessionStorage.getItem("POSSD");
@@ -397,9 +397,10 @@ function loadLibraryFields() {
         return;
     }
 
-    for(var i = 0; i < itemLibrary.items.length; i++) {
+    for(var i = 0 ; i < itemLibrary.items.length; i++) {
+        var itemID = itemLibrary.items[i].item_id;
         var elmDiv = document.createElement("div");
-        elmDiv.id = i;
+        elmDiv.id = itemID;
         elmDiv.style.display = "inline-block";
 
         var elmItem = document.createElement("label");
@@ -417,17 +418,17 @@ function loadLibraryFields() {
 
         var elmPriceInput = document.createElement("input");
         elmPriceInput.type = "text";
-        elmPriceInput.value = itemLibrary.items[i].item_price;
+        elmPriceInput.value = (itemLibrary.items[i].item_price).toFixed(2);
         elmDiv.appendChild(elmPriceInput);
 
         var btn = document.createElement("button");
-        btn.setAttribute("onClick",  "deleteLibraryFields(event," + i + ")");
-        btn.innerHTML = "Delete";
+        btn.setAttribute("onClick",  "deleteLibraryFields(event," + itemID + ")");
+        btn.setAttribute('class','btn btn-info deleteBtn')
+        btn.innerHTML = "<i class='fa fa-trash'></i>";
         elmDiv.appendChild(btn);
         document.getElementById("itemFields").appendChild(elmDiv);
         document.getElementById("itemFields").appendChild(document.createElement("br"));
     }
-    numOfItems = i;
 }
 
 class Item {
@@ -465,7 +466,7 @@ function saveLibraryFields() {
 
        var name = inputLabels[1].value;
        var price = inputLabels[3].value;
-       jsonItemObj.library.items.push(new Item(i/2, name, parseFloat(price)));
+       jsonItemObj.library.items.push(new Item(childFields[i].id, name, parseFloat(price)));
     }
     var stringy = JSON.stringify(jsonItemObj);
    /*console.log(jsonItemObj);
@@ -489,11 +490,18 @@ function saveLibraryFields() {
 }
 
 function addMoreLibraryFields(event) {
+    var numOfItems;
     if(!(event == null))
         event.preventDefault();
     var itemFields = document.getElementById("itemFields");
-    if(numOfItems == null)
+    if(itemFields == null)
         numOfItems = 0;
+    else{
+        var last = itemFields.lastChild;
+        last = last.previousSibling;
+        numOfItems = last.id;
+        numOfItems++;
+    }
 
     var elmDiv = document.createElement("div");
     elmDiv.id = numOfItems;
@@ -522,7 +530,7 @@ function addMoreLibraryFields(event) {
     elmDiv.appendChild(btn);
     itemFields.appendChild(elmDiv);
     itemFields.appendChild(document.createElement("br"));
-    numOfItems++;
+
 
 }
 

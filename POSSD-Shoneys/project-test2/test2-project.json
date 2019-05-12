@@ -1,0 +1,45 @@
+{
+	"project_name":"Project Name",
+	"pages":
+	[
+		{
+			"page_name":"Breakfast",
+			"layout":
+			{
+				"layout_name":"Grid Layout",
+				"cells":
+				[
+					[ 0,0,100,100 ],
+					[ 150,0,100,100 ]
+				]
+			},
+			"elements": [ 7, 5 ]
+		},
+		{
+			"page_name":"Lunch",
+			"layout":
+			{
+				"layout_name":"Grid Layout",
+				"cells":
+				[
+					[ 0,0,100,100 ],
+					[ 150,0,100,100 ]
+				]
+			},
+			"elements": [ 0, 1 ]
+		},
+		{
+			"page_name":"Dinner",
+			"layout":
+			{
+				"layout_name":"Grid Layout",
+				"cells":
+				[
+					[ 0,0,100,100 ],
+					[ 150,0,100,100 ]
+				]
+			},
+			"elements": [ 7, 2 ]
+		}
+	]
+}
