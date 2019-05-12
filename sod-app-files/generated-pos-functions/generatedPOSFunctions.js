@@ -164,7 +164,11 @@ function tableContents(projectObj, itemLibraryData) {
 
         for (var i = 0; i < elements.length; i++) { //loops through the elements to add them
             var btnDiv = document.createElement("div");
-            if (itemLibraryData[elements[i]].item_id === 0) {
+            if (elements[i] === 0) {
+                btnDiv.setAttribute("class", "orderButtons");
+                var btn = document.createElement("button");
+                btn.style.visibility = "hidden";
+                btnDiv.appendChild(btn);
                 tabDiv.appendChild(btnDiv);
                 continue;
             }
