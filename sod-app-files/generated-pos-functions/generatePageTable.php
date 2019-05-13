@@ -8,6 +8,8 @@
 	$possd = $_GET["possd"];
     $projectName = $_GET["projectName"];
 	
+	var_dump($_GET);
+	
 	$sod = dirname(__DIR__);
 	$projDir = $sod."/possd-".$possd."/project-".$projectName."/";
 	

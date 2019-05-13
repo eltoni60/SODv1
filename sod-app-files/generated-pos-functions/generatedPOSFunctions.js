@@ -151,6 +151,15 @@ function createTabs(projectObj) {
     }
 }
 
+function getItemById(itemLibraryData, item_id) {
+	for (var i = 0; i < itemLibraryData.length; i++) {
+		if (itemLibraryData[i].item_id == item_id) {
+			return itemLibraryData[i];
+		}
+	}
+	return null;
+}
+
 function tableContents(projectObj, itemLibraryData) {
     var content = document.getElementById("tabContent");
 
