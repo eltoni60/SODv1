@@ -125,6 +125,7 @@ function loadGPOS() {
     //var htmlDoc = document.getElementById("gpos");
     //var htmlStr = htmlDoc.outerHTML;
 
+	return false;
 }
 
 function createTabs(projectObj) {
@@ -162,11 +163,42 @@ function tableContents(projectObj, itemLibraryData) {
             tabDiv.setAttribute("class", "tab-pane fade "); //Would loop but only one tab needs to be "active"
 
         }
-        tabDiv.setAttribute("id", (projectObj[j].page_name));
+        tabDiv.setAttribute("id", (projectObj[j].page_name)); // the div id is the name of the page
         var elements = projectObj[j].elements;//The elements array of a page
+		// each element index corresponds to a table cell
+		
+		// this is where we will call a GET request at generatePageTable.php to 
+		// get the page layout text. We will insert this table into 
+		// the tabDiv right when we get it so that document.getElementId works
+		
+		var tableText = "";
+		var http = new XMLHttpRequest();
+		// added random parameter to end to try and get the browser to not cache this
+        var url = "./generatePageTable.php" + "?pageName=" + projectObj[j].page_name + "&possd=" +
+			sessionStorage.getItem("POSSD") + "&projectName=" + projectObj.project_name;
+        http.open('GET', url, false); // not async, wait for a response!
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.onreadystatechange = function() {//Call a function when the state changes.
+            if(http.readyState === 4 && http.status === 200) {
+                alert(http.responseText);
+				// this is the response so we just set the variable
+				tableText = http.responseText;
+            }
+        };
+		http.send(); //send will wait until the response is recieved
+		
+		// tableText now has the HTML table that was requested.
+		// create a DOM object out of it and then add it to this div
+		var tableHTML = jQuery.parseHTML(tableText);
+		// now add it 
+		tabDiv.appendChild(tableHTML);
+		
         var btn;
 
         for (var i = 0; i < elements.length; i++) { //loops through the elements to add them
+			var cell = document.getElementById("" + projectObj[j].page_name + "-cell" + (i+1));
+			
+			/**
             var btnDiv = document.createElement("div");
             if (elements[i] === 0) {
                 btnDiv.setAttribute("class", "orderButtons");
@@ -176,16 +208,23 @@ function tableContents(projectObj, itemLibraryData) {
                 tabDiv.appendChild(btnDiv);
                 continue;
             }
-            btnDiv.setAttribute("class", "orderButtons");
-            btn = document.createElement("button");
-            btn.setAttribute("class", "btn btn-info btn-lg");
-            btn.setAttribute("id", itemLibraryData[elements[i]].item_id);
-            btn.setAttribute("name", itemLibraryData[elements[i]].item_name);
-            btn.innerHTML = itemLibraryData[elements[i]].item_name;
-            btn.setAttribute("value", itemLibraryData[elements[i]].item_price);
-            btn.setAttribute("onclick", "addOrderedItem(this)");
-            btnDiv.appendChild(btn);
-            tabDiv.appendChild(btnDiv);
+			**/
+			if (elements[i] != 0) {
+				//btnDiv.setAttribute("class", "orderButtons");
+				btn = document.createElement("button");
+				btn.setAttribute("class", "btn btn-info btn-lg");
+				btn.setAttribute("id", itemLibraryData[elements[i]].item_id);
+				btn.setAttribute("name", itemLibraryData[elements[i]].item_name);
+				btn.innerHTML = itemLibraryData[elements[i]].item_name;
+				btn.setAttribute("value", itemLibraryData[elements[i]].item_price);
+				btn.setAttribute("onclick", "addOrderedItem(this)");
+				
+				//add this created button into the appropriate cell
+				cell.appendChild(btn);
+				
+				//btnDiv.appendChild(btn);
+				//tabDiv.appendChild(btnDiv);
+			}
         }
         content.appendChild(tabDiv);
     }

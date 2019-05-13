@@ -746,7 +746,7 @@ function generate_page_to_string($page, $item_library, $developerMode = false) {
 							)."%; height:".(
 								$pairs[$x+1][$y+1][1]-$pairs[$x][$y][1]
 							).";\" rowspan=\"".$rowspan."\" colspan=\"".$colspan."\"".
-							" class=\"layout-cell\" id=\"cell".$cell_id."\"".
+							" class=\"layout-cell\" id=\"".$page->get_page_name()."-cell".$cell_id."\"".
 							" ondrop=\"dragDrop(event)\" ondragover=\"dragOver(event)\">";
 						
 						// this is the place where element ID is used to fill 
@@ -763,7 +763,7 @@ function generate_page_to_string($page, $item_library, $developerMode = false) {
 							)."%; height:".(
 								$pairs[$x+1][$y+1][1]-$pairs[$x][$y][1]
 							).";\" rowspan=\"".$rowspan."\" colspan=\"".$colspan."\"".
-						" class=\"layout-cell\" id=\"cell".$cell_id."\">";
+							" class=\"layout-cell\" id=\"".$page->get_page_name()."-cell".$cell_id."\">";
 						
 						// this is the place where element ID is used to fill 
 						// what this td tag is
