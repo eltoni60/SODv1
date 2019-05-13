@@ -31,13 +31,13 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="../sod-app-files/project-selector.html">Project Selector</a></li>
+                <li><a conclick="saveDesignerLayout('../sod-app-files/project-selector.html')">Project Selector</a></li>
             </ul>
             <ul class="nav navbar-nav">
-                <li><a href="../sod-app-files/project-selector.html">Item Library</a></li>
+                <li><a onclick="saveDesignerLayout('./item-library.html')">Item Library</a></li>
             </ul>
             <ul class="nav navbar-nav">
-                <li><a href="">Staging Area Selector</a></li>
+                <li><a onclick="saveDesignerLayout('./staging-area-selector.html')">Staging Area Selector</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -118,11 +118,23 @@
     function dragDrop(e) {
         e.preventDefault();
         var data = e.dataTransfer.getData("text");
-        var element = document.getElementById(data);
-        var clonedElement = element.cloneNode(true);
-        clonedElement.setAttribute("ondragstart", "deleteDrag(event)")
-        if(e.currentTarget.childNodes.length === 0)
-            e.target.appendChild(clonedElement);
+        if (!isNaN(parseFloat(data)) && isFinite(data)) {
+            var element = document.getElementById(data);
+            var clonedElement = element.cloneNode(true);
+            clonedElement.setAttribute("ondragstart", "deleteDrag(event)")
+            if(e.currentTarget.childNodes.length === 0)
+                e.target.appendChild(clonedElement);
+            }
+        else {
+            var element = document.getElementById(data);
+            var btnElement = element.firstElementChild;
+            var clonedElement = btnElement.cloneNode(true);
+            clonedElement.setAttribute("ondragstart", "deleteDrag(event)")
+            if(e.currentTarget.childNodes.length === 0)
+                e.target.appendChild(clonedElement);
+
+            element.removeChild(element.firstChild);
+        }
     }
 
     function deleteDrag(e) {
@@ -134,11 +146,15 @@
     function deleteDrop(e) {
         e.preventDefault();
         var data = e.dataTransfer.getData("text");
+        if (!isNaN(parseFloat(data)) && isFinite(data)) {
+            return;
+        }
         var deleteElement = document.getElementById(data);
         deleteElement.removeChild(deleteElement.firstChild);
     }
 
 	// using your function
 	// loadTab();
+
 </script>
 </html>

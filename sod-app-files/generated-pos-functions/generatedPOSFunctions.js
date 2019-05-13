@@ -122,6 +122,9 @@ function loadGPOS() {
     createTabs(projData);
     tableContents(projData, libraryData);
 
+    //var htmlDoc = document.getElementById("gpos");
+    //var htmlStr = htmlDoc.outerHTML;
+
 }
 
 function createTabs(projectObj) {
@@ -161,19 +164,20 @@ function tableContents(projectObj, itemLibraryData) {
         }
         tabDiv.setAttribute("id", (projectObj[j].page_name));
         var elements = projectObj[j].elements;//The elements array of a page
+        var btn;
 
         for (var i = 0; i < elements.length; i++) { //loops through the elements to add them
             var btnDiv = document.createElement("div");
             if (elements[i] === 0) {
                 btnDiv.setAttribute("class", "orderButtons");
-                var btn = document.createElement("button");
+                btn = document.createElement("button");
                 btn.style.visibility = "hidden";
                 btnDiv.appendChild(btn);
                 tabDiv.appendChild(btnDiv);
                 continue;
             }
             btnDiv.setAttribute("class", "orderButtons");
-            var btn = document.createElement("button");
+            btn = document.createElement("button");
             btn.setAttribute("class", "btn btn-info btn-lg");
             btn.setAttribute("id", itemLibraryData[elements[i]].item_id);
             btn.setAttribute("name", itemLibraryData[elements[i]].item_name);
