@@ -86,12 +86,13 @@
 			</button>
 			<button type="button" class="btn btn-danger btn-lg"
 			style="margin: 1em 0 1em; padding: auto; height: 48.8px" 
+			id="removePageButton"
 			onclick="return enterPageRemoveMode('editPages');">
 				Remove Page
 			</button>
-			<form class="deployPageForm" method="post" action="" onsubmit="deployPOSSystem.php"
+			<form class="deployPageForm" onsubmit="return deployPOSSystemGo()"
 				style="display:inline";>
-				<input class="btn btn-success btn-lg" type="submit" value="Deploy" onclick="submitForm('deploySystem.php')" />
+				<input class="btn btn-success btn-lg" type="submit" value="Deploy"  />
 			</form>
         </div>
     </div>

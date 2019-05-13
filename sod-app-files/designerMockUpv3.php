@@ -139,6 +139,6 @@
     }
 
 	// using your function
-	loadTab();
+	// loadTab();
 </script>
 </html>

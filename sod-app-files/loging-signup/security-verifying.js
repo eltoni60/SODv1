@@ -223,6 +223,9 @@ function createNewPage(newPageName) {
 	var projectName = sessionStorage.getItem("PROJECT_NAME");
 	var possd = sessionStorage.getItem("POSSD");
 	
+	// ensure we are not in remove mode
+	exitPageRemoveMode('editPages');
+	
 	var projectObj = {
             POSSD: possd,
             projectName: projectName,
@@ -297,7 +300,7 @@ function createNewPageButton(pageContainerId, newPageName) {
 	btn.style.margin = "1em 2em 1em";
 	btn.style.width = "50% ";
 	document.getElementById(pageContainerId).appendChild(btn);
-	document.getElementById(pageContainerId).appendChild(document.createElement("BR"));
+	//document.getElementById(pageContainerId).appendChild(document.createElement("BR"));
 }
 
 /** This puts the page into "remove move" **/
@@ -318,6 +321,12 @@ function enterPageRemoveMode(pageContainerId) {
 			child.setAttribute("onclick", "return removePage('" + child.id + "', '" + pageContainerId + "')");
 		}
 	}
+	
+	// change the functionality of the remove page button
+	var removeButton = document.getElementById("removePageButton");
+	removeButton.innerHTML = "Cancel Remove";
+	removeButton.setAttribute("onclick", "return exitPageRemoveMode('editPages');");
+	
 	return false;
 }
 
@@ -343,7 +352,6 @@ function exitPageRemoveMode(pageContainerId) {
 			//we can safely modify this now
 			child.innerHTML = child.id;
 			
-			
 			var possd = sessionStorage.getItem("POSSD");
 			var pName = sessionStorage.getItem("PROJECT_NAME");
 			child.setAttribute("onclick", "window.location.replace('./designerMockUpv3.php?modifyingPage=" 
@@ -351,6 +359,13 @@ function exitPageRemoveMode(pageContainerId) {
 
 		}
 	}
+	
+	// change the functionality of the remove page button
+	var removeButton = document.getElementById("removePageButton");
+	removeButton.innerHTML = "Remove Page";
+	removeButton.setAttribute("onclick", "return enterPageRemoveMode('editPages');");
+	
+	return false;
 }
 
 function logOut() {
@@ -641,7 +656,6 @@ function getUrlVars() {
     });
     return vars;
 }
-
 
 
 
