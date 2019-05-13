@@ -662,8 +662,48 @@ function getUrlVars() {
 
 function saveDesignerLayout(path) {
     var parameters = getUrlVars();
-    var
+    var pData = returnLoadedJSON("../POSSD-" + parameters["possd"] + "/project-" + parameters["projectName"] + "/" + parameters["projectName"] + "-project.json");
+    var pagesData = pData["pages"];
+    var cellCount;
+    for (var i = 0; i < pagesData.length; i++) {
+        if(pagesData[i]["page_name"] === parameters["modifyingPage"]) {
+            cellCount = pagesData[i]["layout"]["cells"].length;
+            break;
+        }
+    }
+    var elementArray = [];
 
+    for (var j = 1; j <= cellCount; j++) {
+        var cell = document.getElementById("cell" + j);
+        if(cell.childElementCount === 0) {
+            elementArray.push(0);
+        }
+        else {
+            var btnID = cell.firstElementChild.id;
+            elementArray.push(parseInt(btnID));
+        }
+    }
+
+    pData["pages"][i]["elements"] = elementArray;
+
+    var http = new XMLHttpRequest();
+    // added cache busting technique to see if it would help
+    var url = "./saveProject.php";
+    http.open('POST', url, true);
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState === 4 && http.status === 200) {
+            alert(http.responseText);
+        }
+    };
+
+    var projectObj = {
+        POSSD: parameters["possd"],
+        projectData: pData
+    };
+    http.send(JSON.stringify(projectObj));
+    window.location.href = path;
+    return false;
 }
 
 

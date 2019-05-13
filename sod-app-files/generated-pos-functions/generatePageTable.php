@@ -7,10 +7,7 @@
 	$pageName = $_GET["pageName"];
 	$possd = $_GET["possd"];
     $projectName = $_GET["projectName"];
-	
-	var_dump($_GET);
-	
-	$sod = dirname(__DIR__);
+	$sod = dirname(__FILE__, 3);
 	$projDir = $sod."/possd-".$possd."/project-".$projectName."/";
 	
 	// get the project and item library data

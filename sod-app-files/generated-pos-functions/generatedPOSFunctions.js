@@ -183,8 +183,8 @@ function tableContents(projectObj, itemLibraryData) {
 		var tableText = "";
 		var http = new XMLHttpRequest();
 		// added random parameter to end to try and get the browser to not cache this
-        var url = "./generatePageTable.php" + "?pageName=" + projectObj[j].page_name + "&possd=" +
-			sessionStorage.getItem("POSSD") + "&projectName=" + projectObj.project_name;
+        var url = "../sod-app-files/generated-pos-functions/generatePageTable.php" + "?pageName=" + projectObj[j].page_name + "&possd=" +
+			sessionStorage.getItem("POSSD") + "&projectName=" + sessionStorage.getItem("PROJECT_NAME");
         http.open('GET', url, false); // not async, wait for a response!
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
@@ -198,10 +198,13 @@ function tableContents(projectObj, itemLibraryData) {
 		
 		// tableText now has the HTML table that was requested.
 		// create a DOM object out of it and then add it to this div
-		var tableHTML = jQuery.parseHTML(tableText);
-		// now add it 
-		tabDiv.appendChild(tableHTML);
-		
+
+        var domParser = new DOMParser();
+		var tableHTML = domParser.parseFromString(tableText, "text/html");
+		// now add it
+        console.log(tableHTML.childNodes[0].childNodes[1].innerHTML);
+		tabDiv.appendChild(tableHTML.childNodes[0].childNodes[1]);
+        content.appendChild(tabDiv);
         var btn;
 
         for (var i = 0; i < elements.length; i++) { //loops through the elements to add them
@@ -220,12 +223,13 @@ function tableContents(projectObj, itemLibraryData) {
 			**/
 			if (elements[i] != 0) {
 				//btnDiv.setAttribute("class", "orderButtons");
+                var itemObj = getItemById(itemLibraryData, elements[i]);
 				btn = document.createElement("button");
 				btn.setAttribute("class", "btn btn-info btn-lg");
-				btn.setAttribute("id", itemLibraryData[elements[i]].item_id);
-				btn.setAttribute("name", itemLibraryData[elements[i]].item_name);
-				btn.innerHTML = itemLibraryData[elements[i]].item_name;
-				btn.setAttribute("value", itemLibraryData[elements[i]].item_price);
+				btn.setAttribute("id", itemObj.item_id);
+				btn.setAttribute("name", itemObj.item_name);
+				btn.innerHTML = itemObj.item_name;
+				btn.setAttribute("value", itemObj.item_price);
 				btn.setAttribute("onclick", "addOrderedItem(this)");
 				
 				//add this created button into the appropriate cell
@@ -235,14 +239,14 @@ function tableContents(projectObj, itemLibraryData) {
 				//tabDiv.appendChild(btnDiv);
 			}
         }
-        content.appendChild(tabDiv);
+        //content.appendChild(tabDiv);
     }
 
 }
 
 function getProjectJSON() {
     var possd = sessionStorage.getItem("POSSD");
-    var pName = sessionStorage.getItem("pName");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
     //var possd = "Shoneys";
     //var pName = "test2";
     var projectObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json");
@@ -252,7 +256,7 @@ function getProjectJSON() {
 
 function getItemLibraryJSON() {
     var possd = sessionStorage.getItem("POSSD");
-    var pName = sessionStorage.getItem("pName");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
     //var possd = "Shoneys";
     //var pName = "test2";
     var libraryObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
@@ -261,7 +265,14 @@ function getItemLibraryJSON() {
 
 }
 
+function getItemById(itemLibraryArray, searchID) {
+    for (var k = 0; k < itemLibraryArray.length; k++) {
+        if(itemLibraryArray[k].item_id == parseInt(searchID)) {
+            return itemLibraryArray[k];
+        }
+    }
 
+}
 
 
 
