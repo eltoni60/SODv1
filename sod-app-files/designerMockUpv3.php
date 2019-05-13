@@ -31,7 +31,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a conclick="saveDesignerLayout('../sod-app-files/project-selector.html')">Project Selector</a></li>
+                <li><a onclick="saveDesignerLayout('../sod-app-files/project-selector.html')">Project Selector</a></li>
             </ul>
             <ul class="nav navbar-nav">
                 <li><a onclick="saveDesignerLayout('./item-library.html')">Item Library</a></li>
@@ -51,7 +51,7 @@
     <h3 style="text-align: center">Staging Area Designer</h3>
     <div class="row">
         <form class="deployPageForm" method="post" action="" onsubmit="deployPOSSystem.php">
-            <input class="btn btn-success btn-lg" value="Deploy" type="submit" id="Deploy" onclick="submitForm('deploySystem.php')" />
+            <input class="btn btn-success btn-lg" value="Deploy" type="submit" id="Deploy" onclick="return saveDesignerLayout('../generated-pos/generatedPOSTemplate.html')" />
         </form>
         <div class="btn btn-danger btn-lg trash" id="trash" ondragover="dragOver(event)" ondrop="deleteDrop(event)"><i class='fa fa-trash'></i></div>
     </div>
