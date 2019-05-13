@@ -245,7 +245,7 @@ function createNewPage(newPageName) {
 	createNewPageButton('editPages', newPageName);
 	
 	// hiding the modal that is still visible with jQuery here
-	$('#newPageName').modal('hide')
+	$('#newPageName').modal('hide');
 	
 	return false;
 }
@@ -409,7 +409,7 @@ function loadLibraryFields() {
     var pName = sessionStorage.getItem("PROJECT_NAME");
 	// added random parameter to the end to prevent caching
     var itemLibrary = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
-    if(itemLibrary == null) {
+    if(itemLibrary.items.length == 0) {
         addMoreLibraryFields();
         return;
     }
@@ -483,6 +483,8 @@ function saveLibraryFields(path) {
 
        var name = inputLabels[1].value;
        var price = inputLabels[3].value;
+       if(name === "" || price === "") //Skips the
+           continue;
        jsonItemObj.library.items.push(new Item(childFields[i].id, name, parseFloat(price)));
     }
     var stringy = JSON.stringify(jsonItemObj);
@@ -642,6 +644,12 @@ function getUrlVars() {
     return vars;
 }
 
+
+function saveDesignerLayout(path) {
+    var parameters = getUrlVars();
+    var
+
+}
 
 
 
