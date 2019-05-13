@@ -2,10 +2,6 @@
     "loginCredentials": [
         {
             "username": "user1",
-            "password": "nmoovluf5"
-        },
-        {
-            "username": "user3",
             "password": "nmoovluf"
         }
     ]

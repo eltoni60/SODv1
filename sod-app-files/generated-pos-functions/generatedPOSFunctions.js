@@ -121,10 +121,51 @@ function loadGPOS() {
     var libraryData = getItemLibraryJSON();
     createTabs(projData);
     tableContents(projData, libraryData);
+	
+	//set the title appropriately
+	document.title = sessionStorage.getItem("PROJECT_NAME");
 
-    //var htmlDoc = document.getElementById("gpos");
-    //var htmlStr = htmlDoc.outerHTML;
+    var htmlDoc = document.getElementById("gpos");
+	
+	// we want to remove the onload functionality so it does not
+	// keep adding tabs forever
+	var bodyTag = htmlDoc.children[1];
+	console.log("Got the tag: " + bodyTag.tagName);
+	bodyTag.setAttribute("onload", ""); //clear attribute
+	
+	// we also want to remove the script that writes the POSSD name 
+	var possdNameScript = document.getElementById("possd-name-script");
+	possdNameScript.remove();
+	
+    var htmlStr = htmlDoc.outerHTML;
 
+	console.log("I am gonna write stuff now");
+
+	// now we can write it to a file
+	var gpPOSName = "" + sessionStorage.getItem("POSSD") + "-" + sessionStorage.getItem("PROJECT_NAME")
+        + "-gpos.html";
+	
+	//write it into the proper location
+	var http = new XMLHttpRequest();
+	// added random parameter to end to try and get the browser to not cache this
+	var url = "./../sod-app-files/writeGPOS.php";
+	http.open('POST', url, false); // not async, wait for a response!
+	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	http.onreadystatechange = function() {//Call a function when the state changes.
+		if(http.readyState === 4 && http.status === 200) {
+			//alert(http.responseText);
+			// this is the response so we just set the variable
+		}
+	};
+	var jsonObj = {
+		GPOS: htmlStr,
+		GPOS_Name: gpPOSName
+	};
+	http.send(JSON.stringify(jsonObj)); //send will wait until the response is recieved
+	
+	//now redirect to the POS system
+	console.log("./../generated-pos/" + gpPOSName);
+	window.location.replace("./../generated-pos/" + gpPOSName);
 	return false;
 }
 
@@ -189,7 +230,7 @@ function tableContents(projectObj, itemLibraryData) {
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
             if(http.readyState === 4 && http.status === 200) {
-                alert(http.responseText);
+                // alert(http.responseText);
 				// this is the response so we just set the variable
 				tableText = http.responseText;
             }
@@ -202,7 +243,7 @@ function tableContents(projectObj, itemLibraryData) {
         var domParser = new DOMParser();
 		var tableHTML = domParser.parseFromString(tableText, "text/html");
 		// now add it
-        console.log(tableHTML.childNodes[0].childNodes[1].innerHTML);
+        // console.log(tableHTML.childNodes[0].childNodes[1].innerHTML);
 		tabDiv.appendChild(tableHTML.childNodes[0].childNodes[1]);
         content.appendChild(tabDiv);
         var btn;

@@ -199,7 +199,7 @@ function redirectToItemLibrary(projectname, newProject = false) {
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
             if(http.readyState === 4 && http.status === 200) {
-                alert(http.responseText);
+                //alert(http.responseText);
             }
         };
         http.send(JSON.stringify(projectObj));
@@ -239,7 +239,7 @@ function createNewPage(newPageName) {
 	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	http.onreadystatechange = function() {//Call a function when the state changes.
 		if(http.readyState === 4 && http.status === 200) {
-			alert(http.responseText);
+			//alert(http.responseText);
 		}
 	};
 	var httpBody = JSON.stringify(projectObj);
@@ -270,7 +270,7 @@ function removePage(pageNameToRemove, pageContainerId) {
 	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	http.onreadystatechange = function() {//Call a function when the state changes.
 		if(http.readyState === 4 && http.status === 200) {
-			alert(http.responseText);
+			//alert(http.responseText);
 		}
 	};
 	var httpBody = JSON.stringify(projectObj);
@@ -388,7 +388,7 @@ var loadFile = function (event) {
         http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         http.onreadystatechange = function() {//Call a function when the state changes.
             if(http.readyState === 4 && http.status === 200) {
-                alert(http.responseText);
+                //alert(http.responseText);
             }
         };
 		//we need to carry the POSSD to the processSODP.php
@@ -512,7 +512,7 @@ function saveLibraryFields(path) {
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState === 4 && http.status === 200) {
-            alert(http.responseText);
+            //alert(http.responseText);
         }
     };
     http.send(stringy);
@@ -693,7 +693,7 @@ function saveDesignerLayout(path) {
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState === 4 && http.status === 200) {
-            alert(http.responseText);
+            //alert(http.responseText);
         }
     };
 

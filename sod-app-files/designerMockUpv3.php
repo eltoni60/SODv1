@@ -50,7 +50,7 @@
 <div class="container">
     <h3 style="text-align: center">Staging Area Designer</h3>
     <div class="row">
-        <form class="deployPageForm" method="post" action="" onsubmit="deployPOSSystem.php">
+        <form class="deployPageForm" >
             <input class="btn btn-success btn-lg" value="Deploy" type="submit" id="Deploy" onclick="return saveDesignerLayout('../generated-pos/generatedPOSTemplate.html')" />
         </form>
         <div class="btn btn-danger btn-lg trash" id="trash" ondragover="dragOver(event)" ondrop="deleteDrop(event)"><i class='fa fa-trash'></i></div>
