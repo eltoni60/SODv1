@@ -18,7 +18,7 @@
 	$loadedProject = deserialize_project_data($projectDataFilePath);
 	
 	//default layout shall be a 3x3 grid
-	$defaultLayout = Layout::create_grid_layout(3, 3, $GLOBALS["GEN_POS_WIDTH"], $GLOBALS["GEN_POS_HEIGHT"], 20, 20);
+	$defaultLayout = Layout::create_grid_layout(3, 3, $GLOBALS["GEN_POS_WIDTH"], $GLOBALS["GEN_POS_HEIGHT"], 2, 2);
 	$createdPage = new Page($pageName, $defaultLayout);
 	$loadedProject->add_page($createdPage);
 	serialize_project_data($loadedProject, $projectDataFilePath);

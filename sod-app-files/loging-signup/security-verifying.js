@@ -284,10 +284,14 @@ function removePage(pageNameToRemove, pageContainerId) {
 function createNewPageButton(pageContainerId, newPageName) {
 	var btn = document.createElement("BUTTON");
 	
-	/** TODO: make onclick go to the staging area designer **/
-	
 	btn.id = newPageName;
 	btn.value = newPageName;
+	
+	var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+	btn.setAttribute("onclick", "window.location.replace('./designerMockUpv3.php?modifyingPage=" 
+		+ newPageName + "&possd=" + possd + "&projectName=" + pName + "');");
+	
 	btn.className += 'btn btn-info btn-lg';
 	btn.innerHTML = newPageName;
 	btn.style.margin = "1em 2em 1em";
@@ -339,8 +343,12 @@ function exitPageRemoveMode(pageContainerId) {
 			//we can safely modify this now
 			child.innerHTML = child.id;
 			
-			//TODO: add required code
-			child.setAttribute("onclick", ""); 
+			
+			var possd = sessionStorage.getItem("POSSD");
+			var pName = sessionStorage.getItem("PROJECT_NAME");
+			child.setAttribute("onclick", "window.location.replace('./designerMockUpv3.php?modifyingPage=" 
+				+ child.id + "&possd=" + possd + "&projectName=" + pName + "');");
+
 		}
 	}
 }
@@ -602,9 +610,6 @@ function loadTab() {
     }
 
     return false;
-
-
-
 }
 
 function loadElementToolBox() {

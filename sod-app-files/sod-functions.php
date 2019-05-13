@@ -5,11 +5,11 @@ require('sod-classes.php');
 
 
 /**
-	Program constants
+	Program constants. Assuming percentages here
 */
 
-$GLOBALS["GEN_POS_WIDTH"] = 800;
-$GLOBALS["GEN_POS_HEIGHT"] = 600;
+$GLOBALS["GEN_POS_WIDTH"] = 100;
+$GLOBALS["GEN_POS_HEIGHT"] = 100;
 
 	
 /**
@@ -451,6 +451,21 @@ function create_sod_project_files($sod_dir, $possd, $project_name) {
 }
 
 
+/** Functions used for page generation **/
+
+function set_insert(& $set, $adding) { //passing the array as a reference
+	$has = false;
+	for ($i = 0; $i < count($set); $i++) {
+		if ($set[$i] == $adding) {
+			$has = true;
+		}
+	}
+	if(!$has) {
+		//add it
+		array_push($set, $adding);
+	}
+}
+
 /**
 	POS System Generation - See Section 5.1.9
 	
@@ -467,9 +482,166 @@ function generate_element($element_id, $item) {
 	Generates an HTML table from a Page object. This 
 	depends on the generate_element function.
 */	
-function generate_page($page, $item_library) {
+function generate_page($page, $item_library, $developerMode = false) {
 	
+	/** From what I did originally, the input parameters were **/
+	/** $rectArray, $totalWidth, $totalHeight **/
+	/** We are going to use Rectangle class and percent sizes **/
+	
+	// utilize program globals
+	$totalWidth = $GLOBALS["GEN_POS_WIDTH"];
+	$totalHeight = $GLOBALS["GEN_POS_HEIGHT"];
+	$layoutObject = $page->get_layout();
+	
+	$x_vals = array( 0, $totalWidth );
+	$y_vals = array( 0, $totalHeight );
+	for ($i = 0; $i < $layoutObject->get_cell_count(); $i++) {
+		set_insert($x_vals, $layoutObject->get_cell($i)->x);
+		set_insert($x_vals, $layoutObject->get_cell($i)->x+$layoutObject->get_cell($i)->width);
+		set_insert($y_vals, $layoutObject->get_cell($i)->y);
+		set_insert($y_vals, $layoutObject->get_cell($i)->y+$layoutObject->get_cell($i)->height);
+	}
+	// we have all x vals and y vals. Make the empty pairs table
+	$pairs = array();
+	for ($x = 0; $x < count($x_vals); $x++) {
+		array_push($pairs, array());
+		for ($y = 0; $y < count($y_vals); $y++) {
+			array_push($pairs[$x], array(0, 0));
+		}
+	}
+	
+	//sort values ascending
+	sort($x_vals);
+	sort($y_vals);
+	//insert the pairs into the pairs array
+	for ($col = 0; $col < count($pairs); $col++) {
+		for ($row = 0; $row < count($pairs[$col]); $row++) {
+			$pairs[$col][$row][0] = $x_vals[$col];
+			$pairs[$col][$row][1] = $y_vals[$row];
+		}
+	}
+	$cell_fill = array();
+	for ($x = 0; $x < count($x_vals) - 1; $x++) {
+		array_push($cell_fill, array());
+		for ($y = 0; $y < count($y_vals) - 1; $y++) {
+			array_push($cell_fill[$x], 0);
+		}
+	}
+	
+	// set the values in the cell fill array
+	// so that each cell has its appropriate 
+	// rectangle value
+	for ($rectIndex = 0; $rectIndex < $layoutObject->get_cell_count(); $rectIndex++) {
+		$rect = $layoutObject->get_cell($rectIndex); // get current rectangle
+		// [ x, y, width, height ]
+		$cellStartX = array_search($rect->x, $x_vals);
+		$cellStartY = array_search($rect->y, $y_vals);
+		$cellEndX = array_search($rect->x+$rect->width, $x_vals) - 1;
+		$cellEndY = array_search($rect->y+$rect->height, $y_vals) - 1;
+		
+		for ($x = $cellStartX; $x <= $cellEndX; $x++) {
+			for ($y = $cellStartY; $y <= $cellEndY; $y++) {
+				// this is where each cell gets its ID
+				$cell_fill[$x][$y] = array (
+					'elementId' => $page->get_element_by_cell_location($rectIndex),
+					'cellId' => $rectIndex+1
+				);
+			}
+		}
+	}
+	
+	// go ahead and start generating the
+	// HTML table from this information
+	$accounted_for = array();
+	for ($x = 0; $x < count($x_vals) - 1; $x++) {
+		array_push($accounted_for, array());
+		for ($y = 0; $y < count($y_vals) - 1; $y++) {
+			array_push($accounted_for[$x], false);
+		}
+	}
+	
+	echo "<table cellspacing=\"0\" style=\"width:100%; height:100%;\">\n";
+	for ($y = 0; $y < count($y_vals) - 1; $y++) {
+		echo "<tr>\n";
+		for ($x = 0; $x < count($x_vals) - 1; $x++) {
+			if ($accounted_for[$x][$y] == false) {
+				if ($cell_fill[$x][$y]['cellId'] != 0) { // do something else if it is 0 (see below)
+					$cell_id = $cell_fill[$x][$y]['cellId']; // cell ID is its index+1
+					$colspan = 0;
+					$rowspan = 0;
+					// calculate col span and row span values
+					while ($cell_id == $cell_fill[$x+$colspan][$y]['cellId']) {
+						$colspan++;
+					}
+					while ($cell_id == $cell_fill[$x][$y+$rowspan]['cellId']) {
+						$rowspan++;
+					}
+					
+					if ($developerMode) {
+						
+						// this is for the staging area designer 
+						echo "<td width:".(
+								$pairs[$x+1][$y+1][0]-$pairs[$x][$y][0]
+							)."%; height:".(
+								$pairs[$x+1][$y+1][1]-$pairs[$x][$y][1]
+							).";\" rowspan=\"".$rowspan."\" colspan=\"".$colspan."\"".
+							" class=\"layout-cell\" id=\"cell".$cell_id."\"".
+							" ondrop=\"dragDrop(event)\" ondragover=\"dragOver(event)\">";
+						
+						// this is the place where element ID is used to fill 
+						// what this td tag is
+
+						$elementInThisCell = $cell_fill[$x][$y]['elementId'];
+						
+						echo "</td>\n";
+						
+					} else {
+						// this is for the actual generated POS system
+						echo "<td width:".(
+								$pairs[$x+1][$y+1][0]-$pairs[$x][$y][0]
+							)."%; height:".(
+								$pairs[$x+1][$y+1][1]-$pairs[$x][$y][1]
+							).";\" rowspan=\"".$rowspan."\" colspan=\"".$colspan."\"".
+						" class=\"layout-cell\" id=\"cell".$cell_id."\">";
+						
+						// this is the place where element ID is used to fill 
+						// what this td tag is
+
+						$elementInThisCell = $cell_fill[$x][$y]['elementId'];
+						
+						echo "</td>\n";
+						
+
+					}
+					
+					for ($ax = $x; $ax < $x+$colspan; $ax++) {
+						for ($ay = $y; $ay < $y+$rowspan; $ay++) {
+							$accounted_for[$ax][$ay] = true;
+						}
+					}
+					// should be placed in correct spot in the table
+				}
+				else {
+					echo "<td style=\"width:".(
+							$pairs[$x+1][$y+1][0]-$pairs[$x][$y][0]
+						)."%; height:".(
+							$pairs[$x+1][$y+1][1]-$pairs[$x][$y][1]
+						)."%;\">";
+					// this is where empty elements are placed
+					
+					echo "</td>\n";
+					$accounted_for[$x][$y] = true;
+				}
+			}
+		}
+		echo "</tr>\n";
+	}
+	echo "</table>\n";
 }
+
+
+function generate_page_functionality_for_designer($page, $item_library) {
 	
+}	
 
 ?>
