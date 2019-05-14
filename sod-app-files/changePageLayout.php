@@ -48,6 +48,9 @@
 		//if it is legal to change to, then do it, otherwise do nothing
 		if ($pageObject->can_change_layout($layoutObject)) {
 			$pageObject->change_layout($layoutObject);
+			// only need to save it if it actually worked.
+			serialize_project_data($loadedProject, $projectDataFilePath);
+			
 			echo "SUCCESS";
 		}
 		else {
@@ -56,7 +59,5 @@
 	}
 	else {
 		echo "FAILURE";
-	}
-	serialize_project_data($loadedProject, $projectDataFilePath);
-		
+	}		
 ?>

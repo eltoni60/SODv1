@@ -666,8 +666,9 @@ function getUrlVars() {
 
 function saveDesignerLayout(path) {
     var parameters = getUrlVars();
-    var pData = returnLoadedJSON("../POSSD-" + parameters["possd"] + "/project-" + parameters["projectName"] + "/" + parameters["projectName"] + "-project.json");
-    var pagesData = pData["pages"];
+	var jsonProjectFilePath = "../POSSD-" + parameters["possd"] + "/project-" + parameters["projectName"] + "/" + parameters["projectName"] + "-project.json";
+	var pData = returnLoadedJSON(jsonProjectFilePath);
+	var pagesData = pData["pages"];
     var cellCount;
     for (var i = 0; i < pagesData.length; i++) {
         if(pagesData[i]["page_name"] === parameters["modifyingPage"]) {
@@ -723,8 +724,7 @@ function changeLayoutForPage(changingLayoutPageName, changingLayoutLayoutName) {
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState === 4 && http.status === 200) {
-            alert(http.responseText);
-			returnStatus = http.responseText;
+			//alert(http.responseText);
         }
     };
 
@@ -741,13 +741,16 @@ function changeLayoutForPage(changingLayoutPageName, changingLayoutLayoutName) {
 	//if it was successful, otherwise make
 	//an alert for the return status
 	
-	if (returnStatus == 'SUCCESS') {
-		window.href = "./designerMockUpv3.php?modifyingPage=" + changingLayoutPageName + 
+	if (String(http.responseText).trim() == "SUCCESS") {
+		var path = "./designerMockUpv3.php?modifyingPage=" + changingLayoutPageName + 
 			"&possd=" + possd + "&projectName=" + pName;
+		saveDesignerLayout(path);
 	}
 	else {
 		alert("Could not change layout. Too many elements to fit.");
 	}
+	
+	return false;
 }
 
 
