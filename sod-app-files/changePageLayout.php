@@ -23,25 +23,52 @@
 	$layoutObject = null;
 	
 	if ($layoutName == 'Grid 3x3') {
-		$layoutObject = Layout::create_grid_layout(3, 3, $GLOBALS["GEN_POS_WIDTH"], $GLOBALS["GEN_POS_HEIGHT"], 2, 2);
+		$layoutObject = Layout::create_grid_layout(3, 3, $GLOBALS["GEN_POS_WIDTH"], $GLOBALS["GEN_POS_HEIGHT"], 5, 5);
 	}
 	else if ($layoutName == 'Grid 2x2') {
-		$layoutObject = Layout::create_grid_layout(2, 2, $GLOBALS["GEN_POS_WIDTH"], $GLOBALS["GEN_POS_HEIGHT"], 2, 2);
+		$layoutObject = Layout::create_grid_layout(2, 2, $GLOBALS["GEN_POS_WIDTH"], $GLOBALS["GEN_POS_HEIGHT"], 4, 4);
 	}
 	else if ($layoutName == 'Grid 4x4') {
-		$layoutObject = Layout::create_grid_layout(4, 4, $GLOBALS["GEN_POS_WIDTH"], $GLOBALS["GEN_POS_HEIGHT"], 2, 2);
+		$layoutObject = Layout::create_grid_layout(4, 4, $GLOBALS["GEN_POS_WIDTH"], $GLOBALS["GEN_POS_HEIGHT"], 3, 3);
 	}
 	else if ($layoutName == 'Brick Style 1') {
+		$layoutObject = new Layout("Brick Style 1");
+		$layoutObject->push_cell(new Rectangle(6, 5, 25, 20));
+		$layoutObject->push_cell(new Rectangle(37, 5, 25, 20));
+		$layoutObject->push_cell(new Rectangle(69, 5, 25, 20));
 		
+		$layoutObject->push_cell(new Rectangle(20, 35, 25, 20));
+		$layoutObject->push_cell(new Rectangle(50, 35, 25, 20));
+		
+		$layoutObject->push_cell(new Rectangle(6, 65, 25, 20));
+		$layoutObject->push_cell(new Rectangle(37, 65, 25, 20));
+		$layoutObject->push_cell(new Rectangle(69, 65, 25, 20));
 	}
 	else if ($layoutName == 'Brick Style 2') {
+		$layoutObject = new Layout("Brick Style 2");
+		$layoutObject->push_cell(new Rectangle(20, 5, 25, 20));
+		$layoutObject->push_cell(new Rectangle(50, 5, 25, 20));
 		
+		$layoutObject->push_cell(new Rectangle(6, 35, 25, 20));
+		$layoutObject->push_cell(new Rectangle(37, 35, 25, 20));
+		$layoutObject->push_cell(new Rectangle(69, 35, 25, 20));
+		
+		$layoutObject->push_cell(new Rectangle(20, 65, 25, 20));
+		$layoutObject->push_cell(new Rectangle(50, 65, 25, 20));
 	}
 	else if ($layoutName == 'Vertical') {
-		
+		$layoutObject = new Layout("Horizontal");
+		$layoutObject->push_cell(new Rectangle(6, 15, 25, 70));
+		$layoutObject->push_cell(new Rectangle(37, 15, 25, 70));
+		$layoutObject->push_cell(new Rectangle(69, 15, 25, 70));
 	}
 	else if ($layoutName == 'Horizontal') {
-		
+		$layoutObject = new Layout("Horizontal");
+		$layoutObject->push_cell(new Rectangle(10, 2, 80, 17));
+		$layoutObject->push_cell(new Rectangle(10, 21, 80, 17));
+		$layoutObject->push_cell(new Rectangle(10, 40, 80, 17));
+		$layoutObject->push_cell(new Rectangle(10, 59, 80, 17));
+		$layoutObject->push_cell(new Rectangle(10, 78, 80, 17));
 	}
 	
 	if ($layoutObject != null) {
