@@ -619,15 +619,16 @@ function loadTab() {
     /*var stagingArea = document.getElementById("stagingArea");
     var divItem = stagingArea.firstElementChild;*/
 
-    for(var j = 0; j < stagingArea.childElementCount; j++) {
+    for(var j = 0; j < cellCount; j++) {
         if(elementArray[j] === 0)
             continue;
-
-        var element = document.getElementById(elementArray[j]);
-        var clonedElement = element.cloneNode(true);
-        clonedElement.setAttribute("ondragstart", "deleteDrag(event)");
-        var cell = document.getElementById("cell" + (j+1));
-        cell.appendChild(clonedElement);
+        else {
+            var element = document.getElementById(elementArray[j]);
+            var clonedElement = element.cloneNode(true);
+            clonedElement.setAttribute("ondragstart", "deleteDrag(event)");
+            var cell = document.getElementById("cell" + (j+1));
+            cell.appendChild(clonedElement);
+        }
     }
 
     return false;
@@ -711,6 +712,51 @@ function saveDesignerLayout(path) {
     return false;
 }
 
+/*
+function getProjectJSON() {
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    //var possd = "Shoneys";
+    //var pName = "test2";
+    var projectObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json");
+    projectObj = projectObj["pages"];
+    return projectObj;
+}
+
+function getItemLibraryJSON() {
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    //var possd = "Shoneys";
+    //var pName = "test2";
+    var libraryObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
+    libraryObj = libraryObj["items"];
+    return libraryObj;
+
+}
+
+import { saveAs } from 'file-saver';
+
+function startDownload() {
+
+    var projData =  getProjectJSON();
+    var libraryData = getItemLibraryJSON();
+
+    var sodp = {
+        "project_data": projData,
+        "item_library": libraryData
+    };
+
+    var blob = new Blob([JSON.stringify(sodp)], {
+        type: "text/plain;charset=utf-8;",
+    });
+    saveAs(blob, "download.sodp");
+
+
+
+
+
+}
+*/
 
 function changeLayoutForPage(changingLayoutPageName, changingLayoutLayoutName) {
 	var possd = sessionStorage.getItem("POSSD");
