@@ -319,6 +319,7 @@ function enterPageRemoveMode(pageContainerId) {
 			//we can safely modify this now
 			child.innerHTML = "Remove " + child.id;
 			child.setAttribute("onclick", "return removePage('" + child.id + "', '" + pageContainerId + "')");
+			child.setAttribute("class",'btn btn-danger btn-lg');
 		}
 	}
 	
@@ -356,7 +357,7 @@ function exitPageRemoveMode(pageContainerId) {
 			var pName = sessionStorage.getItem("PROJECT_NAME");
 			child.setAttribute("onclick", "window.location.replace('./designerMockUpv3.php?modifyingPage=" 
 				+ child.id + "&possd=" + possd + "&projectName=" + pName + "');");
-
+			child.setAttribute("class", 'btn btn-info btn-lg');
 		}
 	}
 	
@@ -707,7 +708,44 @@ function saveDesignerLayout(path) {
 }
 
 
+function changeLayoutForPage(changingLayoutPageName, changingLayoutLayoutName) {
+	var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+	
+	var returnStatus = "";
+	var http = new XMLHttpRequest();
+    // added cache busting technique to see if it would help
+    var url = "./changePageLayout.php";
+    http.open('POST', url, false);
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState === 4 && http.status === 200) {
+            alert(http.responseText);
+			returnStatus = http.responseText;
+        }
+    };
 
+    var projectObj = {
+        POSSD: possd,
+        projectName: pName,
+		pageName: changingLayoutPageName,
+		layoutName: changingLayoutLayoutName
+    };
+	
+	http.send(JSON.stringify(projectObj));
+	
+	//check return status and reload the page
+	//if it was successful, otherwise make
+	//an alert for the return status
+	
+	if (returnStatus == 'SUCCESS') {
+		window.href = "./designerMockUpv3.php?modifyingPage=" + changingLayoutPageName + 
+			"&possd=" + possd + "&projectName=" + pName;
+	}
+	else {
+		alert("Could not change layout. Too many elements to fit.");
+	}
+}
 
 
 
