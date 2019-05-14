@@ -799,13 +799,26 @@ function changeLayoutForPage(changingLayoutPageName, changingLayoutLayoutName) {
 	return false;
 }
 
+function getProjectJSON() {
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    //var possd = "Shoneys";
+    //var pName = "test2";
+    var projectObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json");
+    projectObj = projectObj["pages"];
+    return projectObj;
+}
 
+function getItemLibraryJSON() {
+    var possd = sessionStorage.getItem("POSSD");
+    var pName = sessionStorage.getItem("PROJECT_NAME");
+    //var possd = "Shoneys";
+    //var pName = "test2";
+    var libraryObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
+    libraryObj = libraryObj["items"];
+    return libraryObj;
 
-
-
-
-
-
+}
 
 
 

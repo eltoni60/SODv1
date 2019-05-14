@@ -8,6 +8,7 @@
     <script src="./generated-pos-functions/jquery-3.4.1.min.js"></script>
     <script src="./generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
     <script src="loging-signup/security-verifying.js"></script>
+    <script src="loging-signup/FileSaver.js"></script>
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
         .navbar {
@@ -54,6 +55,25 @@
     //attribute has been set.
     if (sessionStorage.getItem("POSSD") == null)
         window.location.replace("./index.html");
+</script>
+
+<script src="loging-signup/FileSaver.js-master/dist/FileSaver.js"></script>
+<script type="text/javascript">
+
+    function startDownload() {
+        var projData = getProjectJSON();
+        var itemLib = getItemLibraryJSON();
+        var sodp = {
+            "project_data": projData,
+            "item_library": itemLib
+        };
+
+        var blob = new Blob([JSON.stringify(sodp)], {
+            type: "text/plain;charset=utf-8;",
+        });
+        saveAs(blob, "download.sodp");
+    }
+
 </script>
 
 <nav class="navbar navbar-inverse">
