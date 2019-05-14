@@ -12,6 +12,14 @@
     <link href="../sod-app-files/generated-pos-functions/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="../sod-app-files/generated-pos-functions/print.min.js"></script>
     <link href="designerv3.css" rel="stylesheet">
+	
+	<script>
+		//This is for binding an event to the layout dropdown box
+		$(function() {
+			$('')
+			changeLayoutForPage(changingLayoutPageName, changingLayoutLayoutName);
+		});
+	</script>
 </head>
 <body onload="loadDesigner()">
 
@@ -50,11 +58,28 @@
 <div class="container">
     <h3 style="text-align: center">Staging Area Designer</h3>
     <div class="row">
+		<div class="dropdown show">
+		  <button class="btn btn-primary dropdown-toggle" 
+			type="button" id="layoutDropdown" 
+			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Change Layout <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" aria-labelledby="layoutDropdown">
+			<li><a href="#" onclick="changeLayoutForPage('<?php echo $_GET["modifyingPage"]; ?>', 'Grid 3x3')">Grid 3x3</a></li>
+			<li><a href="#" onclick="changeLayoutForPage('<?php echo $_GET["modifyingPage"]; ?>', 'Grid 2x2')">Grid 2x2</a></li>
+			<li><a href="#" onclick="changeLayoutForPage('<?php echo $_GET["modifyingPage"]; ?>', 'Grid 4x4')">Grid 4x4</a></li>
+			<li><a href="#" onclick="changeLayoutForPage('<?php echo $_GET["modifyingPage"]; ?>', 'Brick Style 1')">Brick Style 1</a></li>
+			<li><a href="#" onclick="changeLayoutForPage('<?php echo $_GET["modifyingPage"]; ?>', 'Brick Style 2')">Brick Style 2</a></li>
+			<li><a href="#" onclick="changeLayoutForPage('<?php echo $_GET["modifyingPage"]; ?>', 'Vertical')">Vertical</a></li>
+			<li><a href="#" onclick="changeLayoutForPage('<?php echo $_GET["modifyingPage"]; ?>', 'Horizontal')">Horizontal</a></li>
+		  </ul>
+		</div>
+		
         <form class="deployPageForm" >
             <input class="btn btn-success btn-lg" value="Deploy" type="submit" id="Deploy" onclick="return saveDesignerLayout('../generated-pos/generatedPOSTemplate.html')" />
         </form>
         <div class="btn btn-danger btn-lg trash" id="trash" ondragover="dragOver(event)" ondrop="deleteDrop(event)"><i class='fa fa-trash'></i></div>
-    </div>
+	</div>
 </div>
 
 

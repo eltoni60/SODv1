@@ -86,7 +86,6 @@
     position: absolute;
     left: 63.3%;
     width: 20rem;
-
 }
 
 .row {
@@ -97,7 +96,13 @@
 #Deploy {
     position: relative;
     width: 20rem;
-    left: 532%;
+    left: 502%;
+}
+
+#layoutDropdown {
+    position: absolute;
+    left: 2%;
+    width: 20rem;
 }
 
 .layout-cell {
