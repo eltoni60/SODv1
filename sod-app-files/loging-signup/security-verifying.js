@@ -606,24 +606,27 @@ function loadTab() {
     // added random parameter to the end to prevent caching
     var projectData = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json")["pages"];
     var elementArray;
+    var cellCount;
     for (var i = 0; i < projectData.length; i++) {
         if(projectData[i]["page_name"] === page) {
              elementArray = projectData[i]["elements"];
+             cellCount = projectData[i]["layout"].cells.length;
              break;
         }
     }
 
-    var stagingArea = document.getElementById("stagingArea");
-    var divItem = stagingArea.firstElementChild;
+    /*var stagingArea = document.getElementById("stagingArea");
+    var divItem = stagingArea.firstElementChild;*/
 
     for(var j = 0; j < stagingArea.childElementCount; j++) {
         if(elementArray[j] === 0)
             continue;
+
         var element = document.getElementById(elementArray[j]);
         var clonedElement = element.cloneNode(true);
         clonedElement.setAttribute("ondragstart", "deleteDrag(event)");
-        divItem.appendChild(clonedElement);
-        divItem = divItem.nextElementSibling;
+        var cell = document.getElementById("cell" + (j+1));
+        cell.appendChild(clonedElement);
     }
 
     return false;
