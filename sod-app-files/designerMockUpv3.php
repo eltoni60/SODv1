@@ -12,8 +12,18 @@
     <link href="../sod-app-files/generated-pos-functions/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="../sod-app-files/generated-pos-functions/print.min.js"></script>
     <link href="designerv3.css" rel="stylesheet">
+    <link rel="stylesheet" href="overlays.css">
+
 </head>
 <body onload="loadDesigner()">
+<div id="overlay" onclick="hideHelp()">
+    <div id="ELEMENTTOOLBOX" >These are all of the buttons that have been created for you to apply to your layout. You can drag and drop them to the desired cell.</div>
+    <div id="TRACHICON">If you do not want an item in a cell, you can drag and drop it onto the trash icon to remove it from the layout.</div>
+    <div id="LAYOUTBTN">If you want to change the layout of page, click on the dropdown button and select the layout that you would like. We will take care of changing it for you.</div>
+    <div id="DESIGNERDEPLOY">We have provided a deploy button here for your convenience.</div>
+    <div id="NAVBAR">You can navigate to the different modules using the navigation bar.</div>
+
+</div>
 
 <?php
 
@@ -40,6 +50,9 @@
                 <li><a onclick="saveDesignerLayout('./staging-area-selector.html')">Staging Area Selector</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button class="btn btn-default btn-lg" onclick="showHelp()"><i class="fa fa-info" aria-hidden="true"></i> Help</button>
+                </li>
                 <li>
                     <button class="btn btn-warning btn-lg" onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
                 </li>
@@ -113,10 +126,10 @@
 </div>
 <div class="properties grid-container">
     <h3 style="text-align: right; grid-column: 1 / span 3">Properties <button onclick="toggleHide(event)" class="btn btn-info btn-sm"><i class="fa fa-bars" aria-hidden="true"></i></button></h3>
-    <label>Item Name:
+    <label style="visibility: hidden;">Item Name:
         <input type="text" class="grid-item">
     </label>
-    <label> Item Price
+    <label style="visibility: hidden;"> Item Price
         <input type="text" class="grid-item">
     </label>
 </div>

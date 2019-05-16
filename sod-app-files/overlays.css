@@ -1,0 +1,255 @@
+
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+#startOverlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+#HELPBUTTON {
+    position: absolute;
+    top: 3.5%;
+    left: 71%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+
+#PAGE_SUMMARY {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#NEW_PROJECT_BTN {
+    position: absolute;
+    top: 19%;
+    left: 25%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#EDIT_PORJECTS {
+    position: absolute;
+    top: 29%;
+    left: 25%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#GPOS {
+    position: absolute;
+    top: 29%;
+    left: 75%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#LOADFILE {
+    position: absolute;
+    top: 6%;
+    left: 53%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#ADDMORE {
+    position: absolute;
+    top: 78%;
+    left: 22%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#ENTRYFIELDS {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#FINISHNEXT {
+    position: absolute;
+    top: 78%;
+    left: 60%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#ITEM_SUMMARY {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    display: list-item;
+}
+
+#ADDPAGE {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+    width: 50%;
+}
+
+#REMOVEPAGE {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+    width: 50%;
+
+}
+
+#DEPLOY {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+    width: 50%;
+}
+
+#DOWNLOAD {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    font-size: 2rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+    width: 50%;
+}
+
+#ELEMENTTOOLBOX {
+    position: absolute;
+    top: 45%;
+    left: 80%;
+    font-size: 1.5rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+    width: 25%
+}
+
+#TRACHICON {
+    position: absolute;
+    top: 15%;
+    left: 70%;
+    font-size: 1.5rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+    width: 18%;
+}
+
+#LAYOUTBTN {
+    position: absolute;
+    top: 14%;
+    left: 20%;
+    font-size: 1.5rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+    width: 20%;
+
+}
+
+#DESIGNERDEPLOY {
+    position: absolute;
+    top: 15%;
+    left: 89%;
+    font-size: 1.5rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+    width: 15%;
+}
+#NAVBAR {
+    position: absolute;
+    top: 3.5%;
+    left: 55%;
+    font-size: 1.5rem;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    text-align: left;
+    display: list-item;
+}

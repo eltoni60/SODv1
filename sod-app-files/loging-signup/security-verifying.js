@@ -820,10 +820,29 @@ function getItemLibraryJSON() {
 
 }
 
+function showHelp() {
+    document.getElementById("overlay").style.display = "block";
+}
 
+function hideHelp() {
+    document.getElementById("overlay").style.display = "none";
+}
 
+function hideStartHelp() {
+    document.getElementById("startOverlay").style.display = "none";
+    sessionStorage.setItem("HELPSCREEN", true);
+}
 
+function checkRevisit() {
+    var value = sessionStorage.getItem("HELPSCREEN");
+    if (value) {
+        document.getElementById("startOverlay").style.display = "none";
+    }
+    else {
+        document.getElementById("startOverlay").style.display = "block";
 
+    }
+}
 
 
 

@@ -9,6 +9,7 @@
     <script src="./generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
     <script src="loging-signup/security-verifying.js"></script>
     <link href="../sod-app-files/generated-pos-functions/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="overlays.css">
     <style>
         .container {
             display: flex;
@@ -30,6 +31,14 @@
 
 </head>
 <body onload="loadLibraryFields()">
+<div id="overlay" onclick="hideHelp()">
+    <div id="ADDMORE">Click on here to add more menu items.</div>
+    <div id="ENTRYFIELDS">Enter your menu items here. Items consist of a name and price.</div>
+    <div id="FINISHNEXT">Once finished, click next to continue to the Staging Area Selector</div>
+    <div id="ITEM_SUMMARY">In this page, you can add all of the menu items that you offer. In the next page, you will create pages to hold your items.</div>
+
+
+</div>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -48,6 +57,9 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
+                    <button class="btn btn-default btn-lg" onclick="showHelp()"><i class="fa fa-info" aria-hidden="true"></i> Help</button>
+                </li>
+                <li>
                     <button class="btn btn-warning btn-lg" onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
                 </li>
             </ul>
@@ -55,8 +67,7 @@
     </div>
 </nav>
 
-<h2>Item Library</h2>
-<h4>Enter all of your menu items names and prices. Once complete select next to continue. Do not worry if you forget items, you can always come back here to add more.</h4>
+<h2 style="text-align: center">Item Library</h2>
 <div class="container">
 <form name="itemLibrary" action="" onsubmit="return saveLibraryFields('./staging-area-selector.html')" >
     <div id="itemFields"></div>

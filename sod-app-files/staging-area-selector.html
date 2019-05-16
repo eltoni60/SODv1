@@ -8,7 +8,8 @@
     <script src="./generated-pos-functions/jquery-3.4.1.min.js"></script>
     <script src="./generated-pos-functions/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
     <script src="loging-signup/security-verifying.js"></script>
-    <script src="loging-signup/FileSaver.js"></script>
+    <script src="loging-signup/FileSaver.js-master/dist/FileSaver.js"></script>
+    <link rel="stylesheet" href="overlays.css">
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
         .navbar {
@@ -49,6 +50,13 @@
     </style>
 </head>
 <body>
+<div id="overlay" onclick="hideHelp()">
+    <div id="ADDPAGE">A page is a logical division for your menu items. You must have at least one.</div>
+    <div id="REMOVEPAGE">Removing a page is as easy as clicking the remove page button and then click on the page that you want to remove.
+    If you dont want to remove a page, just click on the remove page buttons again.</div>
+    <div id="DEPLOY">If you have your PoS to your liking, you can click on deploy to generate your PoS.</div>
+    <div id="DOWNLOAD">You can download a file representation of your project by clicking download.</div>
+</div>
 
 <script>
     //Doesn't allow access to the project-selector page unless the POSSD session
@@ -81,12 +89,19 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
             </button>
-            <a class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD") + ' - ' + sessionStorage.getItem("PROJECT_NAME"));</script></a>
+            <a href="../sod-app-files/project-selector.html" class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD") + ' - ' + sessionStorage.getItem("PROJECT_NAME"));</script></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
+                <li><a href="../sod-app-files/project-selector.html">Project Selector</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="../sod-app-files/item-library.html">Item Library</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button class="btn btn-default btn-lg" onclick="showHelp()"><i class="fa fa-info" aria-hidden="true"></i> Help</button>
+                </li>
                 <li>
                     <button class="btn btn-warning btn-lg" onclick="return logOut()"><span class="glyphicon glyphicon-log-in"></span> Log Out</button>
                 </li>
