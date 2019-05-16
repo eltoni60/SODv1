@@ -721,7 +721,7 @@ function generate_page_to_string($page, $item_library, $developerMode = false) {
 		}
 	}
 	
-	$page_string .=  "<table cellspacing=\"0\" style=\"width:100%; height:100%;\">\n";
+	$page_string .=  "<table cellspacing=\"0\" style=\"width:100%; height:82%;\">\n";
 	for ($y = 0; $y < count($y_vals) - 1; $y++) {
 		$page_string .=  "<tr>\n";
 		for ($x = 0; $x < count($x_vals) - 1; $x++) {
