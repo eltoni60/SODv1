@@ -34,7 +34,6 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
             </button>
             <a class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD") + ' - ' + sessionStorage.getItem("PROJECT_NAME"));</script></a>
@@ -60,11 +59,11 @@
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
     <h3 style="text-align: center">Staging Area Designer</h3>
     <div class="row">
 		<div class="dropdown show">
-		  <button class="btn btn-primary dropdown-toggle" 
+		  <button class="btn btn-lg btn-primary dropdown-toggle" 
 			type="button" id="layoutDropdown" 
 			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			Change Layout <span class="caret"></span>
@@ -79,11 +78,16 @@
 			<li><a href="" onclick="changeLayoutForPage('<?php echo $_GET["modifyingPage"]; ?>', 'Horizontal')">Horizontal</a></li>
 		  </ul>
 		</div>
-		
-        <form class="deployPageForm" >
-            <input class="btn btn-success btn-lg" value="Deploy" type="submit" id="Deploy" onclick="return saveDesignerLayout('../generated-pos/generatedPOSTemplate.html')" />
-        </form>
-        <div class="btn btn-danger btn-lg trash" id="trash" ondragover="dragOver(event)" ondrop="deleteDrop(event)"><i class='fa fa-trash'></i></div>
+	
+		<form class="deployPageForm" >
+			<input class="btn btn-success btn-lg" value="Deploy" 
+				type="submit" id="Deploy" 
+				onclick="return saveDesignerLayout('../generated-pos/generatedPOSTemplate.html')" />
+		</form>
+		<div class="btn btn-danger btn-lg trash" id="trash" 
+			ondragover="dragOver(event)" ondrop="deleteDrop(event)">
+			<i class='fa fa-trash'></i>
+		</div>
 	</div>
 </div>
 

@@ -1,7 +1,4 @@
 
-
-
-
 .staginArea {
     grid-row: 1 / 5;
     grid-row-gap: 2rem;
@@ -77,32 +74,31 @@
     grid-template-columns: auto auto auto;
     grid-template-rows: unset;
     margin-right: 2rem;
-
-
 }
 
 .trash {
     background-color: red;
-    position: absolute;
-    left: 63.3%;
     width: 20rem;
+	margin-right: 2%;
+	float: right;
 }
+
 
 .row {
-    display: inline-flex;
-
+    display: block-flex;
+	width: 100%;
 }
 
+
 #Deploy {
-    position: relative;
     width: 20rem;
-    left: 502%;
+	float: right;
 }
 
 #layoutDropdown {
-    position: absolute;
-    left: 2%;
     width: 20rem;
+	float: left;
+	margin-left: 2%;
 }
 
 .layout-cell {
