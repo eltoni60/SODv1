@@ -69,11 +69,14 @@
 <script type="text/javascript">
 
     function startDownload() {
-        var projData = getProjectJSON();
-        var itemLib = getItemLibraryJSON();
+		var possd = sessionStorage.getItem("POSSD");
+		var pName = sessionStorage.getItem("PROJECT_NAME");
+		var projectObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json");
+		var libraryObj = returnLoadedJSON("../POSSD-" + possd + "/project-" + pName + "/" + pName + "-item-library.json");
+		
         var sodp = {
-            "project_data": projData,
-            "item_library": itemLib
+            "project_data": projectObj,
+            "item_library": libraryObj
         };
 
         var blob = new Blob([JSON.stringify(sodp)], {

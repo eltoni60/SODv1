@@ -13,7 +13,6 @@
 	$POSSD = $sodpArray["possd"]; // see loadFile()
 	$pName = $project_data_object->get_project_name();
 
-	// current bug - POSSD and pName is not being set correctly
 
 	//create the files from these objects now
 	$sod = dirname(__DIR__);
