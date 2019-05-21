@@ -213,6 +213,14 @@ function redirectToItemLibrary(projectname, newProject = false) {
 
 function redirectToGPOS(projectname) {
     var possd = sessionStorage.getItem("POSSD");
+    var checkGPOS;
+    loadJSON(function(response){
+        checkGPOS = response;
+    }, "../generated-pos/" + possd + "-" + projectname + "-gpos.html" );
+    if (checkGPOS == null) {
+        alert("You have not deployed a PoS yet.");
+        return false;
+    }
     sessionStorage.setItem("pName", projectname);
     window.location.href = "../generated-pos/" + possd + "-" + projectname
         + "-gpos.html";
