@@ -57,7 +57,7 @@
 		$layoutObject->push_cell(new Rectangle(50, 65, 25, 20));
 	}
 	else if ($layoutName == 'Vertical') {
-		$layoutObject = new Layout("Horizontal");
+		$layoutObject = new Layout("Vertical");
 		$layoutObject->push_cell(new Rectangle(6, 15, 25, 70));
 		$layoutObject->push_cell(new Rectangle(37, 15, 25, 70));
 		$layoutObject->push_cell(new Rectangle(69, 15, 25, 70));
@@ -73,7 +73,7 @@
 	
 	if ($layoutObject != null) {
 		//if it is legal to change to, then do it, otherwise do nothing
-		if ($pageObject->can_change_layout($layoutObject)) {
+		if ($pageObject->can_change_layout($layoutObject) == true) {
 			$pageObject->change_layout($layoutObject);
 			// only need to save it if it actually worked.
 			serialize_project_data($loadedProject, $projectDataFilePath);
@@ -81,6 +81,7 @@
 			echo "SUCCESS";
 		}
 		else {
+			var_dump("can't change layout");
 			echo "FAILURE";
 		}
 	}

@@ -185,6 +185,10 @@
         }
         var deleteElement = document.getElementById(data);
         deleteElement.removeChild(deleteElement.firstChild);
+		var urlVars = getUrlVars();
+		var path = "./designerMockUpv3.php?modifyingPage=" + urlVars["modifyingPage"] + 
+			"&possd=" + sessionStorage.getItem("POSSD") + "&projectName=" + sessionStorage.getItem("PROJECT_NAME");
+		saveDesignerLayout(path);
     }
 
 	// using your function

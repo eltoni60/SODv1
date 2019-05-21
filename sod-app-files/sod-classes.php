@@ -134,42 +134,20 @@ class Page {
 		See Section 5.1.7.2 of the System Design Document.
 	*/
 	public function change_layout($new_layout) {
-		if ($this->get_cell_count() > $new_layout->get_cell_count()) {
-			// it just squishes everything to the left
-			$elements_to_process = $this->get_element_count();
-			$iterations = 0;
-			$last_moved_element = 0;
-			$to_move = 0;
-			$first_empty = 0;
-			while ($elements_to_process > 0) {
-								
-				for ($i = 0; $i < $this->get_cell_count(); $i++) {
-					if ($this->element_list[$i] == 0) {
-						$first_empty = $i;
-						break;
-					}
-				}		
-
-				for ($i = $last_moved_element+1; $i < $this->get_cell_count(); $i++) {
-					if ($this->element_list[$i] != 0) {
-						$to_move = $i;
-						break;
-					}
-				}	
-				$last_moved_element = $to_move;		
-				$this->move_element($to_move, $first_empty);
-				$elements_to_process--;
-			}
-		}
 		//transfer to the new layout
 		$new_element_list = array();
 		for ($i = 0; $i < $new_layout->get_cell_count(); $i++) {
 			array_push($new_element_list, 0);
 		}
 		
-		for ($i = 0; $i < $this->get_cell_count(); $i++) {
-			$new_element_list[$i] = $this->element_list[$i];
+		$new_i = 0;
+		for ($i = 0; $i < $this->get_layout()->get_cell_count(); $i++) {
+			if ($this->get_element_by_cell_location($i) != 0) {
+				$new_element_list[$new_i] = $this->get_element_by_cell_location($i);
+				$new_i++;
+			}
 		}
+		
 		// old stuff will be garbage collected?
 		$this->element_list = $new_element_list;
 		$this->layout = $new_layout;

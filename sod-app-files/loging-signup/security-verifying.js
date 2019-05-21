@@ -762,6 +762,51 @@ function changeLayoutForPage(changingLayoutPageName, changingLayoutLayoutName) {
 	var possd = sessionStorage.getItem("POSSD");
     var pName = sessionStorage.getItem("PROJECT_NAME");
 	
+	var jsonProjectFilePath = "../POSSD-" + possd + "/project-" + pName + "/" + pName + "-project.json";
+	var pData = returnLoadedJSON(jsonProjectFilePath);
+	var pagesData = pData["pages"];
+    var cellCount;
+    for (var i = 0; i < pagesData.length; i++) {
+        if(pagesData[i]["page_name"] === changingLayoutPageName) {
+            cellCount = pagesData[i]["layout"]["cells"].length;
+            break;
+        }
+    }
+    var elementArray = [];
+
+    for (var j = 1; j <= cellCount; j++) {
+        var cell = document.getElementById("cell" + j);
+        if(cell.childElementCount === 0) {
+            elementArray.push(0);
+        }
+        else {
+            var btnID = cell.firstElementChild.id;
+            elementArray.push(parseInt(btnID));
+        }
+    }
+
+    pData["pages"][i]["elements"] = elementArray;
+
+    var httpSync = new XMLHttpRequest();
+    // added cache busting technique to see if it would help
+    var urlSync = "./saveProject.php";
+    httpSync.open('POST', urlSync, false);
+    httpSync.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    httpSync.onreadystatechange = function() {//Call a function when the state changes.
+        if(httpSync.readyState === 4 && httpSync.status === 200) {
+            //alert(http.responseText);
+        }
+    };
+
+    var projectObjSync = {
+        POSSD: possd,
+        projectData: pData
+    };
+    httpSync.send(JSON.stringify(projectObjSync));
+	
+	
+	
+	
 	var returnStatus = "";
 	var http = new XMLHttpRequest();
     // added cache busting technique to see if it would help
