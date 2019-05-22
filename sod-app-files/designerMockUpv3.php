@@ -36,7 +36,7 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
             </button>
-            <a class="navbar-brand" href="#"><script> document.write('Sod - ' + sessionStorage.getItem("POSSD") + ' - ' + sessionStorage.getItem("PROJECT_NAME"));</script></a>
+            <a class="navbar-brand" href=""><script> document.write('Sod - ' + sessionStorage.getItem("POSSD") + ' - ' + sessionStorage.getItem("PROJECT_NAME"));</script></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
